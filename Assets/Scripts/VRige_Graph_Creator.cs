@@ -23,6 +23,7 @@ namespace VRige
         public Color defaultColor;
         public bool colorGraph = false;
         [Header("Scale of graph")]
+        [Tooltip("Low - nodes are further, High - nodes are closer")]
         public float graphScale = 1;
         [Header("Scale of nodes")]
         public float scale = 1;
