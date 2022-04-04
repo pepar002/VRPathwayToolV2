@@ -1,0 +1,36 @@
+ManifestFileVersion: 0
+CRC: 2102685303
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: bd7ceea6144c1b0f5e830eaf014d4f94
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 5275c8a661009fa5c49c1181e5cf3763
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 89
+  Script: {instanceID: 0}
+Assets:
+- Assets/Oculus/VR/Textures/cube_texture.png
+- Assets/Oculus/SampleFramework/Usage/Locomotion/Textures/floor_tile_01_nml.png
+- Assets/Oculus/SampleFramework/Usage/Locomotion/Textures/wall_brick_01_msm.png
+- Assets/Oculus/SampleFramework/Usage/Locomotion/Textures/floor_wood_02_msm.png
+- Assets/Oculus/SampleFramework/Usage/HandsTrainExample/Textures/diorama_paint_diorama_bg_elements_Normal.png
+- Assets/Oculus/SampleFramework/Usage/Locomotion/Textures/wall_brick_01_nml.png
+- Assets/Oculus/SampleFramework/Usage/Locomotion/Textures/floor_wood_02_dif.png
+- Assets/Oculus/SampleFramework/Usage/Locomotion/Textures/wall_brick_01_dif.png
+- Assets/Oculus/SampleFramework/Usage/Locomotion/Textures/floor_wood_02_nml.png
+- Assets/SteamVR/Models/Materials/AlienHand_MetallicSmoothness.png
+- Assets/Oculus/SampleFramework/Usage/Locomotion/Textures/floor_tile_01_amb.png
+- Assets/Oculus/SampleFramework/Usage/HandsTrainExample/TrainScene/ReflectionProbe-0.png
+- Assets/SteamVR/Models/Materials/AlienHand_Normal.png
+- Assets/Oculus/SampleFramework/Usage/HandsTrainExample/Textures/diorama_paint_diorama_bg_elements_DiffuseGlossiness.png
+- Assets/SteamVR/Models/Materials/AlienHand_AlbedoTransparency.png
+- Assets/Oculus/SampleFramework/Usage/Locomotion/Textures/metal_01_nml.png
+- Assets/Materials/diagram.png
+- Assets/Oculus/SampleFramework/Usage/Locomotion/Textures/metal_01_dif.png
+- Assets/Oculus/SampleFramework/Usage/Locomotion/Textures/floor_tile_01_dif.png
+Dependencies: []

@@ -1,0 +1,42 @@
+ManifestFileVersion: 0
+CRC: 1506373296
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 8ada2926df72aab7741eec04ef1ac7c7
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 9704b28e902e86d85ac8541796c9e339
+HashAppended: 0
+ClassTypes:
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 89
+  Script: {instanceID: 0}
+Assets:
+- Assets/IATK/Materials/FilterMaterial.mat
+- Assets/SteamVR/InteractionSystem/Core/Materials/FallbackHandIndicator.mat
+- Assets/SteamVR/Models/Materials/AlienHand.mat
+- Assets/Oculus/SampleFramework/Usage/Locomotion/Materials/MAT_floor_wood_02.mat
+- Assets/TextMesh Pro/Examples & Extras/Materials/Crate - Surface Shader Scene.mat
+- Assets/Oculus/VR/Materials/CubeMaterial.mat
+- Assets/RW/Materials/Laser.mat
+- Assets/SteamVR/Models/Materials/knuckles_right.mat
+- Assets/Oculus/SampleFramework/Core/Locomotion/Materials/MeterGrid.mat
+- Assets/Oculus/SampleFramework/Usage/Locomotion/Materials/MAT_floor_tile_01.mat
+- Assets/Oculus/SampleFramework/Usage/SharedAssets/Materials/Ball10.mat
+- Assets/SteamVR/InteractionSystem/Longbow/Materials/BalloonColor.mat
+- Assets/Oculus/SampleFramework/Usage/Locomotion/Materials/MAT_metal_01.mat
+- Assets/Oculus/SampleFramework/Usage/Locomotion/Materials/MAT_brick_01.mat
+- Assets/Oculus/SampleFramework/Usage/HandsTrainExample/Materials/BackgroundMaterial.mat
+- Assets/Materials/Material.mat
+- Assets/Oculus/SampleFramework/Usage/SharedAssets/Materials/Ball03.mat
+Dependencies:
+- C:/Users/yeoez001/Documents/GitHub/VRPathwayProject/OVRAssetBundles/OVRMasterBundle/asset_png0
+- C:/Users/yeoez001/Documents/GitHub/VRPathwayProject/OVRAssetBundles/OVRMasterBundle/asset_jpg0
+- C:/Users/yeoez001/Documents/GitHub/VRPathwayProject/OVRAssetBundles/OVRMasterBundle/asset_tga0
+- C:/Users/yeoez001/Documents/GitHub/VRPathwayProject/OVRAssetBundles/OVRMasterBundle/asset_shader0

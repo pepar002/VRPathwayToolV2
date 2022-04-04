@@ -1,0 +1,16 @@
+ManifestFileVersion: 0
+CRC: 1518083233
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 9a1716890c71bdf2c7282beee7ee1998
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: f19fbf085e00d23fbc8d6cf7b345590b
+HashAppended: 0
+ClassTypes:
+- Class: 28
+  Script: {instanceID: 0}
+Assets:
+- Assets/Oculus/SampleFramework/Usage/Locomotion/Textures/metal_01_msm.tga
+Dependencies: []

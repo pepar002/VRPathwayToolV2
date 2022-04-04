@@ -1,0 +1,232 @@
+ManifestFileVersion: 0
+CRC: 559210520
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 91359d19fec4269ce27c569742b25de8
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 3d2ce1d3913560f431c228d20476c5d7
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 20
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 49
+  Script: {instanceID: 0}
+- Class: 65
+  Script: {instanceID: 0}
+- Class: 72
+  Script: {instanceID: 0}
+- Class: 74
+  Script: {instanceID: 0}
+- Class: 81
+  Script: {instanceID: 0}
+- Class: 90
+  Script: {instanceID: 0}
+- Class: 91
+  Script: {instanceID: 0}
+- Class: 95
+  Script: {instanceID: 0}
+- Class: 109
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 11500000, guid: 169f45804a96d8f45bd39620e5f354c1, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 35041641111766845a0310945bce8e36, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 5aa3a06111b8d204487395efea25d6c9, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: b7f99b5209bd86441a74f3b0c7aab951, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 0acd891338463f048b5c9440d6e916dd, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: ad074644ff568a14187a3690cfbd7534, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: e90911e410742a1498a167540c7865bf, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 84a92b25f83d49b9bc132d206b370281, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 43ad19a5aa2d6cf4fbb646ae37c8e2b4, type: 3}
+- Class: 114
+  Script: {fileID: 16995157, guid: f88388c7eae311647879883c97e22bca, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 00f6c0d7b5a00aa4a8d38a09a0480032, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 32d40088a6124c578ad6b428df586e2e, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 218a3b99a3dcf2a469bcc624f9279f52, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: b3d881e962d099f4a8eb492ef7e9a8c0, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 2705215ac5b84b70bacc50632be6e391, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 4f9c41acb01eb244e9c52cd90ada206e, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: c9da270df5147d24597cc106058c1fa7, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: e07e675d8ca74fd4da1588617a67970e, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: e7418c7dd8f977d4e969202d3fa7e926, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: ab2114bdc8544297b417dfefe9f1e410, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 9541d86e2fd84c1d9990edf0852d74ab, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 54d21f6ece3b46479f0c328f8c6007e0, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: d06720cf3d1d63041b20d02506197257, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 120
+  Script: {instanceID: 0}
+- Class: 128
+  Script: {instanceID: 0}
+- Class: 135
+  Script: {instanceID: 0}
+- Class: 137
+  Script: {instanceID: 0}
+- Class: 222
+  Script: {instanceID: 0}
+- Class: 224
+  Script: {instanceID: 0}
+Assets:
+- Assets/Oculus/Avatar/Resources/FallbackTextures/fallback_diffuse_roughness_2048.png
+- Assets/TextMesh Pro/Examples & Extras/Resources/Sprite Assets/Default Sprite Asset.asset
+- Assets/IATK/Resources/dot.png
+- Assets/IATK/Resources/sphere-texture.png
+- Assets/Oculus/Avatar/Resources/FallbackTextures/fallback_diffuse_roughness_256.png
+- Assets/SteamVR/Input/Editor/Resources/Icons/HandLeftIcon.png
+- Assets/TextMesh Pro/Resources/LineBreaking Leading Characters.txt
+- Assets/SteamVR/Resources/SteamVR_Fade.shader
+- Assets/Resources/OculusPlatformSettings.asset
+- Assets/TextMesh Pro/Examples & Extras/Resources/Fonts & Materials/Bangers SDF Glow.mat
+- Assets/SteamVR/Input/Editor/Resources/Icons/handmask.png
+- Assets/Oculus/Avatar/Resources/Materials/Version1.5/Avatar_PC_SingleComponent.shader
+- Assets/Oculus/VR/Resources/OVRMRUnlitTransparent.shader
+- Assets/Resources/GraphPrefab.prefab
+- Assets/TextMesh Pro/Resources/Sprite Assets/EmojiOne.asset
+- Assets/Oculus/Avatar/Resources/FallbackTextures/fallback_normal_2048.png
+- Assets/Oculus/VR/Resources/OVRMRChromaKey.cginc
+- Assets/SteamVR/Resources/SteamVR_ClearAll.shader
+- Assets/TextMesh Pro/Resources/Style Sheets/Default Style Sheet.asset
+- Assets/SteamVR/Resources/SteamVR_HoverHighlight_URP.mat
+- Assets/Thirdparty/Gridbox Prototype Materials/Resources/Textures/Prototype Grid/prototype_512x512_brown.png
+- Assets/SteamVR/Resources/SteamVR_ExternalCamera.prefab
+- Assets/TextMesh Pro/Examples & Extras/Resources/Fonts & Materials/LiberationSans
+  SDF - Metalic Green.mat
+- Assets/SteamVR/Input/Editor/Resources/Icons/BlenderBehaviour_Boolean_Icon.png
+- Assets/TextMesh Pro/Examples & Extras/Resources/Fonts & Materials/Anton SDF.asset
+- Assets/IATK/Resources/circle-outline-basic.png
+- Assets/Oculus/Avatar/Resources/Materials/Version1.5/Avatar_Mobile_Loader.shader
+- Assets/Resources/ONSPSettings.asset
+- Assets/SteamVR/Input/Editor/Resources/Icons/handmask_Palm.png
+- Assets/SteamVR/Input/Editor/Resources/Icons/HandRightIcon.png
+- Assets/TextMesh Pro/Examples & Extras/Resources/Fonts & Materials/Bangers SDF -
+  Outline.mat
+- Assets/TextMesh Pro/Examples & Extras/Resources/Fonts & Materials/Oswald Bold SDF.asset
+- Assets/SteamVR/Input/Editor/Resources/Icons/handmask_Thumb.png
+- Assets/Oculus/VR/Resources/Cubemap Blit.shader
+- Assets/TextMesh Pro/Examples & Extras/Resources/Color Gradient Presets/Dark to Light
+  Green - Vertical.asset
+- Assets/Oculus/VR/Resources/OVRMRUnlit.shader
+- Assets/Resources/VirtualNode.prefab
+- Assets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF - Drop Shadow.mat
+- Assets/SteamVR/Resources/ReferencePose_OpenHand.asset
+- Assets/Oculus/Avatar/Resources/Materials/AvatarSurfaceShaderSelfOccluding.shader
+- Assets/Oculus/VR/Resources/Unlit Transparent Color.shader
+- Assets/IATK/Resources/Axis.prefab
+- Assets/Oculus/Avatar/Resources/Materials/AvatarSurfaceShaderPBS.shader
+- Assets/SteamVR/Resources/ReferencePose_Fist.asset
+- Assets/Thirdparty/Gridbox Prototype Materials/Resources/Textures/Prototype Grid/prototype_512x512_blue3.png
+- Assets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF.asset
+- Assets/TextMesh Pro/Examples & Extras/Resources/Fonts & Materials/LiberationSans
+  SDF - Soft Mask.mat
+- Assets/Oculus/VR/Resources/OVRMRCameraFrameLit.shader
+- Assets/Thirdparty/Gridbox Prototype Materials/Resources/Materials/Prototype Grid/Prototype_512x512_Brown.mat
+- Assets/TextMesh Pro/Resources/LineBreaking Following Characters.txt
+- Assets/TextMesh Pro/Examples & Extras/Resources/Color Gradient Presets/Light to
+  Dark Green - Vertical.asset
+- Assets/TextMesh Pro/Examples & Extras/Resources/Fonts & Materials/Roboto-Bold SDF
+  - Drop Shadow.mat
+- Assets/TextMesh Pro/Examples & Extras/Resources/Fonts & Materials/Bangers SDF -
+  Drop Shadow.mat
+- Assets/IATK/Resources/BrushingAndLinking.prefab
+- Assets/Oculus/Avatar/Resources/Materials/Version1.5/Avatar_Mobile_CombinedMesh.shader
+- Assets/Oculus/Avatar/Resources/Materials/Expressive/Avatar_Mobile_CombinedMeshExpressive.shader
+- Assets/TextMesh Pro/Examples & Extras/Resources/Fonts & Materials/Anton SDF - Drop
+  Shadow.mat
+- Assets/Oculus/VR/Resources/Underlay Transparent Occluder.shader
+- Assets/TextMesh Pro/Examples & Extras/Resources/Fonts & Materials/LiberationSans
+  SDF - Overlay.mat
+- Assets/IATK/Resources/Key.prefab
+- Assets/Oculus/VR/Resources/Texture2D Blit.shader
+- Assets/Oculus/Avatar/Resources/Materials/Expressive/Avatar_PC_SingleComponentExpressive.shader
+- Assets/TextMesh Pro/Examples & Extras/Resources/Fonts & Materials/Roboto-Bold SDF.asset
+- Assets/Oculus/Avatar/Resources/Materials/AvatarPBRV2Simple.shader
+- Assets/SteamVR/Input/Editor/Resources/Icons/handmask_Pinky.png
+- Assets/TextMesh Pro/Examples & Extras/Resources/Color Gradient Presets/Blue to Purple
+  - Vertical.asset
+- Assets/Resources/OVRPlatformToolSettings.asset
+- Assets/Oculus/Avatar/Resources/FallbackTextures/fallback_normal_256.png
+- Assets/Thirdparty/Gridbox Prototype Materials/Resources/Materials/Prototype Grid/Prototype_512x512_Blue3.mat
+- Assets/SteamVR_Resources/Resources/SteamVR_Settings.asset
+- Assets/TextMesh Pro/Examples & Extras/Resources/Fonts & Materials/Bangers SDF.asset
+- Assets/Oculus/Avatar/Resources/Materials/Expressive/Avatar_Mobile_SingleComponentExpressive.shader
+- Assets/SteamVR/Input/Editor/Resources/Icons/BlenderBehaviour_Manual_Icon.png
+- Assets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF - Fallback.asset
+- Assets/SteamVR/Resources/ReferencePose_BindPose.asset
+- Assets/SteamVR/Input/Editor/Resources/Icons/handmask_Ring.png
+- Assets/Oculus/VR/Resources/OVRMRCameraFrame.shader
+- Assets/TextMesh Pro/Examples & Extras/Resources/Sprite Assets/DropCap Numbers.asset
+- Assets/TextMesh Pro/Examples & Extras/Resources/Fonts & Materials/Bangers SDF Logo.mat
+- Assets/Oculus/Avatar/Resources/Materials/AvatarSurfaceShaderPBSV2.shader
+- Assets/TextMesh Pro/Examples & Extras/Resources/Fonts & Materials/Roboto-Bold SDF
+  - Surface.mat
+- Assets/SteamVR/Resources/SteamVR_SphericalProjection.shader
+- Assets/SteamVR/Resources/SteamVR_AlphaOut.shader
+- Assets/Resources/edge_Material.mat
+- Assets/Oculus/Avatar/Resources/FallbackTextures/fallback_diffuse_roughness_1024.png
+- Assets/TextMesh Pro/Examples & Extras/Resources/Fonts & Materials/Electronic Highway
+  Sign SDF.asset
+- Assets/TextMesh Pro/Examples & Extras/Resources/Fonts & Materials/Anton SDF - Sunny
+  Days.mat
+- Assets/Oculus/Avatar/Resources/Materials/Version1.5/Avatar_Mobile_SingleComponent.shader
+- Assets/SteamVR/Input/Editor/Resources/Icons/handmask_Middle.png
+- Assets/Oculus/Avatar/Resources/Materials/AvatarMaterialStateShader.cginc
+- Assets/Oculus/Avatar/Resources/Materials/Expressive/AvatarEyeLens.shader
+- Assets/Oculus/Avatar/Resources/Materials/AvatarSurfaceShader.shader
+- Assets/SteamVR/Resources/SteamVR_ColorOut.shader
+- Assets/Resources/DOTweenSettings.asset
+- Assets/Oculus/Avatar/Resources/FallbackTextures/fallback_normal_1024.tif
+- Assets/Oculus/VR/Resources/Underlay Impostor.shader
+- Assets/TextMesh Pro/Resources/Shaders/TMP_SDF-Mobile.shader
+- Assets/SteamVR/Input/Editor/Resources/Icons/handmask_Index.png
+- Assets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF - Outline.mat
+- Assets/SteamVR/Input/Editor/Resources/Icons/BlenderBehaviour_Analog_Icon.png
+- Assets/SteamVR/Resources/SteamVR_HoverHighlight.mat
+- Assets/TextMesh Pro/Examples & Extras/Resources/Fonts & Materials/Anton SDF - Outline.mat
+- Assets/TextMesh Pro/Examples & Extras/Resources/Color Gradient Presets/Yellow to
+  Orange - Vertical.asset
+- Assets/Resources/OVRBuildConfig.asset
+- Assets/TextMesh Pro/Resources/TMP Settings.asset
+Dependencies:
+- C:/Users/yeoez001/Documents/GitHub/VRPathwayProject/OVRAssetBundles/OVRMasterBundle/asset_mat0
+- C:/Users/yeoez001/Documents/GitHub/VRPathwayProject/OVRAssetBundles/OVRMasterBundle/asset_shader0

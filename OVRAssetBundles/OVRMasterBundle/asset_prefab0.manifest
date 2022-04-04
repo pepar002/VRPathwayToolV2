@@ -1,0 +1,27 @@
+ManifestFileVersion: 0
+CRC: 2770808665
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: 378e4407ae83f32a450221cbc4c52b3f
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: 0cc77c02dfe1496769a4948062a15474
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+Assets:
+- Assets/RW/Prefabs/Laser.prefab
+Dependencies:
+- C:/Users/yeoez001/Documents/GitHub/VRPathwayProject/OVRAssetBundles/OVRMasterBundle/asset_mat0
