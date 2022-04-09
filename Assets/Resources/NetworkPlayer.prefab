@@ -7324,6 +7324,7 @@ GameObject:
   - component: {fileID: 2594652575581213291}
   - component: {fileID: 3251452640003512925}
   - component: {fileID: 6676475392203909110}
+  - component: {fileID: 1645782493761957625}
   m_Layer: 0
   m_Name: NetworkHand_L
   m_TagString: Player
@@ -7492,6 +7493,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bde418a45728ab4e85835770805185d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1645782493761957625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3251452640003512915}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a18b509686abd6c4b8b407b617243c6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grabBegin: 0.55
+  grabEnd: 0.35
+  m_parentHeldObject: 0
+  m_moveHandPosition: 0
+  m_gripTransform: {fileID: 1627303839000663283}
+  m_grabVolumes:
+  - {fileID: 1627303839000663311}
+  m_controller: 0
+  m_parentTransform: {fileID: 0}
+  m_player: {fileID: 0}
+  laserPointerObj: {fileID: 0}
 --- !u!1 &3298291682074716398
 GameObject:
   m_ObjectHideFlags: 0
@@ -9017,6 +9041,7 @@ GameObject:
   - component: {fileID: 3660432981902969096}
   - component: {fileID: 7848937975826500413}
   - component: {fileID: 2820151965988694009}
+  - component: {fileID: 1703111663909606277}
   m_Layer: 0
   m_Name: NetworkHand_R
   m_TagString: Player
@@ -9374,6 +9399,29 @@ MonoBehaviour:
       m_PersistentCalls:
         m_Calls: []
   debugMode: 1
+--- !u!114 &1703111663909606277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3660432981902969099}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a18b509686abd6c4b8b407b617243c6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  grabBegin: 0.55
+  grabEnd: 0.35
+  m_parentHeldObject: 0
+  m_moveHandPosition: 0
+  m_gripTransform: {fileID: 6064253811482884633}
+  m_grabVolumes:
+  - {fileID: 6809931472352706439}
+  m_controller: 0
+  m_parentTransform: {fileID: 0}
+  m_player: {fileID: 0}
+  laserPointerObj: {fileID: 0}
 --- !u!1 &3660433642775595793
 GameObject:
   m_ObjectHideFlags: 0
