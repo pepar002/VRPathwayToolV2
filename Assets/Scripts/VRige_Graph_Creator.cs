@@ -19,6 +19,8 @@ namespace VRige
         public int GraphSize = 0;
         private ArrayList nodes;
         public GameObject defaultNode;
+        public GameObject origin;
+        public GameObject label;
         [Header("Colour of Nodes")]
         public Color defaultColor;
         public bool colorGraph = false;
@@ -35,6 +37,7 @@ namespace VRige
         [Range(0, 100)]
         public float smoothTime = 1f;
         private float v2d = 1;
+        private bool flag = false;
 
         // Use this for initialization
         void Start()
@@ -96,7 +99,26 @@ namespace VRige
                 t = t * 0.999f;
 
             }
+            else
+            {
+                if (flag == false)
+                {
+                    print("Returning to Origin");
+                    gameObject.transform.position = origin.transform.position;
+                    generateLabels();
+                    flag = true;
+                }
+            }
 
+        }
+
+        private void generateLabels()
+        {
+            foreach(VirtualNode node in nodes)
+            {
+                GameObject l = Instantiate(label, node.transform);
+                l.GetComponentInChildren<TextMesh>().text = node.name;
+            }
         }
 
         // 3D Population
