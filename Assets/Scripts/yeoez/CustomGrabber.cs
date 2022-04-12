@@ -40,7 +40,7 @@ public class CustomGrabber : OVRGrabber
         
     override public void Update()
     {
-        if (photonView.IsMine)
+        /*if (photonView.IsMine)
         {
             base.Update();
             CheckGesture();
@@ -51,7 +51,7 @@ public class CustomGrabber : OVRGrabber
             }
             previousPosition = transform.position;
             lastRot = transform.rotation;
-        }
+        }*/
     }
 
     void CheckGesture()

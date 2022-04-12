@@ -7516,6 +7516,8 @@ MonoBehaviour:
   m_parentTransform: {fileID: 0}
   m_player: {fileID: 0}
   laserPointerObj: {fileID: 0}
+  m_hand: {fileID: 0}
+  gesture: {fileID: 0}
 --- !u!1 &3298291682074716398
 GameObject:
   m_ObjectHideFlags: 0
@@ -9422,6 +9424,8 @@ MonoBehaviour:
   m_parentTransform: {fileID: 0}
   m_player: {fileID: 0}
   laserPointerObj: {fileID: 0}
+  m_hand: {fileID: 0}
+  gesture: {fileID: 0}
 --- !u!1 &3660433642775595793
 GameObject:
   m_ObjectHideFlags: 0

@@ -8,8 +8,8 @@ public class NodeGrabber : OVRGrabber
 {
     public CustomLaserPointer laserPointerObj;
 
-    private OVRHand m_hand;
-    private GestureDetector gesture;
+    public OVRHand m_hand;
+    public GestureDetector gesture;
 
     private Vector3 previousPosition;
     private Quaternion lastRot;
@@ -51,8 +51,9 @@ public class NodeGrabber : OVRGrabber
     {
         if (!m_hand.IsSystemGestureInProgress)
         {
-            if (!m_grabbedObj && (gesture.isIndexPinching() || gesture.isGrabbing()) && m_grabCandidates.Count > 0 && !gesture.isPointing())
+            if (!m_grabbedObj && (gesture.isMiddlePinching() || gesture.isGrabbing()) && m_grabCandidates.Count > 0 && !gesture.isPointing())
             {
+                
                 GrabBegin();
             }
 
@@ -73,6 +74,10 @@ public class NodeGrabber : OVRGrabber
                     laserPointerObj.ShowLaser(false);
                 }
             }
+            /*if(!m_grabbedObj && gesture.isIndexFolding())
+            {
+                print("TESTING FINGER PRESS");
+            }*/
         }
     }
 

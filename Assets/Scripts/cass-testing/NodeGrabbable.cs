@@ -7,7 +7,9 @@ public class NodeGrabbable : OVRGrabbable
 {
     private Color originalColour;
     private MeshRenderer mesh;
-    private CustomGrabber collidedHand;
+    private NodeGrabber collidedHand;
+    private bool activeNode = false;
+    private bool activeReset = false;
 
     // Start is called before the first frame update
     protected override void Start()
@@ -39,11 +41,40 @@ public class NodeGrabbable : OVRGrabbable
         // Comparison done with name as tags are not detected on the hands for unknown reasons
         if (collision.name == "HandHighlight_L" || collision.name == "HandHighlight_R")
         {
-            CustomGrabber hand = collision.gameObject.GetComponentInParent<CustomGrabber>();
+            NodeGrabber hand = collision.gameObject.GetComponentInParent<NodeGrabber>();
             if (!hand.grabbedObject && mesh.material.color != Color.green)
             {
                 // photonView.RPC("ChangeGrabbableColour", RpcTarget.AllBuffered, "green", 0f, 0f, 0f);
-                ChangeGrabbableColour("green", 0f, 0f, 0f);
+                if (hand.gesture.isMiddlePinching())
+                {
+                    ChangeGrabbableColour("green", 0f, 0f, 0f);
+                    collidedHand = hand;
+                }
+                else if (hand.gesture.isIndexPinching() && activeReset == false){
+                    if (!activeNode)
+                    {
+                        ChangeGrabbableColour("yellow", 0f, 0f, 0f);
+                        activeReset = true;
+                        activeNode = true;
+                    }
+                    else
+                    {
+                        ChangeGrabbableColour("blue", 0f, 0f, 0f);
+                        activeNode = false;
+                        activeReset = true;
+                    }
+                    collidedHand = hand;
+
+                }
+                
+            }
+        }
+        else if (collision.name == "IndexTip")
+        {
+            NodeGrabber hand = collision.gameObject.GetComponentInParent<NodeGrabber>();
+            if (hand.gesture.isPointing() && !hand.gesture.isIndexPinching())
+            {
+                ChangeGrabbableColour("red", 0f, 0f, 0f);
                 collidedHand = hand;
             }
         }
@@ -57,9 +88,11 @@ public class NodeGrabbable : OVRGrabbable
 
     private void OnTriggerExit(Collider collision)
     {
-        if (collision.name == "HandHighlight_L" || collision.name == "HandHighlight_R" || collision.name == "Laser_L" || collision.name == "Laser_R")
+        if (collision.name == "IndexTip" || collision.name == "HandHighlight_L" || collision.name == "HandHighlight_R" || collision.name == "Laser_L" || collision.name == "Laser_R")
         {
+            print("testing active");
             ResetColour();
+            activeReset = false;
             collidedHand = null;
         }
     }
@@ -67,7 +100,15 @@ public class NodeGrabbable : OVRGrabbable
     public void ResetColour()
     {
         // photonView.RPC("ChangeGrabbableColour", RpcTarget.AllBuffered, "null", originalColour.r, originalColour.g, originalColour.b);
-        ChangeGrabbableColour("null", originalColour.r, originalColour.g, originalColour.b);
+        if (!activeNode)
+        {
+            ChangeGrabbableColour("null", originalColour.r, originalColour.g, originalColour.b);
+        }
+        else
+        {
+            ChangeGrabbableColour("yellow", 0f, 0f, 0f);
+        }
+        
     }
 
     public void ChangeGrabbableColour(string colour, float r, float g, float b)
@@ -85,6 +126,10 @@ public class NodeGrabbable : OVRGrabbable
         else if (colour.Equals("green"))
         {
             mesh.material.color = Color.green;
+        }
+        else if (colour.Equals("red"))
+        {
+            mesh.material.color = Color.red;
         }
         else if (colour.Equals("null"))
         {
