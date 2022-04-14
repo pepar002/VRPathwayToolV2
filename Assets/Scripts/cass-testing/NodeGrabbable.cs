@@ -69,7 +69,7 @@ public class NodeGrabbable : OVRGrabbable
                 
             }
         }
-        else if (collision.name == "IndexTip")
+        /*else if (collision.name == "IndexTip")
         {
             NodeGrabber hand = collision.gameObject.GetComponentInParent<NodeGrabber>();
             if (hand.gesture.isPointing() && !hand.gesture.isIndexPinching())
@@ -77,7 +77,7 @@ public class NodeGrabbable : OVRGrabbable
                 ChangeGrabbableColour("red", 0f, 0f, 0f);
                 collidedHand = hand;
             }
-        }
+        }*/
 
         else if (collision.name == "Laser_L" || collision.name == "Laser_R")
         {

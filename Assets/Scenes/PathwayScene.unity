@@ -78584,6 +78584,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   edgeCount: 0
   lineMat: {fileID: 2100000, guid: 7a8ce92d973a45c47abaa8e1b26ab103, type: 2}
+  EdgePrefab: {fileID: 3241922911683522819, guid: cdf22003b5bb2294ebd3dabe02d7cf2a,
+    type: 3}
 --- !u!1 &7971167134267595324
 GameObject:
   m_ObjectHideFlags: 0
