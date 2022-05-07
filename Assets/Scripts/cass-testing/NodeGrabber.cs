@@ -10,14 +10,22 @@ public class NodeGrabber : OVRGrabber
 
     public OVRHand m_hand;
     public GestureDetector gesture;
+    public GameObject palmUI;
 
     private Vector3 previousPosition;
     private Quaternion lastRot;
     private Vector3 linearVelocity;
     private Vector3 angularVelocity;
 
+
+
     protected override void Start()
     {
+        if (transform.parent.name == "RightHandAnchor")
+        {
+            palmUI = Instantiate((GameObject)Resources.Load("PalmUI"), gameObject.transform);
+        }
+
         gameObject.layer = LayerMask.NameToLayer("UI");
         base.Start();
         m_hand = gameObject.GetComponent<OVRHand>();
@@ -36,6 +44,7 @@ public class NodeGrabber : OVRGrabber
     {
 
         base.Update();
+
         CheckGesture();
 
         if (m_grabbedObj)
@@ -44,7 +53,36 @@ public class NodeGrabber : OVRGrabber
         }
         previousPosition = transform.position;
         lastRot = transform.rotation;
-        
+        if (transform.parent.name == "RightHandAnchor")
+        {
+            CheckAngle();
+        }
+            
+    }
+
+    void CheckAngle()
+    {
+
+        float rotationX = Mathf.Atan2(transform.up.y, transform.up.x) * Mathf.Rad2Deg;
+        //float rotationZ = Mathf.Atan2(transform.up.x, transform.up.z) * Mathf.Rad2Deg;
+
+        //Debug.Log("X: " + rotationX);
+        //Debug.Log("Z: " + rotationZ);
+
+         bool x = rotationX > -120f && rotationX < -60f;
+        //bool z = rotation.z > -20f && rotation.z < 20f;*//*
+
+        //Debug.Log(x);
+        if (x)
+         {
+            palmUI.SetActive(true);
+         }
+         else
+         {
+             palmUI.SetActive(false);
+         }
+        //Debug.Log(GetCurrentRotation());
+
     }
 
     void CheckGesture()

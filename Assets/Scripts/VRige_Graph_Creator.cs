@@ -45,8 +45,11 @@ namespace VRige
             nodes = new ArrayList();
             edgeCreator = FindObjectOfType<EdgeCreator>();
             UndirectedGraph();
+            EventManager.PressPalmUpButton += MoveGraphUp;
+            EventManager.PressPalmDownButton += MoveGraphDown;
+            EventManager.PressPalmScaleUpButton += ScaleGraphUp;
+            EventManager.PressPalmScaleDownButton += ScaleGraphDown;
         }
-
         // Update is called once per frame
         void Update()
         {
@@ -110,6 +113,27 @@ namespace VRige
                 }
             }
 
+        }
+
+        private void MoveGraphUp()
+        {
+            gameObject.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 0.5f, gameObject.transform.position.z);
+        }
+
+        private void MoveGraphDown()
+        {
+            gameObject.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y - 0.5f, gameObject.transform.position.z);
+            
+        }
+        private void ScaleGraphUp()
+        {
+            gameObject.transform.localScale = new Vector3(gameObject.transform.localScale.x + 0.1f, gameObject.transform.localScale.y + 0.1f, gameObject.transform.localScale.z + 0.1f);
+            gameObject.transform.position = origin.transform.position;
+        }
+        private void ScaleGraphDown()
+        {
+            gameObject.transform.localScale = new Vector3(gameObject.transform.localScale.x - 0.1f, gameObject.transform.localScale.y - 0.1f, gameObject.transform.localScale.z - 0.1f);
+            gameObject.transform.position = origin.transform.position;
         }
 
         private void generateLabels()

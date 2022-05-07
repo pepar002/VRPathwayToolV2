@@ -24,7 +24,7 @@ public class CustomGrabber : OVRGrabber
     
     protected override void Start()
     {
-        gameObject.layer = LayerMask.NameToLayer("UI");
+        /*gameObject.layer = LayerMask.NameToLayer("UI");
         base.Start();
         m_hand = gameObject.GetComponent<OVRHand>();
         photonView = gameObject.GetComponent<PhotonView>();
@@ -35,7 +35,7 @@ public class CustomGrabber : OVRGrabber
             //laserPointer = laserPointerObj.GetComponent<CustomLaserPointer>();
             laserPointerObj.ShowLaser(false);
         }
-        previousPosition = transform.position;
+        previousPosition = transform.position;*/
     }
         
     override public void Update()

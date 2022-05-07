@@ -14,7 +14,7 @@ namespace VRige
         private ArrayList cylEdges = new ArrayList();
         public Material lineMat;
         public GameObject EdgePrefab;
-        private bool generateCylEdges = false;
+        private bool generateCylEdges = true;
 
 
         public void addEdges(Edge e)
@@ -50,8 +50,8 @@ namespace VRige
 
         void OnPostRender()
         {
-            DrawConnectingLines();
-            //UpdateCylEdges();
+            //DrawConnectingLines();
+            UpdateCylEdges();
         }
 
         void UpdateCylEdges()
@@ -69,10 +69,10 @@ namespace VRige
                 Vector3 initialScale = edge.transform.localScale;
 
                 float distance = Vector3.Distance(e.getA(), e.getB());
-                edge.transform.localScale = new Vector3(initialScale.x, distance / 2f, initialScale.z);
+                edge.transform.localScale = new Vector3(initialScale.x, distance, initialScale.z);
 
-                Vector3 middle = (e.getA() + e.getB()) / 2f;
-                edge.transform.position = middle;
+                //Vector3 middle = (e.getA() + e.getB()) / 2f;
+                edge.transform.position = e.getA();
 
                 Vector3 rotation = (e.getB() - e.getA());
                 edge.transform.up = rotation;
