@@ -9755,30 +9755,14 @@ PrefabInstance:
       objectReference: {fileID: 1550667658}
     - target: {fileID: 114056881303578036, guid: 4c5af343697ebc648b7b984d45b57b11,
         type: 3}
-      propertyPath: smoothTime
-      value: 20
-      objectReference: {fileID: 0}
+      propertyPath: xmlDataset
+      value: 
+      objectReference: {fileID: 4900000, guid: d7000a826dded484593b47fc0739adad, type: 3}
     - target: {fileID: 114056881303578036, guid: 4c5af343697ebc648b7b984d45b57b11,
         type: 3}
       propertyPath: graphDataset
       value: 
       objectReference: {fileID: 4900000, guid: 8abcb1a0c72ee4c40ad82ec7f0972c52, type: 3}
-    - target: {fileID: 114056881303578036, guid: 4c5af343697ebc648b7b984d45b57b11,
-        type: 3}
-      propertyPath: area
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114056881303578036, guid: 4c5af343697ebc648b7b984d45b57b11,
-        type: 3}
-      propertyPath: gridGap
-      value: 0.05
-      objectReference: {fileID: 0}
-    - target: {fileID: 114056881303578036, guid: 4c5af343697ebc648b7b984d45b57b11,
-        type: 3}
-      propertyPath: label
-      value: 
-      objectReference: {fileID: 3773153034159123954, guid: 9975d42366d394f4ba511e8ab82b49de,
-        type: 3}
     - target: {fileID: 4237706060500750, guid: 4c5af343697ebc648b7b984d45b57b11, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

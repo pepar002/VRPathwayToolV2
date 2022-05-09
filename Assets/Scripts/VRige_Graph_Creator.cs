@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Xml;
 
 // Author: Adam Drogemuller
 namespace VRige
@@ -11,6 +12,7 @@ namespace VRige
 
         [Header("Input Dataset to Create Graph")]
         public TextAsset graphDataset;
+        public TextAsset xmlDataset;
         public EdgeCreator edgeCreator;
 
         // 3D coordinates
@@ -37,7 +39,9 @@ namespace VRige
         [Range(0, 100)]
         public float smoothTime = 1f;
         private float v2d = 1;
+
         private bool flag = false;
+        private List<DataNode> dataNodes;
 
         // Use this for initialization
         void Start()
@@ -49,6 +53,7 @@ namespace VRige
             EventManager.PressPalmDownButton += MoveGraphDown;
             EventManager.PressPalmScaleUpButton += ScaleGraphUp;
             EventManager.PressPalmScaleDownButton += ScaleGraphDown;
+            ExtractDataset();
         }
         // Update is called once per frame
         void Update()
@@ -114,6 +119,57 @@ namespace VRige
             }
 
         }
+        
+        private void ExtractDataset()
+        {
+            if (xmlDataset != null)
+            {
+                dataNodes = new List<DataNode>();
+                XmlDocument doc = new XmlDocument();
+                doc.LoadXml(xmlDataset.text);
+                XmlNodeList nodeList = doc.SelectNodes("/pathway/entry");
+                foreach(XmlNode node in nodeList)
+                {
+                    if(node.Attributes["type"].Value != "map")
+                    {
+                        int id = int.Parse(node.Attributes["id"].Value);
+                        string name = node.Attributes["name"].Value;
+                        //Debug.LogError(name);
+                        DataNode dNode = new DataNode(id, name);
+                        dataNodes.Add(dNode);
+                    }
+
+                }
+                XmlNodeList nodeRelationList = doc.SelectNodes("/pathway/relation");
+                foreach (XmlNode node in nodeRelationList)
+                {
+                    int id1 = int.Parse(node.Attributes["entry1"].Value);
+                    int id2 = int.Parse(node.Attributes["entry2"].Value);
+                    foreach(DataNode dNode in dataNodes)
+                    {
+                        if(dNode.Id == id1)
+                        {
+                            foreach(DataNode dNode2 in dataNodes)
+                            {
+                                if(dNode2.Id == id2)
+                                {
+                                    dNode.Relations.Add(dNode2);
+                                }
+                            }
+                            
+                        }
+                    }
+                }
+                string list = "";
+                foreach (DataNode node in dataNodes)
+                {
+                    list = list + $"{node.Name}\n";
+                    
+
+                }
+                Debug.Log($"{list}");
+            }
+        }
 
         private void MoveGraphUp()
         {
@@ -128,12 +184,12 @@ namespace VRige
         private void ScaleGraphUp()
         {
             gameObject.transform.localScale = new Vector3(gameObject.transform.localScale.x + 0.1f, gameObject.transform.localScale.y + 0.1f, gameObject.transform.localScale.z + 0.1f);
-            gameObject.transform.position = origin.transform.position;
+            //gameObject.transform.position = origin.transform.position;
         }
         private void ScaleGraphDown()
         {
             gameObject.transform.localScale = new Vector3(gameObject.transform.localScale.x - 0.1f, gameObject.transform.localScale.y - 0.1f, gameObject.transform.localScale.z - 0.1f);
-            gameObject.transform.position = origin.transform.position;
+            //gameObject.transform.position = origin.transform.position;
         }
 
         private void generateLabels()

@@ -1,0 +1,11 @@
+Pyruvate L-Lactate Acetyl-CoA Oxaloacetate 2-Hydroxy-ethyl-ThPP Phosphoenol-pyruvate AcetylP S-Malatate
+Phosphoenol-pyruvate Pyruvate Oxaloacetate
+Oxaloacetate Pyruvate
+Methylglyoxal Pyruvate D-Lactate L-Lactaldehyde R-S-Lactoylglutathione
+L-Lactaldehyde Methylglyoxal L-Lactate
+D-Lactaldehyde Methylglyoxal D-Lactate
+D-Lactate Pyruvate L-Lactate
+R-S-Lactoylglutathione D-Lactate
+L-Lactate Pyruvate Acetate
+Acetyl-P Acetate
+
