@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Xml;
+using System.IO;
 
 // Author: Adam Drogemuller
 namespace VRige
@@ -11,8 +12,9 @@ namespace VRige
     {
 
         [Header("Input Dataset to Create Graph")]
-        public TextAsset graphDataset;
+        private string graphDataset;
         public TextAsset xmlDataset;
+        public TextAsset key;
         public EdgeCreator edgeCreator;
 
         // 3D coordinates
@@ -46,6 +48,8 @@ namespace VRige
         // Use this for initialization
         void Start()
         {
+            ExtractDataset();
+            WriteDataset();
             nodes = new ArrayList();
             edgeCreator = FindObjectOfType<EdgeCreator>();
             UndirectedGraph();
@@ -53,7 +57,8 @@ namespace VRige
             EventManager.PressPalmDownButton += MoveGraphDown;
             EventManager.PressPalmScaleUpButton += ScaleGraphUp;
             EventManager.PressPalmScaleDownButton += ScaleGraphDown;
-            ExtractDataset();
+            
+            
         }
         // Update is called once per frame
         void Update()
@@ -119,7 +124,31 @@ namespace VRige
             }
 
         }
-        
+        public void WriteDataset()
+        {
+            string dataset = "";
+            foreach (DataNode node in dataNodes)
+            {
+                string rList = "";
+                if (node.SubReactions.Count > 0)
+                {
+                    foreach (int sub in node.SubReactions)
+                    {
+                        dataset += $"{getDataNodeFromID(sub).DisplayName} {node.DisplayName}\n";
+                    }
+                    
+                }
+                if (node.ProdReactions.Count > 0)
+                {
+                    foreach (int prod in node.ProdReactions)
+                    {
+                        rList += $"{getDataNodeFromID(prod).DisplayName} ";
+                    }
+                    dataset += $"{node.DisplayName} {rList}\n";
+                }
+            }
+            graphDataset = dataset;
+        }
         private void ExtractDataset()
         {
             if (xmlDataset != null)
@@ -133,13 +162,41 @@ namespace VRige
                     if(node.Attributes["type"].Value != "map")
                     {
                         int id = int.Parse(node.Attributes["id"].Value);
-                        string name = node.Attributes["name"].Value;
+                        String[] l = node.Attributes["name"].Value.Split(':',' ');
+                        string name = l[1];
                         //Debug.LogError(name);
                         DataNode dNode = new DataNode(id, name);
                         dataNodes.Add(dNode);
                     }
 
                 }
+                String keyData = key.text;
+                keyData = keyData.Replace("  	", ";");
+                String[] lines = keyData.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+                foreach (string s in lines)
+                {
+                    Debug.Log(s);
+                    string[] keyItems = s.Split(';');
+                    //Debug.LogError(keyItems[0]);
+                    foreach(DataNode node in dataNodes)
+                    {
+                        if(node.Name == keyItems[0])
+                        {
+                            if (keyItems[1].Contains("EC:")){
+                                int start = keyItems[1].IndexOf("EC:") + 3;
+                                int end = keyItems[1].Length;
+                                node.DisplayName = keyItems[1].Replace(' ', '_').Substring(start, end-start);
+                            }
+                            else
+                            {
+                                node.DisplayName = keyItems[1].Replace(' ', '_');
+                            }
+                            
+                        }
+                    }
+
+                }
+
                 XmlNodeList nodeRelationList = doc.SelectNodes("/pathway/relation");
                 foreach (XmlNode node in nodeRelationList)
                 {
@@ -153,22 +210,67 @@ namespace VRige
                             {
                                 if(dNode2.Id == id2)
                                 {
-                                    dNode.Relations.Add(dNode2);
+                                    dNode.Relations.Add(dNode2.Id);
                                 }
                             }
-                            
                         }
                     }
                 }
-                string list = "";
+                XmlNodeList nodeReactionList = doc.SelectNodes("/pathway/reaction");
+                foreach (XmlNode node in nodeReactionList)
+                {
+                    int parent = int.Parse(node.Attributes["id"].Value);
+                    DataNode target = getDataNodeFromID(parent);
+                    foreach (XmlNode child in node.ChildNodes)
+                    {
+                        if(node.Attributes["type"].Value == "reversible")
+                        {
+                            target.ProdReactions.Add(int.Parse(child.Attributes["id"].Value));
+                        }
+                        else
+                        {
+                            if (child.Name == "substrate")
+                            {
+                                target.SubReactions.Add(int.Parse(child.Attributes["id"].Value));
+                            }
+                            else if (child.Name == "product")
+                            {
+                                target.ProdReactions.Add(int.Parse(child.Attributes["id"].Value));
+                            }
+                        }
+                    }
+                }
+                //string list = "";
                 foreach (DataNode node in dataNodes)
                 {
-                    list = list + $"{node.Name}\n";
-                    
-
+                    string rList = "";
+                    foreach (int relation in node.Relations)
+                    {
+                        rList = rList + $"          >{getDataNodeFromID(relation).DisplayName}\n";
+                    }
+                    foreach (int sub in node.SubReactions)
+                    {
+                        rList = rList + $"          -{getDataNodeFromID(sub).DisplayName}\n";
+                    }
+                    foreach (int prod in node.ProdReactions)
+                    {
+                        rList = rList + $"          +{getDataNodeFromID(prod).DisplayName}\n";
+                    }
+                    Debug.Log($"({node.Id}) { node.Name}: { node.DisplayName}\n" + rList);
                 }
-                Debug.Log($"{list}");
             }
+        }
+
+        private DataNode getDataNodeFromID(int id)
+        {
+            foreach(DataNode node in dataNodes)
+            {
+                if(node.Id == id){
+                    return node;
+                }
+                
+            }
+            return null;
         }
 
         private void MoveGraphUp()
@@ -225,9 +327,10 @@ namespace VRige
         {
             if (graphDataset != null)
             {
-                String allData = graphDataset.text;
-                allData.Replace("\r", "\n");
-                String[] lines = allData.Split("\n"[0]);
+                //String allData = graphDataset.text;
+                //string allData = File.ReadAllText(Application.dataPath + "/Datasets/" + graphDataset.name + ".txt");
+                //allData.Replace("\r", "\n");
+                String[] lines = graphDataset.Split("\n"[0]);
                 populateGridPositions3D(lines.Length * 2);
                 // read through each line
                 foreach (String s in lines)
