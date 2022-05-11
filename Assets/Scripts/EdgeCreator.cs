@@ -16,6 +16,7 @@ namespace VRige
         public GameObject EdgePrefab;
         private bool generateCylEdges = true;
 
+        public ArrayList CylEdges { get => cylEdges; }
 
         public void addEdges(Edge e)
         {
@@ -34,7 +35,7 @@ namespace VRige
                 if (generateCylEdges)
                 {
                     GameObject c = Instantiate(EdgePrefab);
-                    cylEdges.Add(c);
+                    CylEdges.Add(c);
                 }
                 
             }
@@ -44,8 +45,19 @@ namespace VRige
             if (generateCylEdges)
             {
                 GameObject c = Instantiate(EdgePrefab);
-                cylEdges.Add(c);
+                CylEdges.Add(c);
             }
+        }
+
+        public void deleteEdges()
+        {
+            foreach(GameObject c in CylEdges)
+            {
+                Destroy(c);
+
+            }
+            cylEdges = new ArrayList();
+            edges = new ArrayList();
         }
 
         void OnPostRender()
@@ -62,9 +74,9 @@ namespace VRige
                 Destroy(g);
                 
             }*/
-            for (int i = 0; i < cylEdges.Count; i++)
+            for (int i = 0; i < CylEdges.Count; i++)
             {
-                GameObject edge = (GameObject) cylEdges[i];
+                GameObject edge = (GameObject) CylEdges[i];
                 Edge e = (Edge) edges[i];
                 Vector3 initialScale = edge.transform.localScale;
 

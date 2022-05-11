@@ -26,7 +26,8 @@ namespace VRige
         public GameObject origin;
         public GameObject label;
         [Header("Colour of Nodes")]
-        public Color defaultColor;
+        public Color orthologColor;
+        public Color compoundColor;
         public bool colorGraph = false;
         [Header("Scale of graph")]
         [Tooltip("Low - nodes are further, High - nodes are closer")]
@@ -48,17 +49,13 @@ namespace VRige
         // Use this for initialization
         void Start()
         {
-            ExtractDataset();
-            WriteDataset();
-            nodes = new ArrayList();
-            edgeCreator = FindObjectOfType<EdgeCreator>();
-            UndirectedGraph();
+            GenerateGraph(xmlDataset, key);
             EventManager.PressPalmUpButton += MoveGraphUp;
             EventManager.PressPalmDownButton += MoveGraphDown;
             EventManager.PressPalmScaleUpButton += ScaleGraphUp;
             EventManager.PressPalmScaleDownButton += ScaleGraphDown;
-            
-            
+            EventManager.PressPalmPyruvate += GenerateGraph;
+            EventManager.PressPalmGlycolysis += GenerateGraph;
         }
         // Update is called once per frame
         void Update()
@@ -67,6 +64,7 @@ namespace VRige
             // if t > threshold, apply force-directed layout
             if (t > 0.95)
             {
+                flag = false;
                 float k = Mathf.Sqrt(area);
                 //Action<float> Fr = (float z) => {
                 //    return k * k / z;
@@ -116,13 +114,23 @@ namespace VRige
             {
                 if (flag == false)
                 {
-                    print("Returning to Origin");
                     gameObject.transform.position = origin.transform.position;
                     generateLabels();
+                    hideGraph(false);
                     flag = true;
                 }
             }
 
+        }
+        public void GenerateGraph(TextAsset xml, TextAsset key)
+        {
+            t = 1.0f;
+            xmlDataset = xml;
+            this.key = key;
+            ExtractDataset();
+            WriteDataset();
+            edgeCreator = FindObjectOfType<EdgeCreator>();
+            UndirectedGraph();
         }
         public void WriteDataset()
         {
@@ -149,6 +157,7 @@ namespace VRige
             }
             graphDataset = dataset;
         }
+
         private void ExtractDataset()
         {
             if (xmlDataset != null)
@@ -162,10 +171,10 @@ namespace VRige
                     if(node.Attributes["type"].Value != "map")
                     {
                         int id = int.Parse(node.Attributes["id"].Value);
+                        string type = node.Attributes["type"].Value;
                         String[] l = node.Attributes["name"].Value.Split(':',' ');
                         string name = l[1];
-                        //Debug.LogError(name);
-                        DataNode dNode = new DataNode(id, name);
+                        DataNode dNode = new DataNode(id, name, type);
                         dataNodes.Add(dNode);
                     }
 
@@ -184,7 +193,7 @@ namespace VRige
                         {
                             if (keyItems[1].Contains("EC:")){
                                 int start = keyItems[1].IndexOf("EC:") + 3;
-                                int end = keyItems[1].Length;
+                                int end = keyItems[1].Length-1;
                                 node.DisplayName = keyItems[1].Replace(' ', '_').Substring(start, end-start);
                             }
                             else
@@ -322,11 +331,47 @@ namespace VRige
             }
         }
 
+        private void hideGraph(bool hide)
+        {
+            if (hide)
+            {
+                /*foreach (VirtualNode n in nodes)
+                {
+                    n.GetComponent<Renderer>().enabled = false;
+                }
+                foreach(GameObject edge in edgeCreator.CylEdges)
+                {
+                    edge.GetComponent<Renderer>().enabled = false;
+                }*/
+            }
+            else
+            {
+                /*foreach (VirtualNode n in nodes)
+                {
+                    n.GetComponent<Renderer>().enabled = true;
+                }
+                foreach (GameObject edge in edgeCreator.CylEdges)
+                {
+                    edge.GetComponent<Renderer>().enabled = true;
+                }*/
+            }
+            
+        }
+
         // creates undirected graph
         private void UndirectedGraph()
         {
             if (graphDataset != null)
             {
+                if(nodes != null)
+                {
+                    foreach(VirtualNode n in nodes)
+                    {
+                        Destroy(n.gameObject);
+                    }
+                    edgeCreator.deleteEdges();
+                }
+                nodes = new ArrayList();
                 //String allData = graphDataset.text;
                 //string allData = File.ReadAllText(Application.dataPath + "/Datasets/" + graphDataset.name + ".txt");
                 //allData.Replace("\r", "\n");
@@ -335,7 +380,7 @@ namespace VRige
                 // read through each line
                 foreach (String s in lines)
                 {
-                    Color col = defaultColor;
+                    Color col = compoundColor;
                     if (colorGraph == true)
                     {
                         col = UnityEngine.Random.ColorHSV(0.1f, 0.8f, 0.7f, 1f, 0.5f, 1f);
@@ -365,11 +410,28 @@ namespace VRige
                         gridPositionTaken3D[x, y, z] = true;
 
                         GameObject n = Instantiate(defaultNode, pos, transform.rotation);
-                        n.GetComponent<MeshRenderer>().material.color = col;
                         n.name = subLines[0];
-                        //n.GetComponent<MeshRenderer>().enabled = false;
+
                         VirtualNode getNode = n.GetComponent<VirtualNode>();
                         getNode.setID(subLines[0]);
+                        foreach (DataNode dNode in dataNodes)
+                        {
+                            if(getNode.getID() == dNode.DisplayName)
+                            {
+                                getNode.DataID = dNode.Id;
+                                if(dNode.Type == DataNode.EnumType.ORTHOLOG)
+                                {
+                                    n.GetComponent<MeshRenderer>().material.color = orthologColor;
+                                    getNode.DefaultColor = orthologColor;
+                                }
+                                else if(dNode.Type == DataNode.EnumType.COMPOUND)
+                                {
+                                    n.GetComponent<MeshRenderer>().material.color = compoundColor;
+                                    getNode.DefaultColor = compoundColor;
+                                }
+                            }
+                        }
+
                         lineNode = getNode;
                         lineNode.setCircle(true);
                         lineNode.transform.parent = this.transform;
@@ -407,6 +469,23 @@ namespace VRige
                             //n.GetComponent<MeshRenderer>().enabled = false;
                             VirtualNode getNode = n.GetComponent<VirtualNode>();
                             getNode.setID(sub_s);
+                            foreach (DataNode dNode in dataNodes)
+                            {
+                                if (getNode.getID() == dNode.DisplayName)
+                                {
+                                    getNode.DataID = dNode.Id;
+                                    if (dNode.Type == DataNode.EnumType.ORTHOLOG)
+                                    {
+                                        n.GetComponent<MeshRenderer>().material.color = orthologColor;
+                                        getNode.DefaultColor = orthologColor;
+                                    }
+                                    else if (dNode.Type == DataNode.EnumType.COMPOUND)
+                                    {
+                                        n.GetComponent<MeshRenderer>().material.color = compoundColor;
+                                        getNode.DefaultColor = compoundColor;
+                                    }
+                                }
+                            }
                             getNode.setNodes(getNode, lineNode);
                             lineNode.setNodes(lineNode, getNode);
                             getNode.transform.parent = this.transform;
@@ -435,7 +514,9 @@ namespace VRige
                         i++;
                     }
                 }
+
                 GraphSize = nodes.Count;
+                hideGraph(true);
             }
         }
 

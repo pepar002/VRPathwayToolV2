@@ -8,6 +8,7 @@ namespace VRige
     {
 
         public string ID = "-999";
+        private int dataID = 0;
         public Vector3 disp = Vector3.zero;
         private Rigidbody a;
         public ArrayList neighbors;
@@ -26,6 +27,10 @@ namespace VRige
         private bool grabbed = false;
         private bool rotate = false;
         public bool rotateToCenter = false;
+        private Color defaultColor;
+
+        public int DataID { get => dataID; set => dataID = value; }
+        public Color DefaultColor { get => defaultColor; set => defaultColor = value; }
 
         // initialization
         private void Awake()

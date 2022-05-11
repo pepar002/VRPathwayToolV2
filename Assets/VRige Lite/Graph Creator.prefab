@@ -43,14 +43,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e07e675d8ca74fd4da1588617a67970e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  graphDataset: {fileID: 4900000, guid: 368289300ef7ec54a82ffd21dfaccb10, type: 3}
+  xmlDataset: {fileID: 4900000, guid: d7000a826dded484593b47fc0739adad, type: 3}
+  key: {fileID: 4900000, guid: 8bc9808c6b9854a498078f8f1ac52c8c, type: 3}
   edgeCreator: {fileID: 0}
   GraphSize: 0
   defaultNode: {fileID: 1751865289714718, guid: fa5f8de6b545315479d26e8fd2adf23e,
     type: 3}
   origin: {fileID: 0}
   label: {fileID: 3773153034159123954, guid: 9975d42366d394f4ba511e8ab82b49de, type: 3}
-  defaultColor: {r: 0.39279994, g: 0.54147995, b: 0.8584906, a: 1}
+  orthologColor: {r: 0.85751003, g: 0.8584906, b: 0.08503916, a: 0}
+  compoundColor: {r: 0, g: 0.3158722, b: 1, a: 0}
   colorGraph: 0
   graphScale: 1.01
   scale: 0.15
