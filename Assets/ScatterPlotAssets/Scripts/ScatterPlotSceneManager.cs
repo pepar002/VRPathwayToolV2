@@ -56,7 +56,7 @@ public class ScatterPlotSceneManager : MonoBehaviour
 
         // create the axis
 
-        for (int i = 0; i < dataObject.Identifiers.Length; ++i)
+       /* for (int i = 0; i < dataObject.Identifiers.Length; ++i)
         {
             Vector3 v = new Vector3(1.352134f - (i % 7) * 0.35f, 1.506231f - (i / 7) / 2f, 0f);// -0.4875801f);
             GameObject obj = (GameObject)Instantiate(axisPrefab);
@@ -67,8 +67,19 @@ public class ScatterPlotSceneManager : MonoBehaviour
             axis.tag = "Axis";
 
             AddAxis(axis);
-        }
+        }*/
 
+    }
+
+    public void SpawnGraph(Vector3 location)
+    {// -0.4875801f);
+        GameObject obj = (GameObject)Instantiate(axisPrefab);
+        obj.transform.position = location;
+        SAxis axis = obj.GetComponent<SAxis>();
+        axis.Init(dataObject, 1, false);
+        axis.InitOrigin(location, obj.transform.rotation);
+        axis.tag = "Axis";
+        AddAxis(axis);
     }
 
     void Update()
