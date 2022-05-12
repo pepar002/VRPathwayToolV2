@@ -90,8 +90,8 @@ GameObject:
   - component: {fileID: 4551393065374534}
   - component: {fileID: 33842128335525166}
   - component: {fileID: 23192522073786840}
-  - component: {fileID: 114341707906328112}
   - component: {fileID: 135873170876776358}
+  - component: {fileID: 7798720379032948775}
   m_Layer: 0
   m_Name: MaxAxisHandle
   m_TagString: Untagged
@@ -160,7 +160,20 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &114341707906328112
+--- !u!135 &135873170876776358
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1173752162059718}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7798720379032948775
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -169,7 +182,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1173752162059718}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 169f45804a96d8f45bd39620e5f354c1, type: 3}
+  m_Script: {fileID: 11500000, guid: 383b30682173d2e4b9ae05fe6834209e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   axisOffset: 2
@@ -216,19 +229,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!135 &135873170876776358
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1173752162059718}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1186220072444970
 GameObject:
   m_ObjectHideFlags: 0
@@ -583,7 +583,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4339474026186862}
   - component: {fileID: 135124897671923586}
-  - component: {fileID: 114779011648687424}
+  - component: {fileID: 4303166360144914456}
   - component: {fileID: 54808714357107524}
   m_Layer: 10
   m_Name: DownAnchor
@@ -619,7 +619,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.09943407
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114779011648687424
+--- !u!114 &4303166360144914456
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -628,7 +628,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1248689109796598}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0fed51d4d2432d6479dd35956b1b4f54, type: 3}
+  m_Script: {fileID: 11500000, guid: 7d5c2a21460fe8c4f868944dbc7f72e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!54 &54808714357107524
@@ -865,7 +865,7 @@ MonoBehaviour:
   OnProximityEntered:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 114341707906328112}
+      - m_Target: {fileID: 7798720379032948775}
         m_MethodName: ProximityEnter
         m_Mode: 1
         m_Arguments:
@@ -876,7 +876,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 114681245970999096}
+      - m_Target: {fileID: 2395050822100262942}
         m_MethodName: ProximityEnter
         m_Mode: 1
         m_Arguments:
@@ -887,8 +887,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 114658808134116096}
-        m_MethodName: ProximityEnter
+      - m_Target: {fileID: 3017223773817012334}
+        m_MethodName: ProximityExit
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -898,7 +898,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 114813039289448660}
+      - m_Target: {fileID: 5355067253251403249}
         m_MethodName: ProximityEnter
         m_Mode: 1
         m_Arguments:
@@ -912,7 +912,7 @@ MonoBehaviour:
   OnProximityExited:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 114341707906328112}
+      - m_Target: {fileID: 7798720379032948775}
         m_MethodName: ProximityExit
         m_Mode: 1
         m_Arguments:
@@ -923,7 +923,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 114681245970999096}
+      - m_Target: {fileID: 2395050822100262942}
         m_MethodName: ProximityExit
         m_Mode: 1
         m_Arguments:
@@ -934,7 +934,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 114658808134116096}
+      - m_Target: {fileID: 3017223773817012334}
         m_MethodName: ProximityExit
         m_Mode: 1
         m_Arguments:
@@ -945,7 +945,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 114813039289448660}
+      - m_Target: {fileID: 5355067253251403249}
         m_MethodName: ProximityExit
         m_Mode: 1
         m_Arguments:
@@ -1310,7 +1310,7 @@ GameObject:
   - component: {fileID: 4741826101255928}
   - component: {fileID: 33409738968562452}
   - component: {fileID: 23904484286360804}
-  - component: {fileID: 114681245970999096}
+  - component: {fileID: 2395050822100262942}
   - component: {fileID: 135045662777895698}
   m_Layer: 0
   m_Name: MinAxisHandle
@@ -1380,7 +1380,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!114 &114681245970999096
+--- !u!114 &2395050822100262942
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1389,7 +1389,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1493963241218018}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 169f45804a96d8f45bd39620e5f354c1, type: 3}
+  m_Script: {fileID: 11500000, guid: 383b30682173d2e4b9ae05fe6834209e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   axisOffset: 2
@@ -1537,7 +1537,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4569363650785136}
   - component: {fileID: 135777364919105130}
-  - component: {fileID: 114813039289448660}
+  - component: {fileID: 5355067253251403249}
   m_Layer: 0
   m_Name: MinNormaliser
   m_TagString: Untagged
@@ -1574,7 +1574,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.3
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114813039289448660
+--- !u!114 &5355067253251403249
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1583,7 +1583,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1510158793778460}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 169f45804a96d8f45bd39620e5f354c1, type: 3}
+  m_Script: {fileID: 11500000, guid: 383b30682173d2e4b9ae05fe6834209e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   axisOffset: 5
@@ -2083,7 +2083,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4866820653885018}
   - component: {fileID: 120149681917342528}
-  - component: {fileID: 114797955362816774}
+  - component: {fileID: 3586004024566174863}
   m_Layer: 0
   m_Name: Normalization
   m_TagString: Untagged
@@ -2201,7 +2201,7 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 0
   m_Loop: 0
---- !u!114 &114797955362816774
+--- !u!114 &3586004024566174863
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2210,7 +2210,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1706133682958132}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0dbb6337a1ee324eb0a0af581322fa9, type: 3}
+  m_Script: {fileID: 11500000, guid: 5fc4bb943f6e8cb49a0d956634270ebd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   end: {fileID: 1740450645015984}
@@ -2224,7 +2224,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4727869186415394}
   - component: {fileID: 135698463239271718}
-  - component: {fileID: 114658808134116096}
+  - component: {fileID: 3017223773817012334}
   m_Layer: 0
   m_Name: MaxNormaliser
   m_TagString: Untagged
@@ -2261,7 +2261,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.3
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114658808134116096
+--- !u!114 &3017223773817012334
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2270,7 +2270,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1740450645015984}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 169f45804a96d8f45bd39620e5f354c1, type: 3}
+  m_Script: {fileID: 11500000, guid: 383b30682173d2e4b9ae05fe6834209e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   axisOffset: 5
@@ -2480,7 +2480,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4520905949715648}
   - component: {fileID: 135001447112387500}
-  - component: {fileID: 114578005954447908}
+  - component: {fileID: 9004550624957080206}
   - component: {fileID: 54004052693191806}
   m_Layer: 10
   m_Name: UpAnchor
@@ -2516,7 +2516,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.09943407
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &114578005954447908
+--- !u!114 &9004550624957080206
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2525,7 +2525,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1851021997142324}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0fed51d4d2432d6479dd35956b1b4f54, type: 3}
+  m_Script: {fileID: 11500000, guid: 7d5c2a21460fe8c4f868944dbc7f72e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!54 &54004052693191806
