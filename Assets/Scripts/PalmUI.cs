@@ -47,28 +47,28 @@ public class PalmUI : MonoBehaviour
                     collided = true;
                     NodeGrabber hand = other.GetComponentInParent<NodeGrabber>();
                     mesh.material.color = Color.blue;
-                    EventManager.OnPressPalmUpButton();
+                    VRigeEventManager.OnPressPalmUpButton();
                 }
                 else if(name == "PalmButtonDown") 
                 {
                     collided = true;
                     NodeGrabber hand = other.GetComponentInParent<NodeGrabber>();
                     mesh.material.color = Color.blue;
-                    EventManager.OnPressPalmDownButton();
+                    VRigeEventManager.OnPressPalmDownButton();
                 }
                 else if(name == "PalmButtonScaleUp")
                 {
                     collided = true;
                     NodeGrabber hand = other.GetComponentInParent<NodeGrabber>();
                     mesh.material.color = Color.blue;
-                    EventManager.OnPressPalmScaleUpButton();
+                    VRigeEventManager.OnPressPalmScaleUpButton();
                 }
                 else if(name == "PalmButtonScaleDown")
                 {
                     collided = true;
                     NodeGrabber hand = other.GetComponentInParent<NodeGrabber>();
                     mesh.material.color = Color.blue;
-                    EventManager.OnPressPalmScaleDownButton();
+                    VRigeEventManager.OnPressPalmScaleDownButton();
                 }
                 else if(name == "PalmButtonControls")
                 {
@@ -107,14 +107,14 @@ public class PalmUI : MonoBehaviour
                     collided = true;
                     NodeGrabber hand = other.GetComponentInParent<NodeGrabber>();
                     mesh.material.color = Color.blue;
-                    EventManager.OnPressPalmPyruvate(Resources.Load<TextAsset>("Datasets/PyruvateMap"), Resources.Load<TextAsset>("Datasets/PyruvateKey"));
+                    VRigeEventManager.OnPressPalmPyruvate(Resources.Load<TextAsset>("Datasets/PyruvateMap"), Resources.Load<TextAsset>("Datasets/PyruvateKey"));
                 }
                 else if (name == "PalmButtonGlycolysis")
                 {
                     collided = true;
                     NodeGrabber hand = other.GetComponentInParent<NodeGrabber>();
                     mesh.material.color = Color.blue;
-                    EventManager.OnPressPalmGlycolysis(Resources.Load<TextAsset>("Datasets/GlycolysisMap"), Resources.Load<TextAsset>("Datasets/GlycolysisKey"));
+                    VRigeEventManager.OnPressPalmGlycolysis(Resources.Load<TextAsset>("Datasets/GlycolysisMap"), Resources.Load<TextAsset>("Datasets/GlycolysisKey"));
                 }
             }
         }

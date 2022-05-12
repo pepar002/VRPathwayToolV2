@@ -50,12 +50,12 @@ namespace VRige
         void Start()
         {
             GenerateGraph(xmlDataset, key);
-            EventManager.PressPalmUpButton += MoveGraphUp;
-            EventManager.PressPalmDownButton += MoveGraphDown;
-            EventManager.PressPalmScaleUpButton += ScaleGraphUp;
-            EventManager.PressPalmScaleDownButton += ScaleGraphDown;
-            EventManager.PressPalmPyruvate += GenerateGraph;
-            EventManager.PressPalmGlycolysis += GenerateGraph;
+            VRigeEventManager.PressPalmUpButton += MoveGraphUp;
+            VRigeEventManager.PressPalmDownButton += MoveGraphDown;
+            VRigeEventManager.PressPalmScaleUpButton += ScaleGraphUp;
+            VRigeEventManager.PressPalmScaleDownButton += ScaleGraphDown;
+            VRigeEventManager.PressPalmPyruvate += GenerateGraph;
+            VRigeEventManager.PressPalmGlycolysis += GenerateGraph;
         }
         // Update is called once per frame
         void Update()

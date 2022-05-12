@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public static class EventManager{
+public static class VRigeEventManager{
 
     public static event UnityAction PressPalmUpButton;
     public static event UnityAction PressPalmDownButton;
