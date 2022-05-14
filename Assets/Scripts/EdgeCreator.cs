@@ -76,6 +76,7 @@ namespace VRige
             }*/
             for (int i = 0; i < CylEdges.Count; i++)
             {
+                //Debug.LogError("Aligning edge");
                 GameObject edge = (GameObject) CylEdges[i];
                 Edge e = (Edge) edges[i];
                 Vector3 initialScale = edge.transform.localScale;

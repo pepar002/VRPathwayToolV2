@@ -5,8 +5,6 @@ using UnityEngine;
 public class collisionDebug : MonoBehaviour
 {
 
-    protected NetworkHead[] heads;
-    protected NetworkHead pokingPlayerHead;
     // Start is called before the first frame update
     void Start()
     {
