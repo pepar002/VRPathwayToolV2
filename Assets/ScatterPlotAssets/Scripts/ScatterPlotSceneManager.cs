@@ -56,7 +56,7 @@ public class ScatterPlotSceneManager : MonoBehaviour
 
         // create the axis
 
-       /* for (int i = 0; i < dataObject.Identifiers.Length; ++i)
+        for (int i = 0; i < dataObject.Identifiers.Length; ++i)
         {
             Vector3 v = new Vector3(1.352134f - (i % 7) * 0.35f, 1.506231f - (i / 7) / 2f, 0f);// -0.4875801f);
             GameObject obj = (GameObject)Instantiate(axisPrefab);
@@ -67,7 +67,7 @@ public class ScatterPlotSceneManager : MonoBehaviour
             axis.tag = "Axis";
 
             AddAxis(axis);
-        }*/
+        }
 
     }
 
