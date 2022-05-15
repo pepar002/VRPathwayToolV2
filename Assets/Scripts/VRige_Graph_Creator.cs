@@ -117,10 +117,25 @@ namespace VRige
                     gameObject.transform.position = origin.transform.position;
                     generateLabels();
                     hideGraph(false);
+                    RealignGraph();
                     flag = true;
                 }
             }
 
+        }
+
+        private void RealignGraph()
+        {
+
+            foreach (VirtualNode node in nodes)
+            {
+                Vector3 position = node.transform.position;
+                Vector3 newPos = new Vector3(position.x, position.y, position.z + 5);
+
+
+                //Vector3 half = new Vector3(opposite.x + opposite.x / 2, opposite.y + opposite.y / 2, opposite.z + opposite.z / 2);
+                node.transform.position = newPos;
+            }
         }
         public void GenerateGraph(TextAsset xml, TextAsset key)
         {
