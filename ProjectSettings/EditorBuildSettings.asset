@@ -5,18 +5,11 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/Scenes/HandTracking.unity
-    guid: c4332f03874f8874e951aa792b0ba642
-  - enabled: 0
-    path: Assets/Scenes/SampleScene.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
     path: Assets/Scenes/PathwayScene.unity
-    guid: 1c7ed7d9fa0bc394faca59e6dcbb9c36
-  - enabled: 0
-    path: Assets/HTC.UnityPlugin/StereoRendering/Examples/2. Mirror/MirrorExample.unity
-    guid: 4d7251eab2001e047884d804882ac9f9
+    guid: 9fc0d4010bbf28b4594072e72b8655ab
   m_configObjects:
-    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 5172c9d1c80d325469d966a1b9c9a7de,
-      type: 2}
+    Unity.XR.Oculus.Settings: {fileID: 11400000, guid: f5c5ad28d060a6f4a84b5845d2952079, type: 2}
+    Unity.XR.OpenVR.Settings: {fileID: 11400000, guid: 84ba8dc67f885054a9079aab39a92207, type: 2}
+    com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 6a95572e7b69c084cb8840489e470bff, type: 2}
+    com.unity.xr.openxr.settings4: {fileID: 11400000, guid: 45a53e867a379ba488f9ace85e5fc131, type: 2}

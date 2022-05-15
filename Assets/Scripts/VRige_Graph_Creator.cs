@@ -49,6 +49,7 @@ namespace VRige
         // Use this for initialization
         void Start()
         {
+            //edgeCreator = transform.GetComponent<EdgeCreator>();
             GenerateGraph(xmlDataset, key);
             VRigeEventManager.PressPalmUpButton += MoveGraphUp;
             VRigeEventManager.PressPalmDownButton += MoveGraphDown;
@@ -60,7 +61,6 @@ namespace VRige
         // Update is called once per frame
         void Update()
         {
-
             // if t > threshold, apply force-directed layout
             if (t > 0.95)
             {
@@ -117,10 +117,25 @@ namespace VRige
                     gameObject.transform.position = origin.transform.position;
                     generateLabels();
                     hideGraph(false);
+                    RealignGraph();
                     flag = true;
                 }
             }
 
+        }
+
+        private void RealignGraph()
+        {
+
+            foreach (VirtualNode node in nodes)
+            {
+                Vector3 position = node.transform.position;
+                Vector3 newPos = new Vector3(position.x, position.y, position.z + 5);
+
+
+                //Vector3 half = new Vector3(opposite.x + opposite.x / 2, opposite.y + opposite.y / 2, opposite.z + opposite.z / 2);
+                node.transform.position = newPos;
+            }
         }
         public void GenerateGraph(TextAsset xml, TextAsset key)
         {
@@ -184,7 +199,6 @@ namespace VRige
                 String[] lines = keyData.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
                 foreach (string s in lines)
                 {
-                    Debug.Log(s);
                     string[] keyItems = s.Split(';');
                     //Debug.LogError(keyItems[0]);
                     foreach(DataNode node in dataNodes)
@@ -250,7 +264,7 @@ namespace VRige
                     }
                 }
                 //string list = "";
-                foreach (DataNode node in dataNodes)
+               /* foreach (DataNode node in dataNodes)
                 {
                     string rList = "";
                     foreach (int relation in node.Relations)
@@ -266,7 +280,7 @@ namespace VRige
                         rList = rList + $"          +{getDataNodeFromID(prod).DisplayName}\n";
                     }
                     Debug.Log($"({node.Id}) { node.Name}: { node.DisplayName}\n" + rList);
-                }
+                }*/
             }
         }
 
@@ -492,7 +506,6 @@ namespace VRige
                             Edge e = new Edge(lineNode.transform, n.transform, false);
                             edgeCreator.addEdges(e);
                             nodes.Add(getNode);
-                            print("added edge");
 
                             n.transform.localScale = new Vector3(scale, scale, scale);
 

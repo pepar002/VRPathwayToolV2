@@ -6,7 +6,7 @@ using OculusSampleFramework;
 
 public class NodeGrabber : OVRGrabber
 {
-    public CustomLaserPointer laserPointerObj;
+    public LaserPointer laserPointerObj;
 
     public OVRHand m_hand;
     public GestureDetector gesture;
@@ -35,7 +35,6 @@ public class NodeGrabber : OVRGrabber
         if (laserPointerObj != null && laserPointerObj.isActiveAndEnabled)
         {
             //laserPointer = laserPointerObj.GetComponent<CustomLaserPointer>();
-            laserPointerObj.ShowLaser(false);
         }
         previousPosition = transform.position;
     }
@@ -105,11 +104,9 @@ public class NodeGrabber : OVRGrabber
             {
                 if (gesture.isPointing())
                 {
-                    laserPointerObj.ShowLaser(true);
                 }
                 else
                 {
-                    laserPointerObj.ShowLaser(false);
                 }
             }
             /*if(!m_grabbedObj && gesture.isIndexFolding())
@@ -229,7 +226,7 @@ public class NodeGrabber : OVRGrabber
             }
         }
     }
-    public override void GrabEnd()
+    /*public override void GrabEnd()
     {
         linearVelocity = (transform.position - previousPosition) / Time.fixedDeltaTime;
         Quaternion dif = lastRot * Quaternion.Inverse(transform.rotation);
@@ -249,5 +246,5 @@ public class NodeGrabber : OVRGrabber
         GrabbableRelease(linearVelocity, angularVelocity);
 
         GrabVolumeEnable(true);
-    }
+    }*/
 }

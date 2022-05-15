@@ -10,7 +10,7 @@ ANY KIND, either express or implied. See the License for the specific language g
 permissions and limitations under the License.
 ************************************************************************************/
 
-#if USING_XR_MANAGEMENT && USING_XR_SDK_OCULUS
+#if USING_XR_MANAGEMENT && (USING_XR_SDK_OCULUS || USING_XR_SDK_OPENXR)
 #define USING_XR_SDK
 #endif
 
@@ -43,7 +43,7 @@ public static class OVRExtensions
 	/// </summary>
 	public static OVRPose ToTrackingSpacePose(this Transform transform, Camera camera)
 	{
-		//Initializing to identity, but for all Oculus headsets, down below the pose will be initialized to the runtime's pose value, so identity will never be returned.
+		// Initializing to identity, but for all Oculus headsets, down below the pose will be initialized to the runtime's pose value, so identity will never be returned.
 		OVRPose headPose = OVRPose.identity;
 
 		Vector3 pos;
@@ -58,28 +58,46 @@ public static class OVRExtensions
 		return ret;
 	}
 
+	/// <summary>
+	/// Converts the given pose from tracking-space to world-space.
+	/// </summary>
+	[Obsolete("ToWorldSpacePose should be invoked with an explicit mainCamera parameter")]
+	public static OVRPose ToWorldSpacePose(this OVRPose trackingSpacePose)
+	{
+		return ToWorldSpacePose(trackingSpacePose, Camera.main);
+	}
 
 	/// <summary>
 	/// Converts the given pose from tracking-space to world-space.
 	/// </summary>
-	public static OVRPose ToWorldSpacePose(OVRPose trackingSpacePose)
+	public static OVRPose ToWorldSpacePose(this OVRPose trackingSpacePose, Camera mainCamera)
+	{
+		// Transform from tracking-Space to head-Space
+		OVRPose poseInHeadSpace = trackingSpacePose.ToHeadSpacePose();
+
+		// Transform from head space to world space
+		OVRPose ret = mainCamera.transform.ToOVRPose() * poseInHeadSpace;
+
+		return ret;
+	}
+	
+	/// <summary>
+	/// Converts the given pose from tracking-space to head-space.
+	/// </summary>
+	public static OVRPose ToHeadSpacePose(this OVRPose trackingSpacePose)
 	{
 		OVRPose headPose = OVRPose.identity;
 
 		Vector3 pos;
 		Quaternion rot;
-		if (OVRNodeStateProperties.GetNodeStatePropertyVector3(Node.Head, NodeStatePropertyType.Position, OVRPlugin.Node.Head, OVRPlugin.Step.Render, out pos))
+		if (OVRNodeStateProperties.GetNodeStatePropertyVector3(UnityEngine.XR.XRNode.Head, NodeStatePropertyType.Position, OVRPlugin.Node.Head, OVRPlugin.Step.Render, out pos))
 			headPose.position = pos;
-		if (OVRNodeStateProperties.GetNodeStatePropertyQuaternion(Node.Head, NodeStatePropertyType.Orientation, OVRPlugin.Node.Head, OVRPlugin.Step.Render, out rot))
+		if (OVRNodeStateProperties.GetNodeStatePropertyQuaternion(UnityEngine.XR.XRNode.Head, NodeStatePropertyType.Orientation, OVRPlugin.Node.Head, OVRPlugin.Step.Render, out rot))
 			headPose.orientation = rot;
 
-		// Transform from tracking-Space to head-Space
 		OVRPose poseInHeadSpace = headPose.Inverse() * trackingSpacePose;
 
-		// Transform from head space to world space
-		OVRPose ret = Camera.main.transform.ToOVRPose() * poseInHeadSpace;
-
-		return ret;
+		return poseInHeadSpace;
 	}
 
 	/// <summary>
@@ -176,6 +194,16 @@ public static class OVRExtensions
 		return new OVRPlugin.Vector3f() { x = v.x, y = v.y, z = -v.z };
 	}
 
+	public static Vector4 FromVector4f(this OVRPlugin.Vector4f v)
+	{
+		return new Vector4() { x = v.x, y = v.y, z = v.z, w = v.w };
+	}
+
+	public static OVRPlugin.Vector4f ToVector4f(this Vector4 v)
+	{
+		return new OVRPlugin.Vector4f() { x = v.x, y = v.y, z = v.z, w = v.w };
+	}
+
 	public static Quaternion FromQuatf(this OVRPlugin.Quatf q)
 	{
 		return new Quaternion() { x = q.x, y = q.y, z = q.z, w = q.w };
@@ -240,6 +268,50 @@ public static class OVRExtensions
 				return result;
 		}
 		return null;
+	}
+
+	public static bool Equals(this Gradient gradient, Gradient otherGradient)
+	{
+		if (gradient.colorKeys.Length != otherGradient.colorKeys.Length || gradient.alphaKeys.Length != otherGradient.alphaKeys.Length)
+			return false;
+
+		for (int i = 0; i < gradient.colorKeys.Length; i++)
+		{
+			GradientColorKey key = gradient.colorKeys[i];
+			GradientColorKey otherKey = otherGradient.colorKeys[i];
+			if (key.color != otherKey.color || key.time != otherKey.time)
+				return false;
+		}
+
+		for (int i = 0; i < gradient.alphaKeys.Length; i++)
+		{
+			GradientAlphaKey key = gradient.alphaKeys[i];
+			GradientAlphaKey otherKey = otherGradient.alphaKeys[i];
+			if (key.alpha != otherKey.alpha || key.time != otherKey.time)
+				return false;
+		}
+
+		return true;
+	}
+
+	public static void CopyFrom(this Gradient gradient, Gradient otherGradient)
+	{
+		GradientColorKey[] colorKeys = new GradientColorKey[otherGradient.colorKeys.Length];
+		for (int i = 0; i < colorKeys.Length; i++)
+		{
+			Color col = otherGradient.colorKeys[i].color;
+			colorKeys[i].color = new Color(col.r, col.g, col.b, col.a);
+			colorKeys[i].time = otherGradient.colorKeys[i].time;
+		}
+
+		GradientAlphaKey[] alphaKeys = new GradientAlphaKey[otherGradient.alphaKeys.Length];
+		for (int i = 0; i < alphaKeys.Length; i++)
+		{
+			alphaKeys[i].alpha = otherGradient.alphaKeys[i].alpha;
+			alphaKeys[i].time = otherGradient.alphaKeys[i].time;
+		}
+
+		gradient.SetKeys(colorKeys, alphaKeys);
 	}
 }
 
@@ -549,6 +621,13 @@ public struct OVRPose
 		result.Orientation.z = orientation.z;
 		result.Orientation.w = orientation.w;
 		return result;
+	}
+
+	public OVRPose Rotate180AlongX()
+	{
+		var ret = this;
+		ret.orientation *= Quaternion.Euler(180, 0, 0);
+		return ret;
 	}
 }
 
