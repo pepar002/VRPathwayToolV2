@@ -56,7 +56,7 @@ public class NodeGrabbable : OVRGrabbable
                         ChangeGrabbableColour("yellow", 0f, 0f, 0f);
                         activeReset = true;
                         activeNode = true;
-                        ScatterPlotSceneManager.Instance.SpawnGraph(transform.position);
+                        //ScatterPlotSceneManager.Instance.SpawnGraph(transform.position);
                     }
                     else
                     {

@@ -2849,6 +2849,8 @@ GameObject:
   - component: {fileID: 65042695062986878}
   - component: {fileID: 54227409716071068}
   - component: {fileID: 1738318635026088797}
+  - component: {fileID: 2085958879914978054}
+  - component: {fileID: 3367160194434964348}
   m_Layer: 0
   m_Name: Axis
   m_TagString: Untagged
@@ -2865,7 +2867,7 @@ Transform:
   m_GameObject: {fileID: 1960369366394742}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0.8191, y: 1.7062311, z: -0.4875801}
-  m_LocalScale: {x: 0.02059407, y: 0.2660912, z: 0.020594077}
+  m_LocalScale: {x: 0.018793236, y: 0.24282306, z: 0.018793244}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4897893201050354}
@@ -2972,3 +2974,61 @@ MonoBehaviour:
   isDirty: 0
   isInSplom: 0
   SourceIndex: -1
+--- !u!114 &2085958879914978054
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1960369366394742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43f86b14a27b52f4f9298c33015b5c26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _transferOnSecondSelection: 0
+  _addNewPointsToFront: 0
+  _forwardElement: {fileID: 0}
+  _oneGrabTransformer: {fileID: 0}
+  _twoGrabTransformer: {fileID: 0}
+  _maxGrabPoints: -1
+--- !u!114 &3367160194434964348
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1960369366394742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9a7676b01585ce43908639a27765dfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxInteractors: -1
+  _maxSelectingInteractors: -1
+  _pointableElement: {fileID: 2085958879914978054}
+  _relativeTo: {fileID: 4987830469036994}
+  _rigidbody: {fileID: 54227409716071068}
+  _resetGrabOnGrabsUpdated: 1
+  _physicsGrabbable: {fileID: 0}
+  _scoringModifier:
+    _maxDistance: 0.1
+    _positionRotationWeight: 0
+  _supportedGrabTypes: 1
+  _pinchGrabRules:
+    _thumbRequirement: 2
+    _indexRequirement: 1
+    _middleRequirement: 0
+    _ringRequirement: 0
+    _pinkyRequirement: 0
+    _unselectMode: 1
+  _palmGrabRules:
+    _thumbRequirement: 1
+    _indexRequirement: 2
+    _middleRequirement: 2
+    _ringRequirement: 2
+    _pinkyRequirement: 1
+    _unselectMode: 0
+  _movementProvider: {fileID: 0}
+  _handAligment: 2
+  _handGrabPoints: []

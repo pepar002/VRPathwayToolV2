@@ -129,9 +129,6 @@ namespace VRige
             {
                 Vector3 position = node.transform.position;
                 Vector3 newPos = new Vector3(position.x, position.y, position.z + 5);
-
-
-                //Vector3 half = new Vector3(opposite.x + opposite.x / 2, opposite.y + opposite.y / 2, opposite.z + opposite.z / 2);
                 node.transform.position = newPos;
             }
         }
