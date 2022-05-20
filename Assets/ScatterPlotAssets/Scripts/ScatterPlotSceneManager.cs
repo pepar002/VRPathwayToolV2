@@ -14,6 +14,8 @@ public class ScatterPlotSceneManager : MonoBehaviour
     public class OnAxisAddedEvent : UnityEvent<SAxis> { }
     public OnAxisAddedEvent OnAxisAdded = new OnAxisAddedEvent();
 
+    public bool generateAll;
+
     [SerializeField]
     GameObject axisPrefab;
 
@@ -58,28 +60,37 @@ public class ScatterPlotSceneManager : MonoBehaviour
 
         for (int i = 0; i < dataObject.Identifiers.Length; ++i)
         {
-            Vector3 v = new Vector3(1.352134f - (i % 7) * 0.35f, 1.506231f - (i / 7) / 2f, 0f);// -0.4875801f);
-            GameObject obj = (GameObject)Instantiate(axisPrefab);
-            obj.transform.position = v;
-            SAxis axis = obj.GetComponent<SAxis>();
-            axis.Init(dataObject, i, true);
-            axis.InitOrigin(v, obj.transform.rotation);
-            axis.tag = "Axis";
+            if (generateAll)
+            {
+                Vector3 v = new Vector3(1.352134f - (i % 7) * 0.35f, 1.506231f - (i / 7) / 2f, 0f);// -0.4875801f);
+                GameObject obj = (GameObject)Instantiate(axisPrefab);
+                obj.transform.position = v;
+                SAxis axis = obj.GetComponent<SAxis>();
+                axis.Init(dataObject, i, true);
+                axis.InitOrigin(v, obj.transform.rotation);
+                axis.tag = "Axis";
 
-            AddAxis(axis);
+                AddAxis(axis);
+            }
+            
         }
 
     }
 
-    public void SpawnGraph(Vector3 location)
-    {// -0.4875801f);
+    public GameObject SpawnGraph(Transform node, Vector3 location)
+    {
+        /*GameObject graph = new GameObject();
+        graph.name = node.name + " Graph";
+        graph = Instantiate(graph, node);
+        GameObject obj = (GameObject)Instantiate(axisPrefab, graph.transform);*/
         GameObject obj = (GameObject)Instantiate(axisPrefab);
         obj.transform.position = location;
         SAxis axis = obj.GetComponent<SAxis>();
-        axis.Init(dataObject, 1, false);
+        axis.Init(dataObject, 2, false);
         axis.InitOrigin(location, obj.transform.rotation);
         axis.tag = "Axis";
         AddAxis(axis);
+        return axis.gameObject;
     }
 
     void Update()

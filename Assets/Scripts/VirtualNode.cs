@@ -9,6 +9,7 @@ namespace VRige
 
         public string ID = "-999";
         private int dataID = 0;
+        public bool activeNode = false;
         public Vector3 disp = Vector3.zero;
         private Rigidbody a;
         public ArrayList neighbors;
@@ -29,13 +30,20 @@ namespace VRige
         public bool rotateToCenter = false;
         private Color defaultColor;
 
+        private GameObject axis;
+        private List<GameObject> visualizations;
+
+        private MeshRenderer mesh;
+
         public int DataID { get => dataID; set => dataID = value; }
         public Color DefaultColor { get => defaultColor; set => defaultColor = value; }
+
 
         // initialization
         private void Awake()
         {
             neighbors = new ArrayList();
+            mesh = GetComponent<MeshRenderer>();
         }
 
 
@@ -64,7 +72,50 @@ namespace VRige
                 float randZ = Random.Range(0, 0.1f);
                 transform.position += new Vector3(randX, randY, randZ);
             }
+
+
         }
+
+        public void selectNode()
+        {
+            if (!activeNode)
+            {
+                activeNode = true;
+                if(axis == null)
+                {
+                    axis = ScatterPlotSceneManager.Instance.SpawnGraph(transform, transform.position);
+                    axis.transform.localScale = new Vector3(axis.transform.localScale.x * 2, axis.transform.localScale.y * 2, axis.transform.localScale.z * 2);
+                    visualizations = new List<GameObject>();
+                    foreach (Visualization v in axis.GetComponent<SAxis>().correspondingVisualizations())
+                    {
+                        visualizations.Add(v.gameObject);
+                        //v.transform.localScale = new Vector3(v.transform.localScale.x * 2, v.transform.localScale.y * 2, v.transform.localScale.z * 2);
+                    }
+                }
+                else
+                {
+                    axis.SetActive(true);
+                    foreach (GameObject v in visualizations)
+                    {
+                        v.SetActive(true);
+                    }
+                }
+                mesh.material.color = Color.green;
+            }
+            else
+            {
+                foreach (GameObject v in visualizations)
+                {
+                    v.SetActive(false);
+                }
+
+                activeNode = false;
+                axis.SetActive(false);
+                mesh.material.color = defaultColor;
+            }
+            
+        }
+
 
         // return ID
         public string getID()

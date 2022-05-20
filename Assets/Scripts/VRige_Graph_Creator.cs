@@ -51,12 +51,10 @@ namespace VRige
         {
             //edgeCreator = transform.GetComponent<EdgeCreator>();
             GenerateGraph(xmlDataset, key);
-            VRigeEventManager.PressPalmUpButton += MoveGraphUp;
-            VRigeEventManager.PressPalmDownButton += MoveGraphDown;
-            VRigeEventManager.PressPalmScaleUpButton += ScaleGraphUp;
-            VRigeEventManager.PressPalmScaleDownButton += ScaleGraphDown;
             VRigeEventManager.PressPalmPyruvate += GenerateGraph;
             VRigeEventManager.PressPalmGlycolysis += GenerateGraph;
+
+            VRigeEventManager.SliderMoveX += MoveGraphX;
         }
         // Update is called once per frame
         void Update()
@@ -131,9 +129,6 @@ namespace VRige
             {
                 Vector3 position = node.transform.position;
                 Vector3 newPos = new Vector3(position.x, position.y, position.z + 5);
-
-
-                //Vector3 half = new Vector3(opposite.x + opposite.x / 2, opposite.y + opposite.y / 2, opposite.z + opposite.z / 2);
                 node.transform.position = newPos;
             }
         }
@@ -295,25 +290,21 @@ namespace VRige
             }
             return null;
         }
-
-        private void MoveGraphUp()
+        public void MoveGraphX(float f)
         {
-            gameObject.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y + 0.5f, gameObject.transform.position.z);
+            gameObject.transform.position = new Vector3(f, gameObject.transform.position.y, gameObject.transform.position.z);
         }
-
-        private void MoveGraphDown()
+        public void MoveGraphY(float f)
         {
-            gameObject.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y - 0.5f, gameObject.transform.position.z);
-            
+            gameObject.transform.position = new Vector3(gameObject.transform.position.x, f, gameObject.transform.position.z);
         }
-        private void ScaleGraphUp()
+        public void MoveGraphZ(float f)
         {
-            gameObject.transform.localScale = new Vector3(gameObject.transform.localScale.x + 0.1f, gameObject.transform.localScale.y + 0.1f, gameObject.transform.localScale.z + 0.1f);
-            //gameObject.transform.position = origin.transform.position;
+            gameObject.transform.position = new Vector3(gameObject.transform.position.x, gameObject.transform.position.y, f);
         }
-        private void ScaleGraphDown()
+        public void ScaleGraph(float f)
         {
-            gameObject.transform.localScale = new Vector3(gameObject.transform.localScale.x - 0.1f, gameObject.transform.localScale.y - 0.1f, gameObject.transform.localScale.z - 0.1f);
+            gameObject.transform.localScale = new Vector3(f, f, f);
             //gameObject.transform.position = origin.transform.position;
         }
 
