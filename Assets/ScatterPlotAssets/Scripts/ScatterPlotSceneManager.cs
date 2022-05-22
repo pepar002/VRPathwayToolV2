@@ -105,6 +105,7 @@ public class ScatterPlotSceneManager : MonoBehaviour
     {
         sceneAxes.Add(axis);
         OnAxisAdded.Invoke(axis);
+        //Debug.Log(sceneAxes.Count());
     }
 
     //

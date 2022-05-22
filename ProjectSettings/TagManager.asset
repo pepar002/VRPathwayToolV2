@@ -5,6 +5,12 @@ TagManager:
   serializedVersion: 2
   tags:
   - Controller
+  - Visualisation
+  - View
+  - Scatterplot2D
+  - Scatterplot3D
+  - LinkedVisualisation
+  - Axis
   layers:
   - Default
   - TransparentFX
@@ -14,8 +20,8 @@ TagManager:
   - UI
   - Label
   - Post
-  - 
-  - 
+  - View
+  - AxisAnchor
   - 
   - 
   - 
