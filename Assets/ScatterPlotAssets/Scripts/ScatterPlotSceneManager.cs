@@ -9,6 +9,8 @@ public class ScatterPlotSceneManager : MonoBehaviour
 
     public List<SAxis> sceneAxes { get; internal set; }
 
+    public HashSet<int> axisIds { get; set; }
+
     public DataBinding.DataObject dataObject;
 
     public class OnAxisAddedEvent : UnityEvent<SAxis> { }
@@ -38,6 +40,7 @@ public class ScatterPlotSceneManager : MonoBehaviour
     void Start()
     {
         sceneAxes = new List<SAxis>();
+        axisIds = new HashSet<int>();
         dataObject = new DataBinding.DataObject(sourceData.text, metadata);
 
         // setup default visual settings
@@ -77,20 +80,98 @@ public class ScatterPlotSceneManager : MonoBehaviour
 
     }
 
-    public GameObject SpawnGraph(Transform node, Vector3 location)
+    public bool SpawnGraph(Transform node, Vector3 location)
     {
         /*GameObject graph = new GameObject();
         graph.name = node.name + " Graph";
         graph = Instantiate(graph, node);
         GameObject obj = (GameObject)Instantiate(axisPrefab, graph.transform);*/
+
+        /*
+                if (sceneAxes.Count >= 1)
+                {
+                    GameObject axisClone = sceneAxes.Last().Clone();
+                    //axisClone.transform.rotation = obj.transform.rotation;
+                    axisClone.transform.position = location;
+                    //axisClone.transform.localScale = axis.transform.localScale;
+
+                    AddAxis(axisClone.GetComponent<SAxis>());
+                    return axisClone;
+                }
+                else {
+                    GameObject obj = (GameObject)Instantiate(axisPrefab);
+                    obj.transform.position = location;
+                    SAxis axis = obj.GetComponent<SAxis>();
+                    axis.Init(dataObject, 2, false);
+                    axis.InitOrigin(location, obj.transform.rotation);
+                    //axis.transform.localScale = new Vector3(axis.transform.localScale.x * 2, axis.transform.localScale.y * 2, axis.transform.localScale.z * 2);
+                    axis.tag = "Axis";
+                    AddAxis(axis);
+                    return axis.gameObject;
+                }*/
+
+        int id = 2;  // to be changed when dataset attribute is relevant
+
+
+        if (axisIds.Contains(1)) // if axis control axis already exists
+        {
+            GenerateCloneAxis(1, location, Quaternion.Euler(0, 0, 90), true);
+
+        }
+        else {
+            GenerateAxis(1, location, Quaternion.Euler(0, 0, 90), true);
+        }
+
+        if (axisIds.Contains(id))
+        {
+            GenerateCloneAxis(id, location, Quaternion.Euler(0, 180, 0), false);
+        }
+        else
+        {
+            GenerateAxis(id, location, Quaternion.Euler(0, 180, 0), false);
+        }
+
+        return true;
+    }
+
+   void GenerateAxis(int id, Vector3 location, Quaternion rotation, bool horizantal)
+    {
+        // id 1 is control attribute
+
+        // Vertical Axis
         GameObject obj = (GameObject)Instantiate(axisPrefab);
+        float h = obj.GetComponent<BoxCollider>().size.y * obj.transform.localScale.y;
+
+        if (horizantal) location = new Vector3(location.x - h / 2, location.y - h / 2, location.z);
         obj.transform.position = location;
+        obj.transform.rotation = rotation;
+        // Horizontal Axis
         SAxis axis = obj.GetComponent<SAxis>();
-        axis.Init(dataObject, 2, false);
-        axis.InitOrigin(location, obj.transform.rotation);
+        axis.Init(dataObject, id, false);  // id = 1 i.e. control attribute
+        
+        axis.InitOrigin(location, rotation);
         axis.tag = "Axis";
         AddAxis(axis);
-        return axis.gameObject;
+        ScaleAxisVisualizations(axis);
+    }
+
+    void GenerateCloneAxis(int id, Vector3 location, Quaternion rotation, bool horizontal)
+    {
+
+        SAxis hAxisClone = sceneAxes.ElementAt(id).Clone().GetComponent<SAxis>();
+        hAxisClone.transform.rotation = rotation;
+
+        float h = hAxisClone.GetComponent<BoxCollider>().size.y * hAxisClone.transform.localScale.y;
+        if (horizontal)
+        {
+            hAxisClone.transform.position = new Vector3(location.x - h / 2, location.y - h / 2, location.z);
+
+        }
+        else {
+            hAxisClone.transform.position = location;
+        }
+        AddAxis(hAxisClone);
+        ScaleAxisVisualizations(hAxisClone);
     }
 
     void Update()
@@ -101,10 +182,18 @@ public class ScatterPlotSceneManager : MonoBehaviour
         }
     }
 
+    void ScaleAxisVisualizations(SAxis axis) {
+        foreach (Visualization v in axis.GetComponent<SAxis>().correspondingVisualizations())
+        {
+            v.transform.localScale = new Vector3(v.transform.localScale.x * 2, v.transform.localScale.y * 2, v.transform.localScale.z * 2);
+        }
+    }
+
     public void AddAxis(SAxis axis)
     {
         sceneAxes.Add(axis);
         OnAxisAdded.Invoke(axis);
+        //Debug.Log(sceneAxes.Count());
     }
 
     //

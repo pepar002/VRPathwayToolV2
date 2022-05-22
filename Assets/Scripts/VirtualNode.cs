@@ -30,7 +30,7 @@ namespace VRige
         public bool rotateToCenter = false;
         private Color defaultColor;
 
-        private GameObject axis;
+        private bool axis = false;
         private List<GameObject> visualizations;
 
         private MeshRenderer mesh;
@@ -81,36 +81,36 @@ namespace VRige
             if (!activeNode)
             {
                 activeNode = true;
-                if(axis == null)
+                if(!axis)
                 {
                     axis = ScatterPlotSceneManager.Instance.SpawnGraph(transform, transform.position);
-                    axis.transform.localScale = new Vector3(axis.transform.localScale.x * 2, axis.transform.localScale.y * 2, axis.transform.localScale.z * 2);
-                    visualizations = new List<GameObject>();
-                    foreach (Visualization v in axis.GetComponent<SAxis>().correspondingVisualizations())
+                    //axis.transform.localScale = new Vector3(axis.transform.localScale.x * 2, axis.transform.localScale.y * 2, axis.transform.localScale.z * 2);
+                    //visualizations = new List<GameObject>();
+/*                    foreach (Visualization v in axis.GetComponent<SAxis>().correspondingVisualizations())
                     {
                         visualizations.Add(v.gameObject);
-                        //v.transform.localScale = new Vector3(v.transform.localScale.x * 2, v.transform.localScale.y * 2, v.transform.localScale.z * 2);
-                    }
+                        v.transform.localScale = new Vector3(v.transform.localScale.x * 2, v.transform.localScale.y * 2, v.transform.localScale.z * 2);
+                    }*/
                 }
                 else
                 {
-                    axis.SetActive(true);
+/*                    axis.SetActive(true);
                     foreach (GameObject v in visualizations)
                     {
                         v.SetActive(true);
-                    }
+                    }*/
                 }
                 mesh.material.color = Color.green;
             }
             else
             {
-                foreach (GameObject v in visualizations)
+/*                foreach (GameObject v in visualizations)
                 {
                     v.SetActive(false);
-                }
+                }*/
 
                 activeNode = false;
-                axis.SetActive(false);
+                //axis.SetActive(false);
                 mesh.material.color = defaultColor;
             }
             
