@@ -9,10 +9,13 @@ namespace VRige
 
         public string ID = "-999";
         private int dataID = 0;
+        public int spID = -1;
         public bool activeNode = false;
+
         public Vector3 disp = Vector3.zero;
         private Rigidbody a;
         public ArrayList neighbors;
+
         private float Length = 0.01f;
         private float EdgeLength;
         private float SpringK = 10.2f;
@@ -34,6 +37,9 @@ namespace VRige
         private List<GameObject> visualizations;
 
         private MeshRenderer mesh;
+        public MeshRenderer outline;
+
+        public bool containsData;
 
         public int DataID { get => dataID; set => dataID = value; }
         public Color DefaultColor { get => defaultColor; set => defaultColor = value; }
@@ -44,6 +50,20 @@ namespace VRige
         {
             neighbors = new ArrayList();
             mesh = GetComponent<MeshRenderer>();
+            spID = -1;
+        }
+
+        private void Start()
+        {
+            if(spID > 0)
+            {
+                containsData = true;
+                outline.gameObject.SetActive(true);
+            }
+            else
+            {
+                containsData = false;
+            }
         }
 
 
@@ -83,7 +103,11 @@ namespace VRige
                 activeNode = true;
                 if(!axis)
                 {
-                    axis = ScatterPlotSceneManager.Instance.SpawnGraph(transform, transform.position);
+                    if (containsData)
+                    {
+                        axis = ScatterPlotSceneManager.Instance.SpawnGraph(transform, transform.position, spID);
+                    }
+                    
                     //axis.transform.localScale = new Vector3(axis.transform.localScale.x * 2, axis.transform.localScale.y * 2, axis.transform.localScale.z * 2);
                     //visualizations = new List<GameObject>();
 /*                    foreach (Visualization v in axis.GetComponent<SAxis>().correspondingVisualizations())

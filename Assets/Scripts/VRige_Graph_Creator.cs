@@ -141,6 +141,7 @@ namespace VRige
             WriteDataset();
             edgeCreator = FindObjectOfType<EdgeCreator>();
             UndirectedGraph();
+            AssignScatterplots();
         }
         public void WriteDataset()
         {
@@ -166,6 +167,30 @@ namespace VRige
                 }
             }
             graphDataset = dataset;
+        }
+
+        public void AssignScatterplots()
+        {
+            foreach(DataNode node in dataNodes)
+            {
+                int spID = ScatterPlotSceneManager.Instance.assignNodeId(node.Name);
+                if(spID >= 0)
+                {
+                    getVirtualNode(node.Id).spID = spID;
+                }
+            }
+        }
+
+        public VirtualNode getVirtualNode(int dataNodeid)
+        {
+            foreach (VirtualNode node in nodes)
+            {
+                if(node.DataID == dataNodeid)
+                {
+                    return node;
+                }
+            }
+            return null;
         }
 
         private void ExtractDataset()

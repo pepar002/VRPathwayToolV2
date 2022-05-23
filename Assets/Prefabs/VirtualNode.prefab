@@ -124,12 +124,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ID: -999
+  spID: 0
   activeNode: 0
   disp: {x: 0, y: 0, z: 0}
   f_a: 0
   neighborCount: 0
   addDeg: 0
   rotateToCenter: 0
+  outline: {fileID: 8325289548966789153}
+  containsData: 0
 --- !u!114 &-75828174218615309
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -458,7 +461,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8004126219361743903
 Transform:
   m_ObjectHideFlags: 0
@@ -502,7 +505,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2961136e3be0a5445bd337e3de98ec3a, type: 2}
+  - {fileID: 2100000, guid: ec6ee198870b4564e80208803e0d979c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ItemPickupOutline
+  m_Name: NodeOutline
   m_Shader: {fileID: 4800000, guid: 0c1cf10ea69e60e4f9eb8955749f88ec, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 5
@@ -70,11 +70,11 @@ Material:
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 1
-    - g_flCornerAdjust: 1
-    - g_flOutlineWidth: 0.0054
+    - g_flCornerAdjust: 0
+    - g_flOutlineWidth: 0.0074
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _OutlineColor: {r: 0.44034123, g: 0.58823526, b: 0.42820066, a: 1}
-    - g_vOutlineColor: {r: 0.23106743, g: 1, b: 0.1745283, a: 1}
+    - g_vOutlineColor: {r: 1, g: 0.36917955, b: 0.3066038, a: 1}
   m_BuildTextureStacks: []
