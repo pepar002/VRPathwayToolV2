@@ -15,6 +15,9 @@ namespace VRige
         public Material lineMat;
         public GameObject EdgePrefab;
         private bool generateCylEdges = true;
+        public GameObject edgeParent;
+        public float xScale;
+        public float yScale;
 
         public ArrayList CylEdges { get => cylEdges; }
 
@@ -34,7 +37,7 @@ namespace VRige
                 edgeCount++;
                 if (generateCylEdges)
                 {
-                    GameObject c = Instantiate(EdgePrefab);
+                    GameObject c = Instantiate(EdgePrefab, edgeParent.transform);
                     CylEdges.Add(c);
                 }
                 
@@ -44,7 +47,7 @@ namespace VRige
             edgeCount++;
             if (generateCylEdges)
             {
-                GameObject c = Instantiate(EdgePrefab);
+                GameObject c = Instantiate(EdgePrefab, edgeParent.transform);
                 CylEdges.Add(c);
             }
         }
