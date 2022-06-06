@@ -16,6 +16,7 @@ namespace VRige
         public TextAsset xmlDataset;
         public TextAsset key;
         public EdgeCreator edgeCreator;
+        public Transform edgeParent;
 
         // 3D coordinates
         public Vector3[,,] gridPositions3D;
@@ -131,6 +132,8 @@ namespace VRige
                 Vector3 newPos = new Vector3(position.x, position.y, position.z + 5);
                 node.transform.position = newPos;
             }
+            this.transform.localScale = new Vector3(0.4f, 0.4f, 0.4f);
+            //edgeParent.localScale = new Vector3(edgeParent.localScale.x * 0.4f, edgeParent.localScale.y, edgeParent.localScale.z * 0.4f);
         }
         public void GenerateGraph(TextAsset xml, TextAsset key)
         {
@@ -141,6 +144,7 @@ namespace VRige
             WriteDataset();
             edgeCreator = FindObjectOfType<EdgeCreator>();
             UndirectedGraph();
+            AssignScatterplots();
         }
         public void WriteDataset()
         {
@@ -166,6 +170,30 @@ namespace VRige
                 }
             }
             graphDataset = dataset;
+        }
+
+        public void AssignScatterplots()
+        {
+            foreach(DataNode node in dataNodes)
+            {
+                int spID = ScatterPlotSceneManager.Instance.assignNodeId(node.Name);
+                if(spID >= 0)
+                {
+                    getVirtualNode(node.Id).spID = spID;
+                }
+            }
+        }
+
+        public VirtualNode getVirtualNode(int dataNodeid)
+        {
+            foreach (VirtualNode node in nodes)
+            {
+                if(node.DataID == dataNodeid)
+                {
+                    return node;
+                }
+            }
+            return null;
         }
 
         private void ExtractDataset()

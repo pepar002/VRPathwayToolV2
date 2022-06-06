@@ -36,12 +36,16 @@ public class ScatterPlotSceneManager : MonoBehaviour
         get { return _instance ?? (_instance = FindObjectOfType<ScatterPlotSceneManager>()); }
     }
 
-
-    void Start()
+    private void Awake()
     {
         sceneAxes = new List<SAxis>();
         axisIds = new HashSet<int>();
         dataObject = new DataBinding.DataObject(sourceData.text, metadata);
+    }
+
+    void Start()
+    {
+        
 
         // setup default visual settings
 
@@ -80,7 +84,18 @@ public class ScatterPlotSceneManager : MonoBehaviour
 
     }
 
-    public bool SpawnGraph(Transform node, Vector3 location)
+    public int assignNodeId(string name)
+    {
+        foreach(var item in dataObject.Identifiers.Select((name, index) => (name, index)))
+        {
+            if (name == item.name) return item.index;
+        }
+        return -1;
+    }
+
+
+
+    public bool SpawnGraph(Transform node, Vector3 location, int spID)
     {
         /*GameObject graph = new GameObject();
         graph.name = node.name + " Graph";
@@ -110,7 +125,7 @@ public class ScatterPlotSceneManager : MonoBehaviour
                     return axis.gameObject;
                 }*/
 
-        int id = 2;  // to be changed when dataset attribute is relevant
+        //int id = 2;  // to be changed when dataset attribute is relevant
 
 
         if (axisIds.Contains(1)) // if axis control axis already exists
@@ -122,13 +137,13 @@ public class ScatterPlotSceneManager : MonoBehaviour
             GenerateAxis(1, location, Quaternion.Euler(0, 0, 90), true);
         }
 
-        if (axisIds.Contains(id))
+        if (axisIds.Contains(spID))
         {
-            GenerateCloneAxis(id, location, Quaternion.Euler(0, 180, 0), false);
+            GenerateCloneAxis(spID, location, Quaternion.Euler(0, 180, 0), false);
         }
         else
         {
-            GenerateAxis(id, location, Quaternion.Euler(0, 180, 0), false);
+            GenerateAxis(spID, location, Quaternion.Euler(0, 180, 0), false);
         }
 
         return true;
