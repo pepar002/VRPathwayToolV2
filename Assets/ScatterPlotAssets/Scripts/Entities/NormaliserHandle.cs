@@ -58,9 +58,13 @@ public class NormaliserHandle : MonoBehaviour, SGrabbable {
     {
     }
 
+    /*
+     * Linear interpolation between the controller (collider) and the axis widget
+     * whenever its dragging
+     */
     public void OnDrag(WandController controller)
     {
-        float offset = parentAxis.CalculateLinearMapping(controller.transform);
+        float offset = parentAxis.CalculateLinearMapping(controller.GetSphere().transform);
         Vector3 newP = Vector3.Lerp(parentAxis.MinPosition, parentAxis.MaxPosition, offset);
         transform.position = newP;
         parentAxis.isDirty = true;

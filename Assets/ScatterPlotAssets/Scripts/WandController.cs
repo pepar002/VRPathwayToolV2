@@ -408,6 +408,23 @@ public class WandController : MonoBehaviour
         gameObject.GetComponent<SphereCollider>().enabled = true;
     }
 
+    // Grab the sphere game object attached to the contoller gameobject
+    public GameObject GetSphere()
+    {
+        var transforms = this.GetComponentsInChildren<Transform>();
+        String childObjName = "Sphere";
+
+        foreach (Transform child in transforms)
+        {
+            if (child.name == childObjName)
+            {
+                return child.gameObject;
+            }
+        }
+
+        return null;
+    }
+
     public bool IsDragging(SGrabbable grab)
     {
         return draggingObjects.Any(x => x.GetComponent<SGrabbable>() == grab);
