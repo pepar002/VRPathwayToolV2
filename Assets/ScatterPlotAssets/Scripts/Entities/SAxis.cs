@@ -277,7 +277,8 @@ public class SAxis : MonoBehaviour, SGrabbable {
         direction.Normalize();
 
         Vector3 displacement = tr.position - MinPosition;
-
+/*        Console.Out.Write("Direction" + direction);
+        Console.Out.Write("Displacement" + direction);*/
         return Vector3.Dot(displacement, direction) / length;
     }
 

@@ -57,11 +57,16 @@ public class AxisRangeWidget : MonoBehaviour, SGrabbable {
     public void OnRelease(WandController controller)
     { }
 
+    /*
+     * Linear interpolation between the controller (collider) and the axis widget
+     * whenever its dragging
+     */
     public void OnDrag(WandController controller)
     {
+        // Get the sphere child gameobject attached to controller (getting the sphere collider component of the controller
+        // will yield the same tranform.position as the controller rather than the collider itself)
 
-
-        float offset = parentAxis.CalculateLinearMapping(controller.transform);
+        float offset = parentAxis.CalculateLinearMapping(controller.GetSphere().transform);
         Vector3 axisOffset = new Vector3(transform.localPosition.x, 0, 0);
         transform.localPosition = Vector3.Lerp(new Vector3(transform.localPosition.x, -0.5f, 0),
                                                new Vector3(transform.localPosition.x, 0.5f, 0), 

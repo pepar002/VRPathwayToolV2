@@ -67,6 +67,7 @@ public class ScatterPlotSceneManager : MonoBehaviour
 
         for (int i = 0; i < dataObject.Identifiers.Length; ++i)
         {
+            // displays all axes on the scene if true
             if (generateAll)
             {
                 Vector3 v = new Vector3(1.352134f - (i % 7) * 0.35f, 1.506231f - (i / 7) / 2f, 0f);// -0.4875801f);
@@ -83,6 +84,7 @@ public class ScatterPlotSceneManager : MonoBehaviour
         }
 
     }
+
 
     public int assignNodeId(string name)
     {
@@ -170,6 +172,9 @@ public class ScatterPlotSceneManager : MonoBehaviour
         ScaleAxisVisualizations(axis);
     }
 
+    /*
+     * Generates a clone of an existing axis (To be removed)
+     */
     void GenerateCloneAxis(int id, Vector3 location, Quaternion rotation, bool horizontal)
     {
 
@@ -196,7 +201,9 @@ public class ScatterPlotSceneManager : MonoBehaviour
             CreateSPLOMS();
         }
     }
-
+    /*
+     * Doubles the scale of the visualizations attached to an axis
+     */
     void ScaleAxisVisualizations(SAxis axis) {
         foreach (Visualization v in axis.GetComponent<SAxis>().correspondingVisualizations())
         {
@@ -204,6 +211,9 @@ public class ScatterPlotSceneManager : MonoBehaviour
         }
     }
 
+    /*
+     * Keeps track of the axes loaded to the scene
+     */
     public void AddAxis(SAxis axis)
     {
         sceneAxes.Add(axis);
@@ -211,10 +221,10 @@ public class ScatterPlotSceneManager : MonoBehaviour
         //Debug.Log(sceneAxes.Count());
     }
 
-    //
-    // Debug functions
-    //
 
+    /*
+     * Create Scatter Plot Matrices
+     */
     void CreateSPLOMS()
     {
         print("creating the splom");
