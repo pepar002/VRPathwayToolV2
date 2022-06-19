@@ -29,7 +29,9 @@ public interface Brushable
     void OnDetailOnDemandRelease(WandController controller);
 
 }
-
+/*
+ * This class deals with interactions based on the Oculus Rift controller interactions and Hand interactions
+ */
 public class WandController : MonoBehaviour
 {
     // the controller this component is attached to
@@ -53,7 +55,6 @@ public class WandController : MonoBehaviour
     bool isTouchDown;
 
     Valve.VR.SteamVR_TrackedObject trackedObject;
-    //Valve.VR.SteamVR_Controller.Device controller;
     
     Collider intersectingCollider;
     List<Collider> intersectingGrabbables = new List<Collider>();
@@ -84,8 +85,6 @@ public class WandController : MonoBehaviour
 
     void Start()
     {
-        //if (!isOculusRift) controller = SteamVR_Controller.Input((int)trackedObject.index); 
-
         brushingPoint = GameObject.CreatePrimitive(PrimitiveType.Sphere);
         brushingPoint.transform.localScale = new Vector3(0.01f, 0.01f, 0.0f);
 
@@ -109,6 +108,9 @@ public class WandController : MonoBehaviour
         }
     }
 
+    /*
+     * On every update check for the active controller and check for any instantiated interactions
+     */
     void Update()
     {
         activeController = OVRInput.GetActiveController(); // will always get active controller
@@ -121,7 +123,8 @@ public class WandController : MonoBehaviour
         {
             // update the sphere colliders
             UpdateSphereColliders(gameObject, gameObject.GetComponent<SphereCollider>());
-
+            
+            // Check the current status of Oculus controller buttons to determing whether to grab or not
             gripDown = isOculusRift ?
     OVRInput.GetDown(OVRInput.Button.PrimaryIndexTrigger, OculusController) || OVRInput.GetDown(OVRInput.Button.SecondaryIndexTrigger, OculusController)
     : false;
@@ -145,6 +148,7 @@ public class WandController : MonoBehaviour
             UpdateSphereColliders(gameObject, gameObject.GetComponent<SphereCollider>());
             //gesture = GetComponentInChildren<GestureDetector>();
 
+            // If a hand is making a pinching gesture then it is assumed that it's grabbing (Gestures can be altered)
             if (hand && hand.GetFingerIsPinching(OVRHand.HandFinger.Index))
             {
                 // it should get to grabbing ofc
@@ -161,14 +165,9 @@ public class WandController : MonoBehaviour
         #endregion
 
 
-        //bool grabbing = handController.GetIndexFingerIsPinching() && handController.GetFingerIsPinching(Oculus.Interaction.Input.HandFinger.Thumb);
-
-        //bool isGrab = OVRInput.;
-        //bool isRelease;
-
-        //bool upButtonDown = isOculusRift?
-        //    OVRInput.GetDown(OVRInput.Button.PrimaryThumbstickDown, OculusController) || OVRInput.GetDown(OVRInput.Button.SecondaryThumbstickDown, OculusController)
-        //    : 
+        /* Check if object can be dragged and compare the objects dragging/grabbing priority
+         * against other draggable object in the proximity
+         */
         if (gripDown && intersectingGrabbables.Any(x => x!= null) && draggingObjects.Count == 0)
         {
             var potentialDrags = intersectingGrabbables.Where(x => x != null).ToList();
@@ -191,16 +190,14 @@ public class WandController : MonoBehaviour
         if (draggingObjects.Count > 0)
         {
             if (!isOculusRift)
-                isOculusRift = false; //controller.TriggerHapticPulse(100); does nothing toberemoved
+                isOculusRift = false;
         }
 
-        //brush actions : SteamVR_Controller.ButtonMask.Grip
-
         bool padPressDown = isOculusRift ? OVRInput.Get(OVRInput.Button.PrimaryThumbstick, OculusController) || OVRInput.Get(OVRInput.Button.SecondaryThumbstick, OculusController)
-           : false; // controller.GetPressDown(gripButton);
+           : false;
 
         bool padPressUp = isOculusRift ? OVRInput.GetUp(OVRInput.Button.PrimaryThumbstick, OculusController) || OVRInput.GetUp(OVRInput.Button.SecondaryThumbstick, OculusController)
-          : false; // controller.GetPressDown(gripButton);
+          : false;
 
         #region details on demand
         //detail on demand actions

@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * Used for debugging purposes
+ */
 public class Debugging : MonoBehaviour
 {
 
@@ -22,7 +25,7 @@ public class Debugging : MonoBehaviour
 
         Debug.Log("Compare sphere transforms: " + comparePositions(sphereCollider.gameObject, sphere));
     }
-
+    // get sphere child object from specified game object
     GameObject getSphereInHand(GameObject handObj, string childObjName) {
         var transforms = handObj.GetComponentsInChildren<Transform>();
 

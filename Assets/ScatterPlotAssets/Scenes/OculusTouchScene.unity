@@ -739,21 +739,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &766192335
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 766192325}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2380ddd5ef18a3c469a1df3f45e35864, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OculusController: 64
-  isOculusRift: 1
-  theBrushingMaterial: {fileID: 0}
 --- !u!135 &766192336
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -767,6 +752,21 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.05
   m_Center: {x: -0.09, y: -0.04, z: -0.04}
+--- !u!114 &766192343
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 766192325}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0172b9ac20a7c8446a347268c1c4b7d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OculusController: 64
+  isOculusRift: 1
+  theBrushingMaterial: {fileID: 0}
 --- !u!850595691 &968599574
 LightingSettings:
   m_ObjectHideFlags: 0
@@ -917,21 +917,6 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.03
   m_Center: {x: 0, y: -0.04, z: 0}
---- !u!114 &1146368867
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1146368864}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2380ddd5ef18a3c469a1df3f45e35864, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OculusController: 1
-  isOculusRift: 1
-  theBrushingMaterial: {fileID: 0}
 --- !u!54 &1146368868
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -948,6 +933,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1146368870
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1146368864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0172b9ac20a7c8446a347268c1c4b7d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OculusController: 1
+  isOculusRift: 1
+  theBrushingMaterial: {fileID: 0}
 --- !u!1001 &1213677401
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1368,21 +1368,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &1432641346
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1432641336}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2380ddd5ef18a3c469a1df3f45e35864, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OculusController: 32
-  isOculusRift: 1
-  theBrushingMaterial: {fileID: 0}
 --- !u!135 &1432641347
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1396,6 +1381,21 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.05
   m_Center: {x: 0.09, y: 0.04, z: 0.04}
+--- !u!114 &1432641354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1432641336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0172b9ac20a7c8446a347268c1c4b7d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OculusController: 32
+  isOculusRift: 1
+  theBrushingMaterial: {fileID: 0}
 --- !u!1 &1672190934 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 112276, guid: d9809c5e8418bb047bf2c8ba1d1a2cec, type: 3}
@@ -1414,7 +1414,7 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1672190934}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.03
@@ -1435,7 +1435,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &1672190939
+--- !u!114 &1672190941
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1444,11 +1444,41 @@ MonoBehaviour:
   m_GameObject: {fileID: 1672190934}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2380ddd5ef18a3c469a1df3f45e35864, type: 3}
+  m_Script: {fileID: 11500000, guid: 0172b9ac20a7c8446a347268c1c4b7d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   OculusController: 2
   isOculusRift: 1
+  theBrushingMaterial: {fileID: 0}
+--- !u!114 &1672190942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1672190934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ef16aad3de7f574e9a6672156363948, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OculusController: 0
+  activeController: 0
+  hand: {fileID: 0}
+  isOculusRift: 0
+  brushingPoint: {fileID: 0}
+  isTouchDown: 0
+  trackedObject: {fileID: 0}
+  intersectingCollider: {fileID: 0}
+  intersectingGrabbables: []
+  draggingObjects: []
+  brushableCollider: {fileID: 0}
+  tracking: []
+  previousYValuePad: 0
+  incrementYValuePad: 0
+  yvaluePadTouchDown: 0
+  currentBrushView: {fileID: 0}
+  currentDetailView: {fileID: 0}
   theBrushingMaterial: {fileID: 0}
 --- !u!1001 &1926122841
 PrefabInstance:
