@@ -50,8 +50,9 @@ namespace VRige
         // Use this for initialization
         void Start()
         {
-            //edgeCreator = transform.GetComponent<EdgeCreator>();
+            //generate the graph from the dataset
             GenerateGraph(xmlDataset, key);
+            //experimental--palm ui events
             VRigeEventManager.PressPalmPyruvate += GenerateGraph;
             VRigeEventManager.PressPalmGlycolysis += GenerateGraph;
 
@@ -113,6 +114,7 @@ namespace VRige
             {
                 if (flag == false)
                 {
+                    //after generated reposition, generate labels
                     gameObject.transform.position = origin.transform.position;
                     generateLabels();
                     hideGraph(false);
@@ -122,7 +124,7 @@ namespace VRige
             }
 
         }
-
+        //realign position and rescale for correct vr size
         private void RealignGraph()
         {
 
@@ -133,8 +135,8 @@ namespace VRige
                 node.transform.position = newPos;
             }
             this.transform.localScale = new Vector3(0.4f, 0.4f, 0.4f);
-            //edgeParent.localScale = new Vector3(edgeParent.localScale.x * 0.4f, edgeParent.localScale.y, edgeParent.localScale.z * 0.4f);
         }
+        //main control method that will generate the graph based in the selected xml dataset
         public void GenerateGraph(TextAsset xml, TextAsset key)
         {
             t = 1.0f;
@@ -146,6 +148,7 @@ namespace VRige
             UndirectedGraph();
             AssignScatterplots();
         }
+        //write the file string that generates the correct node generations based on node data
         public void WriteDataset()
         {
             string dataset = "";
@@ -172,6 +175,7 @@ namespace VRige
             graphDataset = dataset;
         }
 
+        //assign correct scatterplot to correct node
         public void AssignScatterplots()
         {
             foreach(DataNode node in dataNodes)
@@ -183,7 +187,7 @@ namespace VRige
                 }
             }
         }
-
+        //get specific node from id
         public VirtualNode getVirtualNode(int dataNodeid)
         {
             foreach (VirtualNode node in nodes)
@@ -196,6 +200,9 @@ namespace VRige
             return null;
         }
 
+        //this creates data nodes based on the specific xml data inputted.
+        //As the xml data created by Kegg is generated in a certain way,
+        //this extracts that data into individual node data objects
         private void ExtractDataset()
         {
             if (xmlDataset != null)
@@ -286,27 +293,9 @@ namespace VRige
                         }
                     }
                 }
-                //string list = "";
-               /* foreach (DataNode node in dataNodes)
-                {
-                    string rList = "";
-                    foreach (int relation in node.Relations)
-                    {
-                        rList = rList + $"          >{getDataNodeFromID(relation).DisplayName}\n";
-                    }
-                    foreach (int sub in node.SubReactions)
-                    {
-                        rList = rList + $"          -{getDataNodeFromID(sub).DisplayName}\n";
-                    }
-                    foreach (int prod in node.ProdReactions)
-                    {
-                        rList = rList + $"          +{getDataNodeFromID(prod).DisplayName}\n";
-                    }
-                    Debug.Log($"({node.Id}) { node.Name}: { node.DisplayName}\n" + rList);
-                }*/
             }
         }
-
+        //get data node from specific id
         private DataNode getDataNodeFromID(int id)
         {
             foreach(DataNode node in dataNodes)
@@ -318,6 +307,7 @@ namespace VRige
             }
             return null;
         }
+        // used by ui to scale and translate graph
         public void MoveGraphX(float f)
         {
             gameObject.transform.position = new Vector3(f, gameObject.transform.position.y, gameObject.transform.position.z);
@@ -336,6 +326,7 @@ namespace VRige
             //gameObject.transform.position = origin.transform.position;
         }
 
+        //generates the labels for each node
         private void generateLabels()
         {
             foreach(VirtualNode node in nodes)

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class DataPoint : MonoBehaviour
 {
+
+    //old version, not used
     [SerializeField]
     private string id;
 

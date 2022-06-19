@@ -94,7 +94,7 @@ public class ScatterPlotSceneManager : MonoBehaviour
     }
 
 
-
+    //generates the 2 axis graph for a specific node
     public bool SpawnGraph(Transform node, Vector3 location, int spID)
     {
         /*GameObject graph = new GameObject();

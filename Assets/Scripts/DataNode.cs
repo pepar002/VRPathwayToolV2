@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class DataNode
 {
+
+    /// <summary>
+    /// stores the type of data node from the kegg database to be used with graph generation
+    /// </summary>
     private int id;
     private string name;
     private string displayName;

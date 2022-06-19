@@ -5,6 +5,8 @@ using UnityEngine.Events;
 
 public static class VRigeEventManager{
 
+
+    //this class is no currently being used, but was created for early testing with events
     public static event UnityAction<float> SliderMoveX;
 
     public static event UnityAction PressPalmUpButton;

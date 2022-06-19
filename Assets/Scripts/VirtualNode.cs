@@ -95,7 +95,7 @@ namespace VRige
 
 
         }
-
+        //when a node is selected spawn the specific graph if there is one
         public void selectNode()
         {
             if (!activeNode)

@@ -21,6 +21,7 @@ namespace VRige
 
         public ArrayList CylEdges { get => cylEdges; }
 
+        //add edges for each node
         public void addEdges(Edge e)
         {
             bool hasEdge = false;
@@ -51,7 +52,7 @@ namespace VRige
                 CylEdges.Add(c);
             }
         }
-
+        //deletes the edges. primarily used when spawning a different pathway
         public void deleteEdges()
         {
             foreach(GameObject c in CylEdges)
@@ -69,6 +70,7 @@ namespace VRige
             UpdateCylEdges();
         }
 
+        //update the edge connections when moved or grabbed
         void UpdateCylEdges()
         {
             /*foreach(GameObject g in cylEdges)
@@ -96,7 +98,7 @@ namespace VRige
                 
             }
         }
-
+        //not used - was gl lines as edges
         void DrawConnectingLines()
         {
             //GL.PushMatrix();

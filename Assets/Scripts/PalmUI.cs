@@ -15,7 +15,12 @@ public class PalmUI : MonoBehaviour
 
     
 
-    // Start is called before the first frame update
+   /// <summary>
+   /// Whole class not used anymore, was used for testing purposes in the old version of this
+   /// 
+   /// essentially allowed for a ui to pop up when you held your palm up. pressing buttons moved graph and spawned new pathways
+   /// </summary>
+   /// 
     void Start()
     {
         mesh = GetComponent<MeshRenderer>();
