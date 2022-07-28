@@ -11,6 +11,8 @@ TagManager:
   - Scatterplot3D
   - LinkedVisualisation
   - Axis
+  - NodeName
+  - NodeDescription
   layers:
   - Default
   - TransparentFX

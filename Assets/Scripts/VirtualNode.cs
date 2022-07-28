@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace VRige
 {
@@ -39,6 +40,8 @@ namespace VRige
         private MeshRenderer mesh;
         public MeshRenderer outline;
 
+        public NodeMenu nodeMenu;
+
         public bool containsData;
 
         public int DataID { get => dataID; set => dataID = value; }
@@ -51,6 +54,9 @@ namespace VRige
             neighbors = new ArrayList();
             mesh = GetComponent<MeshRenderer>();
             spID = -1;
+
+            GameObject menu = (GameObject)Resources.Load("NodeMenu");
+            //nodeMenu = menu.GetComponent<NodeMenu>();
         }
 
         private void Start()
@@ -106,6 +112,11 @@ namespace VRige
                     if (containsData)
                     {
                         axis = ScatterPlotSceneManager.Instance.SpawnGraph(transform, transform.position, spID);
+                        nodeMenu.transform.position = transform.position;
+                        nodeMenu.gameObject.SetActive(true);
+                        //NodeMenu menu = Instantiate(nodeMenu);
+                        //menu.transform.position = transform.position;
+                        //menu.Name.text = name;
                     }
                     
                     //axis.transform.localScale = new Vector3(axis.transform.localScale.x * 2, axis.transform.localScale.y * 2, axis.transform.localScale.z * 2);
@@ -118,7 +129,9 @@ namespace VRige
                 }
                 else
                 {
-/*                    axis.SetActive(true);
+                    nodeMenu.gameObject.SetActive(true);
+
+                    /*axis.SetActive(true);
                     foreach (GameObject v in visualizations)
                     {
                         v.SetActive(true);
@@ -136,6 +149,7 @@ namespace VRige
                 activeNode = false;
                 //axis.SetActive(false);
                 mesh.material.color = defaultColor;
+                nodeMenu.gameObject.SetActive(false);
             }
             
         }

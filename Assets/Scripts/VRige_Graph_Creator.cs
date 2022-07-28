@@ -17,6 +17,7 @@ namespace VRige
         public TextAsset key;
         public EdgeCreator edgeCreator;
         public Transform edgeParent;
+        public NodeMenu nodeMenu;
 
         // 3D coordinates
         public Vector3[,,] gridPositions3D;
@@ -46,6 +47,8 @@ namespace VRige
 
         private bool flag = false;
         private List<DataNode> dataNodes;
+
+        private bool nodesEnabled = true;
 
         // Use this for initialization
         void Start()
@@ -116,7 +119,7 @@ namespace VRige
                 {
                     //after generated reposition, generate labels
                     gameObject.transform.position = origin.transform.position;
-                    generateLabels();
+                    generateUI();
                     hideGraph(false);
                     RealignGraph();
                     flag = true;
@@ -124,6 +127,30 @@ namespace VRige
             }
 
         }
+
+        public void hideNodes()
+        {
+            if (nodesEnabled)
+            {
+                foreach(VirtualNode node in nodes)
+                {
+                    node.gameObject.SetActive(false);
+                }
+                nodesEnabled = false;
+                Debug.Log("Hiding Nodes");
+            }
+            else
+            {
+                foreach (VirtualNode node in nodes)
+                {
+                    node.gameObject.SetActive(true);
+                }
+                nodesEnabled = true;
+                Debug.Log("Showing Nodes");
+
+            }
+        }
+
         //realign position and rescale for correct vr size
         private void RealignGraph()
         {
@@ -327,12 +354,17 @@ namespace VRige
         }
 
         //generates the labels for each node
-        private void generateLabels()
+        private void generateUI()
         {
             foreach(VirtualNode node in nodes)
             {
                 GameObject l = Instantiate(label, node.transform);
                 l.GetComponentInChildren<TextMesh>().text = node.name;
+                NodeMenu menu = Instantiate(nodeMenu);
+                menu.transform.position = node.transform.position;
+                node.nodeMenu = menu;
+                menu.Name.text = node.name;
+                menu.gameObject.SetActive(false);
             }
         }
 

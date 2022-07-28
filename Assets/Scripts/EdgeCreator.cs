@@ -18,6 +18,7 @@ namespace VRige
         public GameObject edgeParent;
         public float xScale;
         public float yScale;
+        private bool edgesEnabled = true;
 
         public ArrayList CylEdges { get => cylEdges; }
 
@@ -64,6 +65,26 @@ namespace VRige
             edges = new ArrayList();
         }
 
+        public void hideEdges()
+        {
+            if (edgesEnabled)
+            {
+                foreach (GameObject edge in cylEdges)
+                {
+                    edge.SetActive(false);
+                }
+                edgesEnabled = false;
+            }
+            else
+            {
+                foreach (GameObject edge in cylEdges)
+                {
+                    edge.SetActive(true);
+                }
+                edgesEnabled = true;
+
+            }
+        }
         void OnPostRender()
         {
             //DrawConnectingLines();

@@ -132,6 +132,7 @@ MonoBehaviour:
   addDeg: 0
   rotateToCenter: 0
   outline: {fileID: 8325289548966789153}
+  nodeMenu: {fileID: 0}
   containsData: 0
 --- !u!114 &-75828174218615309
 MonoBehaviour:
