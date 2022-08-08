@@ -65,9 +65,9 @@ namespace VRige
             edges = new ArrayList();
         }
 
-        public void hideEdges()
+        public void hideEdges(bool hide)
         {
-            if (edgesEnabled)
+            if (hide && edgesEnabled)
             {
                 foreach (GameObject edge in cylEdges)
                 {
@@ -75,7 +75,7 @@ namespace VRige
                 }
                 edgesEnabled = false;
             }
-            else
+            else if(!hide && !edgesEnabled)
             {
                 foreach (GameObject edge in cylEdges)
                 {

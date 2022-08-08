@@ -2851,6 +2851,7 @@ GameObject:
   - component: {fileID: 1738318635026088797}
   - component: {fileID: 2085958879914978054}
   - component: {fileID: 3367160194434964348}
+  - component: {fileID: 1507726848336782621}
   m_Layer: 0
   m_Name: Axis
   m_TagString: Untagged
@@ -3032,3 +3033,15 @@ MonoBehaviour:
   _movementProvider: {fileID: 0}
   _handAligment: 2
   _handGrabPoints: []
+--- !u!114 &1507726848336782621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1960369366394742}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10f71dc600fe4284b88d69e1ee5c3e97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

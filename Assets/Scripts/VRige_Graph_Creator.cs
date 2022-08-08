@@ -50,6 +50,8 @@ namespace VRige
 
         private bool nodesEnabled = true;
 
+        public enum PathwayType { PYRUVATE, CITRATE }
+
         // Use this for initialization
         void Start()
         {
@@ -120,7 +122,6 @@ namespace VRige
                     //after generated reposition, generate labels
                     gameObject.transform.position = origin.transform.position;
                     generateUI();
-                    hideGraph(false);
                     RealignGraph();
                     flag = true;
                 }
@@ -128,23 +129,25 @@ namespace VRige
 
         }
 
-        public void hideNodes()
+        public void hideNodes(bool hide)
         {
-            if (nodesEnabled)
+            if (hide && nodesEnabled)
             {
                 foreach(VirtualNode node in nodes)
                 {
                     node.gameObject.SetActive(false);
                 }
+                edgeCreator.hideEdges(true);
                 nodesEnabled = false;
                 Debug.Log("Hiding Nodes");
             }
-            else
+            else if(!hide && !nodesEnabled)
             {
                 foreach (VirtualNode node in nodes)
                 {
                     node.gameObject.SetActive(true);
                 }
+                edgeCreator.hideEdges(false);
                 nodesEnabled = true;
                 Debug.Log("Showing Nodes");
 
@@ -163,10 +166,11 @@ namespace VRige
             }
             this.transform.localScale = new Vector3(0.4f, 0.4f, 0.4f);
         }
+
         //main control method that will generate the graph based in the selected xml dataset
         public void GenerateGraph(TextAsset xml, TextAsset key)
         {
-            t = 1.0f;
+            t = 1f;
             xmlDataset = xml;
             this.key = key;
             ExtractDataset();
@@ -174,6 +178,13 @@ namespace VRige
             edgeCreator = FindObjectOfType<EdgeCreator>();
             UndirectedGraph();
             AssignScatterplots();
+        }
+
+        public void GenerateGraph(string pathway)
+        {
+            TextAsset map = Resources.Load<TextAsset>("Datasets/" + pathway + "Map");
+            TextAsset key = Resources.Load<TextAsset>("Datasets/" + pathway + "Key");
+            GenerateGraph(map, key);
         }
         //write the file string that generates the correct node generations based on node data
         public void WriteDataset()
@@ -349,7 +360,7 @@ namespace VRige
         }
         public void ScaleGraph(float f)
         {
-            gameObject.transform.localScale = new Vector3(f, f, f);
+            gameObject.transform.localScale = new Vector3(gameObject.transform.localScale.x + f, gameObject.transform.localScale.y + f, gameObject.transform.localScale.z + f);
             //gameObject.transform.position = origin.transform.position;
         }
 
@@ -385,33 +396,6 @@ namespace VRige
                     }
                 }
             }
-        }
-
-        private void hideGraph(bool hide)
-        {
-            if (hide)
-            {
-                /*foreach (VirtualNode n in nodes)
-                {
-                    n.GetComponent<Renderer>().enabled = false;
-                }
-                foreach(GameObject edge in edgeCreator.CylEdges)
-                {
-                    edge.GetComponent<Renderer>().enabled = false;
-                }*/
-            }
-            else
-            {
-                /*foreach (VirtualNode n in nodes)
-                {
-                    n.GetComponent<Renderer>().enabled = true;
-                }
-                foreach (GameObject edge in edgeCreator.CylEdges)
-                {
-                    edge.GetComponent<Renderer>().enabled = true;
-                }*/
-            }
-            
         }
 
         // creates undirected graph
@@ -571,7 +555,6 @@ namespace VRige
                 }
 
                 GraphSize = nodes.Count;
-                hideGraph(true);
             }
         }
 

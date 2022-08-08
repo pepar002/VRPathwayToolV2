@@ -133,6 +133,7 @@ MonoBehaviour:
   rotateToCenter: 0
   outline: {fileID: 8325289548966789153}
   nodeMenu: {fileID: 0}
+  headCamera: {fileID: 0}
   containsData: 0
 --- !u!114 &-75828174218615309
 MonoBehaviour:
@@ -444,7 +445,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _facing: 0
-  _doubleSided: 1
+  _doubleSided: 0
 --- !u!1 &5723661840105299663
 GameObject:
   m_ObjectHideFlags: 0

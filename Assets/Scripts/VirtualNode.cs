@@ -41,6 +41,8 @@ namespace VRige
         public MeshRenderer outline;
 
         public NodeMenu nodeMenu;
+        public Transform spLocation;
+        public GameObject headCamera;
 
         public bool containsData;
 
@@ -56,12 +58,24 @@ namespace VRige
             spID = -1;
 
             GameObject menu = (GameObject)Resources.Load("NodeMenu");
+            /*foreach(GameObject g in menu.GetComponentsInChildren<GameObject>())
+            {
+                if(g.name == "ScatterPlot")
+                {
+                    spLocation = g.transform;
+                }
+            }*/
             //nodeMenu = menu.GetComponent<NodeMenu>();
         }
 
         private void Start()
         {
-            if(spID > 0)
+            if (!headCamera)
+            {
+                headCamera = GameObject.Find("CenterEyeAnchor");
+            }
+
+            if (spID > 0)
             {
                 containsData = true;
                 outline.gameObject.SetActive(true);
@@ -113,6 +127,10 @@ namespace VRige
                     {
                         axis = ScatterPlotSceneManager.Instance.SpawnGraph(transform, transform.position, spID);
                         nodeMenu.transform.position = transform.position;
+                        Vector3 v = nodeMenu.transform.position - headCamera.transform.position;
+                        Quaternion q = Quaternion.LookRotation(v);
+                        nodeMenu.transform.rotation = q;
+
                         nodeMenu.gameObject.SetActive(true);
                         //NodeMenu menu = Instantiate(nodeMenu);
                         //menu.transform.position = transform.position;
@@ -129,7 +147,12 @@ namespace VRige
                 }
                 else
                 {
+                    nodeMenu.transform.position = transform.position;
+                    Vector3 v = nodeMenu.transform.position - headCamera.transform.position;
+                    Quaternion q = Quaternion.LookRotation(v);
+                    nodeMenu.transform.rotation = q;
                     nodeMenu.gameObject.SetActive(true);
+
 
                     /*axis.SetActive(true);
                     foreach (GameObject v in visualizations)

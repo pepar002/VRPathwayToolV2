@@ -23,6 +23,7 @@ public static class VRigeEventManager{
     public static void OnPressPalmGlycolysis(TextAsset xml, TextAsset key) => PressPalmGlycolysis?.Invoke(xml, key);
 
 
+
     public static void OnSliderMoveX(float f) => SliderMoveX?.Invoke(f);
 }
 

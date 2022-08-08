@@ -29,6 +29,8 @@ public class ScatterPlotSceneManager : MonoBehaviour
     [SerializeField]
     DataObjectMetadata metadata;
 
+    public GameObject headCamera;
+
 
     static ScatterPlotSceneManager _instance;
     public static ScatterPlotSceneManager Instance
