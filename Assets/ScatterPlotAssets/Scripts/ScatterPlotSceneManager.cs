@@ -97,61 +97,15 @@ public class ScatterPlotSceneManager : MonoBehaviour
 
 
     //generates the 2 axis graph for a specific node
-    public bool SpawnGraph(Transform node, Vector3 location, int spID)
+    public bool SpawnGraph(Transform node, Vector3 location, int spID, string nodeName)
     {
-        /*GameObject graph = new GameObject();
-        graph.name = node.name + " Graph";
-        graph = Instantiate(graph, node);
-        GameObject obj = (GameObject)Instantiate(axisPrefab, graph.transform);*/
-
-        /*
-                if (sceneAxes.Count >= 1)
-                {
-                    GameObject axisClone = sceneAxes.Last().Clone();
-                    //axisClone.transform.rotation = obj.transform.rotation;
-                    axisClone.transform.position = location;
-                    //axisClone.transform.localScale = axis.transform.localScale;
-
-                    AddAxis(axisClone.GetComponent<SAxis>());
-                    return axisClone;
-                }
-                else {
-                    GameObject obj = (GameObject)Instantiate(axisPrefab);
-                    obj.transform.position = location;
-                    SAxis axis = obj.GetComponent<SAxis>();
-                    axis.Init(dataObject, 2, false);
-                    axis.InitOrigin(location, obj.transform.rotation);
-                    //axis.transform.localScale = new Vector3(axis.transform.localScale.x * 2, axis.transform.localScale.y * 2, axis.transform.localScale.z * 2);
-                    axis.tag = "Axis";
-                    AddAxis(axis);
-                    return axis.gameObject;
-                }*/
-
-        //int id = 2;  // to be changed when dataset attribute is relevant
-
-
-        if (axisIds.Contains(1)) // if axis control axis already exists
-        {
-            GenerateCloneAxis(1, location, Quaternion.Euler(0, 0, 90), true);
-
-        }
-        else {
-            GenerateAxis(1, location, Quaternion.Euler(0, 0, 90), true);
-        }
-
-        if (axisIds.Contains(spID))
-        {
-            GenerateCloneAxis(spID, location, Quaternion.Euler(0, 180, 0), false);
-        }
-        else
-        {
-            GenerateAxis(spID, location, Quaternion.Euler(0, 180, 0), false);
-        }
+        GenerateAxis(spID, location, Quaternion.Euler(0, 180, 0), nodeName, false); // Vertical axis
+        GenerateAxis(1, location, Quaternion.Euler(0, 0, 90), nodeName, true); // Horizontal axis       
 
         return true;
     }
 
-   void GenerateAxis(int id, Vector3 location, Quaternion rotation, bool horizantal)
+   void GenerateAxis(int id, Vector3 location, Quaternion rotation, string nodeName, bool horizontal)
     {
         // id 1 is control attribute
 
@@ -159,13 +113,14 @@ public class ScatterPlotSceneManager : MonoBehaviour
         GameObject obj = (GameObject)Instantiate(axisPrefab);
         float h = obj.GetComponent<BoxCollider>().size.y * obj.transform.localScale.y;
 
-        if (horizantal) location = new Vector3(location.x - h / 2, location.y - h / 2, location.z);
+        if (horizontal) location = new Vector3(location.x - h / 2, location.y - h / 2, location.z);
         obj.transform.position = location;
         obj.transform.rotation = rotation;
         // Horizontal Axis
         SAxis axis = obj.GetComponent<SAxis>();
-        axis.Init(dataObject, id, false);  // id = 1 i.e. control attribute
-        
+        if (horizontal) axis.Init(dataObject, id, false, nodeName);  // id = 1 i.e. control attribute
+        else axis.Init(dataObject, id, false);
+
         axis.InitOrigin(location, rotation);
         axis.tag = "Axis";
         AddAxis(axis);
@@ -173,7 +128,7 @@ public class ScatterPlotSceneManager : MonoBehaviour
     }
 
     /*
-     * Generates a clone of an existing axis (To be removed)
+     * Generates the horizontal axis of a 2D SP (To be merged with GenerateVAxis)
      */
     void GenerateCloneAxis(int id, Vector3 location, Quaternion rotation, bool horizontal)
     {
@@ -223,7 +178,7 @@ public class ScatterPlotSceneManager : MonoBehaviour
 
 
     /*
-     * Create Scatter Plot Matrices
+     * TODO: Does not create SPLOMS, it creates a 3D SP instead!!
      */
     void CreateSPLOMS()
     {

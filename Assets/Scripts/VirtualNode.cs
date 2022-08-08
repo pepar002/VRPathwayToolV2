@@ -111,7 +111,7 @@ namespace VRige
                 {
                     if (containsData)
                     {
-                        axis = ScatterPlotSceneManager.Instance.SpawnGraph(transform, transform.position, spID);
+                        axis = ScatterPlotSceneManager.Instance.SpawnGraph(transform, transform.position, spID, this.name);
                         nodeMenu.transform.position = transform.position;
                         nodeMenu.gameObject.SetActive(true);
                         //NodeMenu menu = Instantiate(nodeMenu);

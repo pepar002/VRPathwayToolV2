@@ -71,11 +71,12 @@ public class SAxis : MonoBehaviour, SGrabbable {
     SAxis ghostSourceAxis = null;
 
 
-    public void Init(DataBinding.DataObject srcData, int idx, bool isPrototype = false)
+    public void Init(DataBinding.DataObject srcData, int idx, bool isPrototype = false, string suffix = "")
     {
         SourceIndex = idx;
         axisId = idx;
-        name = "axis " + srcData.indexToDimension(idx);
+        if (!String.IsNullOrEmpty(suffix)) suffix = "-" + suffix;
+        name = "axis " + srcData.indexToDimension(idx) + suffix;
 
 
         AttributeRange = srcData.DimensionsRange[axisId];
