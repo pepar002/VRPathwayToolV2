@@ -222,6 +222,7 @@ namespace VRige
                 if(spID >= 0)
                 {
                     getVirtualNode(node.Id).spID = spID;
+                    getVirtualNode(node.Id).name = node.Name;
                 }
             }
         }

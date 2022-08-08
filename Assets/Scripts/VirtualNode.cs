@@ -125,7 +125,7 @@ namespace VRige
                 {
                     if (containsData)
                     {
-                        axis = ScatterPlotSceneManager.Instance.SpawnGraph(transform, transform.position, spID);
+                        axis = ScatterPlotSceneManager.Instance.SpawnGraph(transform, transform.position, spID, this.name);
                         nodeMenu.transform.position = transform.position;
                         Vector3 v = nodeMenu.transform.position - headCamera.transform.position;
                         Quaternion q = Quaternion.LookRotation(v);
