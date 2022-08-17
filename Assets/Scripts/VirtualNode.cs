@@ -34,14 +34,14 @@ namespace VRige
         public bool rotateToCenter = false;
         private Color defaultColor;
 
-        private bool axis = false;
-        private List<GameObject> visualizations;
-
         private MeshRenderer mesh;
         public MeshRenderer outline;
 
+        private bool axis = false;
+        private List<GameObject> scatterplots;
         public NodeMenu nodeMenu;
         public Transform spLocation;
+        public GameObject spParent;
         public GameObject headCamera;
 
         public bool containsData;
@@ -58,13 +58,6 @@ namespace VRige
             spID = -1;
 
             GameObject menu = (GameObject)Resources.Load("NodeMenu");
-            /*foreach(GameObject g in menu.GetComponentsInChildren<GameObject>())
-            {
-                if(g.name == "ScatterPlot")
-                {
-                    spLocation = g.transform;
-                }
-            }*/
             //nodeMenu = menu.GetComponent<NodeMenu>();
         }
 
@@ -85,7 +78,6 @@ namespace VRige
                 containsData = false;
             }
         }
-
 
         // set neighbours
         public void setNodes(VirtualNode a, VirtualNode b)
@@ -113,6 +105,11 @@ namespace VRige
                 transform.position += new Vector3(randX, randY, randZ);
             }
 
+            if (axis)
+            {
+/*                GameObject.Find("axis " + gameObject.name).transform.parent = spParent.transform;
+                GameObject.Find("axis CONDITION-" + gameObject.name).transform.parent = spParent.transform;*/
+            }
 
         }
         //when a node is selected spawn the specific graph if there is one
@@ -125,16 +122,37 @@ namespace VRige
                 {
                     if (containsData)
                     {
-                        axis = ScatterPlotSceneManager.Instance.SpawnGraph(transform, transform.position, spID, this.name);
                         nodeMenu.transform.position = transform.position;
+
                         Vector3 v = nodeMenu.transform.position - headCamera.transform.position;
                         Quaternion q = Quaternion.LookRotation(v);
                         nodeMenu.transform.rotation = q;
 
+                        foreach (Transform g in nodeMenu.GetComponentsInChildren<Transform>())
+                        {
+                            if (g.name == "spLocation")
+                            {
+                                spLocation = g;
+                            }
+                        }
+
+
+                        spParent = new GameObject(gameObject.name + " sp");
+
+                        
+
+                        spParent.transform.position = spLocation.position;
+                        axis = ScatterPlotSceneManager.Instance.SpawnGraph(spLocation, spLocation.position, spID, this.name);
+
+
+                        GameObject.Find("axis " + gameObject.name).transform.parent = spParent.transform;
+                        GameObject.Find("axis CONDITION-" + gameObject.name).transform.parent = spParent.transform;
+
+                        Vector3 spV = spParent.transform.position - headCamera.transform.position;
+                        Quaternion q2 = Quaternion.LookRotation(spV);
+                        spParent.transform.rotation = q2;
+
                         nodeMenu.gameObject.SetActive(true);
-                        //NodeMenu menu = Instantiate(nodeMenu);
-                        //menu.transform.position = transform.position;
-                        //menu.Name.text = name;
                     }
                     
                     //axis.transform.localScale = new Vector3(axis.transform.localScale.x * 2, axis.transform.localScale.y * 2, axis.transform.localScale.z * 2);
@@ -147,18 +165,31 @@ namespace VRige
                 }
                 else
                 {
-                    nodeMenu.transform.position = transform.position;
-                    Vector3 v = nodeMenu.transform.position - headCamera.transform.position;
-                    Quaternion q = Quaternion.LookRotation(v);
-                    nodeMenu.transform.rotation = q;
-                    nodeMenu.gameObject.SetActive(true);
-
-
-                    /*axis.SetActive(true);
-                    foreach (GameObject v in visualizations)
+                    if (containsData)
                     {
-                        v.SetActive(true);
-                    }*/
+                        nodeMenu.transform.position = transform.position;
+                        Vector3 v = nodeMenu.transform.position - headCamera.transform.position;
+                        Quaternion q = Quaternion.LookRotation(v);
+                        nodeMenu.transform.rotation = q;
+
+                        try
+                        {
+                            foreach (GameObject sp in scatterplots)
+                            {
+                                sp.SetActive(true);
+                            }
+                        }
+                        catch
+                        {}
+
+                        nodeMenu.gameObject.SetActive(true);
+                        spParent.SetActive(true);
+                        /*axis.SetActive(true);
+                        foreach (GameObject v in visualizations)
+                        {
+                            v.SetActive(true);
+                        }*/
+                    }
                 }
                 mesh.material.color = Color.green;
             }
@@ -172,6 +203,50 @@ namespace VRige
                 activeNode = false;
                 //axis.SetActive(false);
                 mesh.material.color = defaultColor;
+                /*GameObject.Find("axis " + gameObject.name).transform.parent = spParent.transform;
+                GameObject.Find("axis CONDITION-" + gameObject.name).transform.parent = spParent.transform;*/
+                try
+                {
+                    GameObject.Find("axis " + gameObject.name).transform.position = spLocation.transform.position;
+                    GameObject.Find("axis CONDITION-" + gameObject.name).transform.position = spLocation.transform.position;
+                }
+                catch { }
+                
+
+                try
+                {
+                    scatterplots = new List<GameObject>();
+                    scatterplots.Add(GameObject.Find("axis " + gameObject.name));
+                    scatterplots.Add(GameObject.Find("axis CONDITION-" + gameObject.name));
+                    scatterplots.Add(GameObject.Find("axis " + gameObject.name + " axis CONDITION-" + gameObject.name + " visualisation"));
+                    scatterplots.Add(GameObject.Find("axis CONDITION visualisation"));
+                    scatterplots.Add(GameObject.Find("axis " + gameObject.name + " visualisation"));
+
+                    foreach(GameObject sp in scatterplots)
+                    {
+                        sp.SetActive(false);
+                    }
+
+                   /* GameObject.Find("axis " + gameObject.name).SetActive(false);
+                    GameObject.Find("axis CONDITION visualisation").SetActive(false);
+                    GameObject.Find("axis " + gameObject.name + " visualisation").SetActive(false);
+                    GameObject.Find("axis CONDITION-" + gameObject.name).SetActive(false);
+                    GameObject.Find("axis " + gameObject.name + " axis CONDITION-" + gameObject.name + " visualisation").SetActive(false);*/
+                }
+                catch {
+                }
+                try
+                {
+                    scatterplots.Add(GameObject.Find("axis CONDITION-" + gameObject.name + " visualisation"));
+                    scatterplots.Add(GameObject.Find("axis " + gameObject.name + " visualisation"));
+
+                    foreach (GameObject sp in scatterplots)
+                    {
+                        sp.SetActive(false);
+                    }
+                }
+                catch { }
+                //spParent.SetActive(false);
                 nodeMenu.gameObject.SetActive(false);
             }
             
