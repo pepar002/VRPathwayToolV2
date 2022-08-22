@@ -51,14 +51,23 @@ namespace VRige
 
         public bool containsData;
 
+        private bool menuUpdated = false;  // TO DO testing
+
+        private List<string> names;
+        private string formula;  // only for compounds
+        private string symbol;  // only for enzymes/ortholog
+
         public int DataID { get => dataID; set => dataID = value; }
         public Color DefaultColor { get => defaultColor; set => defaultColor = value; }
+        public List<string> Names { get => names; }
 
+        public string Formula { get => formula; }
 
         // initialization
         private void Awake()
         {
             neighbors = new ArrayList();
+            names = new List<string>();
             mesh = GetComponent<MeshRenderer>();
             spID = -1;
 
@@ -109,6 +118,7 @@ namespace VRige
                 float randZ = Random.Range(0, 0.1f);
                 transform.position += new Vector3(randX, randY, randZ);
             }
+
 
         }
         //when a node is selected spawn the specific graph if there is one
@@ -226,5 +236,63 @@ namespace VRige
             }
             return circleNode;
         }
+
+        public void GetInfo(string response)
+        {
+            string[] lines = response.Split(new[] { "\r\n", "\r", "\n" }, System.StringSplitOptions.RemoveEmptyEntries);
+            List<string> categories = new List<string> { "ENTRY", "NAME", "FORMULA", "COMMENT", "PATHWAY" };
+
+
+            bool foundName = false;
+
+            foreach (string line in lines)
+            {
+                //Debug.Log(line);
+                string[] words = line.Trim(new char[] { ' ', ';' }).Split(new char[] { ' ', '\t' }, System.StringSplitOptions.RemoveEmptyEntries);
+                if (words[0] == "NAME")
+                {
+                    foundName = true;
+                    names.Add(string.Join(" ", words[1..]));
+                    continue;
+                }
+                else if (categories.Contains(words[0]))
+                    foundName = false;
+
+                if (words[0] == "FORMULA" || words[0] == "SYMBOL")
+                    formula = words[1];
+
+
+                if (foundName)
+                    names.Add(line.Trim(new char[] { ' ', ';' }));
+            }
+            //Debug.Log(name);
+            if (name == "Enzyme_N6-(dihydrolipoyl)lysine")
+                Debug.Log(string.Format("Loading information works this node has {0} names and first name is {1}", names.Count, names.ToArray()[0]));
+
+            // TO DO testing
+            if (!menuUpdated && nodeMenu != null)
+            {
+                UpdateNodeMenu();
+                menuUpdated = true;
+            }
+        }
+
+        public void UpdateNodeMenu() {
+            // UPDATE node menu with formula and descriptions
+            if (formula != null && !string.IsNullOrEmpty(formula))
+            {
+                //Debug.Log(formula);
+                //Debug.Log(nodeMenu.Formula);
+                nodeMenu.Formula.text += ": " + formula;
+            }
+
+            if (names.Count > 0)
+            {
+                string description = string.Join("\n", names);
+
+                nodeMenu.Description.text += "\n" + description;
+            }
+        }
+
     }
 }

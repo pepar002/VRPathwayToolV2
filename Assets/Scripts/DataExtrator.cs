@@ -13,9 +13,9 @@ public class DataExtrator : MonoBehaviour
 
     private List<string> pathwayIds; // list of entry ids for the pathways related to pyruvate
     private Dictionary<string, XmlDocument> pathwayXmls;
-    private Dictionary<string, string> pathwayKeys;
+    //private Dictionary<string, string> pathwayKeys;
 
-
+    private string pathwayKeys;
     public Dictionary<string, XmlDocument> PathwayXmls { get => pathwayXmls; }
 
     private void Awake()
@@ -37,53 +37,54 @@ public class DataExtrator : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log("Pyruvate Pathway loaded: " + (pathwayIds.Count==13).ToString());
-        Debug.Log(String.Format("Pathways size: {0}",pathwayXmls.Count));
+        Debug.Log("Pyruvate Pathway loaded: " + (pathwayIds.Count==13 && pathwayXmls.Count>=1).ToString());
+        //Debug.Log(String.Format("Pathways size: {0}",pathwayXmls.Count));
 
-        //LoadRelatedPathways();
+        StartCoroutine(LoadRelatedPathways());
     }
 
     public void LoadPyruvatePathway() {
         // Get the xmlreponse for the first/default pathway (pyruvate)
-        IEnumerator iterator = SendRequest(URI + "/get/ko00620/kgml", GetPathwayXml);
+        IEnumerator iterator = SendRequest(URI + "/get/ko00620/kgml", GetPathwayXml, true);
         while (iterator.MoveNext())
         {
             if (iterator.Current != null)
-                Debug.Log(iterator.Current);
+                //Debug.Log(iterator.Current);
+                _ = 0; // Do nothing
         }
     }
-    public void LoadRelatedPathways() {
+    public IEnumerator LoadRelatedPathways() {
         foreach (string entryId in pathwayIds)
         {
-            StartCoroutine(SendRequest(String.Format("{0}/get/{1}/kgml", URI, entryId), GetPathwayXml, false));
+            yield return StartCoroutine(SendRequest(String.Format("{0}/get/{1}/kgml", URI, entryId), GetPathwayXml));
         }
 
-        StartCoroutine(WaitUntilPathwaysLoaded());
+        yield return StartCoroutine(WaitUntilPathwaysLoaded()); // TO DO remove; used to fill up the pathway keys
     }
 
-    private void ProcessAllPathwayKeys()
+    private IEnumerator ProcessAllPathwayKeys()
     {
         foreach (string entryId in pathwayIds)
         {
-            string[] pathwayContent = getPathwayContent(pathwayXmls[entryId]).ToArray();
+            string[] pathwayContent = GetPathwayContent(pathwayXmls[entryId]).ToArray();
             string contentURL ="";
             int size = pathwayContent.Length;
             int indexStart = 0;
             while (size > 100) {
                 contentURL = URI + "/list/" + string.Join("+", pathwayContent, 0, 100);
-                StartCoroutine(SendKeyRequest(contentURL, entryId, ProcessKeys));
+                yield return StartCoroutine(SendRequest(contentURL, ProcessKeys));
                 indexStart += 100;
                 size -= 100;
             }
 
             contentURL = URI + "/list/" + string.Join("+", pathwayContent, indexStart, size);
 
-            StartCoroutine(SendKeyRequest(contentURL, entryId, ProcessKeys));
+            yield return StartCoroutine(SendRequest(contentURL, ProcessKeys));
         }
 
     }
 
-    public IEnumerator SendRequest(string url, UnityAction<string> onSuccess, bool sync = true) {
+    public IEnumerator SendRequest(string url, UnityAction<string> onSuccess, bool sync = false) {
 
         #region Old http request code
         using UnityWebRequest request = UnityWebRequest.Get(url);
@@ -166,35 +167,34 @@ public class DataExtrator : MonoBehaviour
 
         Debug.Log(pathwayXmls.Count +" " + pathwayIds.Count);
 
-        ProcessAllPathwayKeys();
+        yield return StartCoroutine(ProcessAllPathwayKeys());
     }
 
+    // sends a request to get an image from a url
     public IEnumerator SendImageRequest(string url, UnityAction<Texture2D> onSuccess)
     {
-        using (UnityWebRequest request = UnityWebRequestTexture.GetTexture(url)){
+        UnityWebRequest request = UnityWebRequestTexture.GetTexture(url);
+        yield return request.SendWebRequest();
 
-            yield return request.SendWebRequest();
 
-            switch (request.result)
-            {
-                case UnityWebRequest.Result.ConnectionError:
-                case UnityWebRequest.Result.DataProcessingError:
-                    Debug.LogError(": Error: " + request.error);
-                    Debug.Log("url: " + url);
-                    yield return request.error;
-                    break;
-                case UnityWebRequest.Result.ProtocolError:
-                    Debug.LogError(": HTTP Error: " + request.error);
-                    yield return request.error;
-                    break;
-                case UnityWebRequest.Result.Success:
-                    Texture2D response = ((DownloadHandlerTexture)request.downloadHandler).texture;
-                    onSuccess(response);
-                    Debug.Log(":\nReceived: " + response);
-                    yield return request.downloadHandler.text;
-                    break;
-            }
-
+        switch (request.result)
+        {
+            case UnityWebRequest.Result.ConnectionError:
+            case UnityWebRequest.Result.DataProcessingError:
+                Debug.LogError(": Error: " + request.error);
+                Debug.Log("url: " + url);
+                yield return request.error;
+                break;
+            case UnityWebRequest.Result.ProtocolError:
+                Debug.LogError(": HTTP Error: " + request.error);
+                yield return request.error;
+                break;
+            case UnityWebRequest.Result.Success:
+                Texture2D response = ((DownloadHandlerTexture)request.downloadHandler).texture;
+                onSuccess(response);
+                //Debug.Log(":\nReceived: " + request.downloadHandler.text);
+                yield return request.downloadHandler;
+                break;
         }
     }
 
@@ -213,7 +213,7 @@ public class DataExtrator : MonoBehaviour
 
         if (pathway.Attributes["number"].Value == "00620") {
             XmlNodeList entries = doc.SelectNodes("/pathway/entry");
-            Debug.Log("In Data Extractor: "+entries.Count);
+            //Debug.Log("In Data Extractor: "+entries.Count);
             // record all ids of pathways related to pyruvate metabolism
             foreach (XmlNode entry in entries)
             {
@@ -231,13 +231,30 @@ public class DataExtrator : MonoBehaviour
 
     }
 
-    private void ProcessKeys(string pathwayEntry, string key) {
-        // TO DO process the received key text (append if already exists for each pathway)
+    private void ProcessKeys(string response) {
+        // TO DO process the received key text
+/*        string[] lines = response.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries);
+        string key = "";
+        Debug.Log(response);
+        foreach (string line in lines) {
+            //Debug.Log("Line: " + line);
+            // if enzyme/ortholog
+            if (line.Substring(0, 2) == "ko")
+            {
+                string[] words = line.Split(':', ' ', ';');
+
+            }
+            // if compound
+            else { 
+
+            }
+        }*/
+
     }
 
     // gets all compounds and enzymes entry ids from the pathway kml file
     // TODO can be done in getpathwayxml function (code reuse)
-    private List<string> getPathwayContent(XmlDocument doc) {
+    private List<string> GetPathwayContent(XmlDocument doc) {
         List<string> content = new List<string>();
 
         if (doc!= null) {

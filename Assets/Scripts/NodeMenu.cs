@@ -11,6 +11,7 @@ public class NodeMenu : MonoBehaviour
 
     public TMPro.TMP_Text Name;
     public TMPro.TMP_Text Description;
+    public TMPro.TMP_Text Formula;
     //public Texture2D Image;
     public Image Image;
     void Start()

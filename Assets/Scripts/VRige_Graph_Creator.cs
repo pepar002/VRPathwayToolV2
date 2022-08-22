@@ -181,7 +181,7 @@ namespace VRige
             edgeCreator = FindObjectOfType<EdgeCreator>();
             UndirectedGraph();
             AssignScatterplots();
-            //SendNodeApiRequests();
+            SendNodeApiRequests();
         }
 
 /*        public void GenerateGraph(string pathway)
@@ -258,7 +258,7 @@ namespace VRige
                 //doc.LoadXml(xmlDataset.text);
 
                 XmlNodeList nodeList = doc.SelectNodes("/pathway/entry");
-                Debug.Log("In Graph Creator: " + nodeList.Count);
+                //Debug.Log("In Graph Creator: " + nodeList.Count);
                 foreach (XmlNode node in nodeList)
                 {
                     if(node.Attributes["type"].Value != "map")
@@ -613,15 +613,21 @@ namespace VRige
             //Execute coroutines for getting the node data synchronously with async to the application execution
             foreach (DataNode n in dataNodes) {
                 // send http request to get data node information
-                string url = DataExtrator.URI + "/get/" + n.Entry;
-                yield return StartCoroutine(DataExtrator.Instance.SendRequest(url, n.GetInfo, false));
+                VirtualNode vNode = getVirtualNode(n.Id);
+                if (vNode != null) {
+                    //Debug.Log(vNode);
+                    //Debug.Log(nodes.Count);
+                    string url = DataExtrator.URI + "/get/" + n.Entry;
+                    yield return StartCoroutine(DataExtrator.Instance.SendRequest(url, vNode.GetInfo));
 
-                // send http request to get compound image
-                if (n.Type == DataNode.EnumType.COMPOUND)
-                {
-                    string imageUrl = DataExtrator.URI + "/get/" + n.Entry + "/image";
-                    yield return StartCoroutine(DataExtrator.Instance.SendImageRequest(imageUrl, n.GetImage));
+                    // send http request to get compound image (images from API are in GIF format - not supported by unitywebrequest)
+                    /*                if (n.Type == DataNode.EnumType.COMPOUND)
+                                    {
+                                        string imageUrl = DataExtrator.URI + "/get/" + n.Entry + "/image";
+                                        yield return StartCoroutine(DataExtrator.Instance.SendImageRequest(imageUrl, vNode.GetImage));
+                                    }*/
                 }
+                vNode = null;
             }
 
         }
