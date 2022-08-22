@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using System.Xml;
 
 public static class VRigeEventManager{
 
@@ -13,14 +14,14 @@ public static class VRigeEventManager{
     public static event UnityAction PressPalmDownButton;
     public static event UnityAction PressPalmScaleUpButton;
     public static event UnityAction PressPalmScaleDownButton;
-    public static event UnityAction<TextAsset, TextAsset> PressPalmPyruvate;
-    public static event UnityAction<TextAsset, TextAsset> PressPalmGlycolysis;
+    public static event UnityAction<XmlDocument, string> PressPalmPyruvate;
+    public static event UnityAction<XmlDocument, string> PressPalmGlycolysis;
     public static void OnPressPalmUpButton() => PressPalmUpButton?.Invoke();
     public static void OnPressPalmDownButton() => PressPalmDownButton?.Invoke();
     public static void OnPressPalmScaleUpButton() => PressPalmScaleUpButton?.Invoke();
     public static void OnPressPalmScaleDownButton() => PressPalmScaleDownButton?.Invoke();
-    public static void OnPressPalmPyruvate(TextAsset xml, TextAsset key) => PressPalmPyruvate?.Invoke(xml, key);
-    public static void OnPressPalmGlycolysis(TextAsset xml, TextAsset key) => PressPalmGlycolysis?.Invoke(xml, key);
+    public static void OnPressPalmPyruvate(XmlDocument xml, string key) => PressPalmPyruvate?.Invoke(xml, key);
+    public static void OnPressPalmGlycolysis(XmlDocument xml, string key) => PressPalmGlycolysis?.Invoke(xml, key);
 
 
 

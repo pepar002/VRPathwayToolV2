@@ -13,7 +13,7 @@ namespace VRige
 
         [Header("Input Dataset to Create Graph")]
         private string graphDataset;
-        public TextAsset xmlDataset;
+        public XmlDocument xmlDataset;
         public TextAsset key;
         public EdgeCreator edgeCreator;
         public Transform edgeParent;
@@ -45,6 +45,7 @@ namespace VRige
         public float smoothTime = 1f;
         private float v2d = 1;
 
+
         private bool flag = false;
         private List<DataNode> dataNodes;
 
@@ -55,8 +56,9 @@ namespace VRige
         // Use this for initialization
         void Start()
         {
-            //generate the graph from the dataset
-            GenerateGraph(xmlDataset, key);
+            DataExtrator.Instance.LoadPyruvatePathway();
+            //generate the graph from the datasets
+            GenerateGraph(DataExtrator.Instance.PathwayXmls["ko00620"], key.text);
             //experimental--palm ui events
             VRigeEventManager.PressPalmPyruvate += GenerateGraph;
             VRigeEventManager.PressPalmGlycolysis += GenerateGraph;
@@ -168,24 +170,28 @@ namespace VRige
         }
 
         //main control method that will generate the graph based in the selected xml dataset
-        public void GenerateGraph(TextAsset xml, TextAsset key)
+        public void GenerateGraph(XmlDocument xml, string key)
         {
             t = 1f;
             xmlDataset = xml;
-            this.key = key;
-            ExtractDataset();
+            //this.key = key;
+            
+            ExtractDataset(key);
             WriteDataset();
             edgeCreator = FindObjectOfType<EdgeCreator>();
             UndirectedGraph();
             AssignScatterplots();
+            //SendNodeApiRequests();
         }
 
-        public void GenerateGraph(string pathway)
+/*        public void GenerateGraph(string pathway)
         {
             TextAsset map = Resources.Load<TextAsset>("Datasets/" + pathway + "Map");
             TextAsset key = Resources.Load<TextAsset>("Datasets/" + pathway + "Key");
             GenerateGraph(map, key);
-        }
+        }*/
+
+
         //write the file string that generates the correct node generations based on node data
         public void WriteDataset()
         {
@@ -218,11 +224,11 @@ namespace VRige
         {
             foreach(DataNode node in dataNodes)
             {
-                int spID = ScatterPlotSceneManager.Instance.assignNodeId(node.Name);
+                int spID = ScatterPlotSceneManager.Instance.assignNodeId(node.Entry);
                 if(spID >= 0)
                 {
                     getVirtualNode(node.Id).spID = spID;
-                    getVirtualNode(node.Id).name = node.Name;
+                    getVirtualNode(node.Id).name = node.Entry;
                 }
             }
         }
@@ -242,28 +248,32 @@ namespace VRige
         //this creates data nodes based on the specific xml data inputted.
         //As the xml data created by Kegg is generated in a certain way,
         //this extracts that data into individual node data objects
-        private void ExtractDataset()
+        private void ExtractDataset(string key)
         {
             if (xmlDataset != null)
             {
                 dataNodes = new List<DataNode>();
-                XmlDocument doc = new XmlDocument();
-                doc.LoadXml(xmlDataset.text);
+                // uses the pathway xml loaded from data extractor class
+                XmlDocument doc = xmlDataset;
+                //doc.LoadXml(xmlDataset.text);
+
                 XmlNodeList nodeList = doc.SelectNodes("/pathway/entry");
-                foreach(XmlNode node in nodeList)
+                Debug.Log("In Graph Creator: " + nodeList.Count);
+                foreach (XmlNode node in nodeList)
                 {
                     if(node.Attributes["type"].Value != "map")
                     {
                         int id = int.Parse(node.Attributes["id"].Value);
                         string type = node.Attributes["type"].Value;
                         String[] l = node.Attributes["name"].Value.Split(':',' ');
-                        string name = l[1];
-                        DataNode dNode = new DataNode(id, name, type);
+                        string entryId = l[1];
+                        DataNode dNode = new DataNode(id, entryId, type);
                         dataNodes.Add(dNode);
+
                     }
 
                 }
-                String keyData = key.text;
+                String keyData = key;
                 keyData = keyData.Replace("  	", ";");
                 String[] lines = keyData.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
                 foreach (string s in lines)
@@ -272,7 +282,7 @@ namespace VRige
                     //Debug.LogError(keyItems[0]);
                     foreach(DataNode node in dataNodes)
                     {
-                        if(node.Name == keyItems[0])
+                        if(node.Entry == keyItems[0])
                         {
                             if (keyItems[1].Contains("EC:")){
                                 int start = keyItems[1].IndexOf("EC:") + 3;
@@ -589,6 +599,31 @@ namespace VRige
                 }
             }
             return null;
+        }
+
+
+        // TESTING send api requests to get node information
+        // need to send out a few requests at a time (or else forbidden)
+        private void SendNodeApiRequests()
+        {
+            StartCoroutine(StartMultipleRoutines());
+           
+        }
+        private IEnumerator StartMultipleRoutines() {
+            //Execute coroutines for getting the node data synchronously with async to the application execution
+            foreach (DataNode n in dataNodes) {
+                // send http request to get data node information
+                string url = DataExtrator.URI + "/get/" + n.Entry;
+                yield return StartCoroutine(DataExtrator.Instance.SendRequest(url, n.GetInfo, false));
+
+                // send http request to get compound image
+                if (n.Type == DataNode.EnumType.COMPOUND)
+                {
+                    string imageUrl = DataExtrator.URI + "/get/" + n.Entry + "/image";
+                    yield return StartCoroutine(DataExtrator.Instance.SendImageRequest(imageUrl, n.GetImage));
+                }
+            }
+
         }
 
     }
