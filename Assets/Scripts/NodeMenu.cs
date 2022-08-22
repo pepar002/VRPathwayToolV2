@@ -8,6 +8,8 @@ public class NodeMenu : MonoBehaviour
     // Start is called before the first frame update
     public TMPro.TMP_Text Name;
     public TMPro.TMP_Text Description;
+    //public Texture2D Image;
+    public Image Image;
     void Start()
     {
         

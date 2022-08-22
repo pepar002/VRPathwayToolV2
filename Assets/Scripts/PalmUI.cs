@@ -13,7 +13,7 @@ public class PalmUI : MonoBehaviour
     public static bool collided = false;
     private bool activeGraph = false;
 
-    
+
 
    /// <summary>
    /// Whole class not used anymore, was used for testing purposes in the old version of this
@@ -112,14 +112,14 @@ public class PalmUI : MonoBehaviour
                     collided = true;
                     NodeGrabber hand = other.GetComponentInParent<NodeGrabber>();
                     mesh.material.color = Color.blue;
-                    VRigeEventManager.OnPressPalmPyruvate(Resources.Load<TextAsset>("Datasets/PyruvateMap"), Resources.Load<TextAsset>("Datasets/PyruvateKey"));
+                    VRigeEventManager.OnPressPalmPyruvate(DataExtrator.Instance.PathwayXmls["ko00620"], Resources.Load<TextAsset>("Datasets/PyruvateKey").text);
                 }
                 else if (name == "PalmButtonGlycolysis")
                 {
                     collided = true;
                     NodeGrabber hand = other.GetComponentInParent<NodeGrabber>();
                     mesh.material.color = Color.blue;
-                    VRigeEventManager.OnPressPalmGlycolysis(Resources.Load<TextAsset>("Datasets/GlycolysisMap"), Resources.Load<TextAsset>("Datasets/GlycolysisKey"));
+                    VRigeEventManager.OnPressPalmGlycolysis(DataExtrator.Instance.PathwayXmls["00010"], Resources.Load<TextAsset>("Datasets/GlycolysisKey").text);
                 }
             }
         }
