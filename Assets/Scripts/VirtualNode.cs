@@ -40,7 +40,10 @@ namespace VRige
         private bool axis = false;
         private List<SAxis> spAxis;
 
-        private List<GameObject> scatterplots;
+        private Button pinNode;
+        private Button unPinNode;
+        private bool pinned;
+
         public NodeMenu nodeMenu;
         public Transform spLocation;
         public GameObject spParent;
@@ -107,12 +110,6 @@ namespace VRige
                 transform.position += new Vector3(randX, randY, randZ);
             }
 
-            if (axis)
-            {
-/*                GameObject.Find("axis " + gameObject.name).transform.parent = spParent.transform;
-                GameObject.Find("axis CONDITION-" + gameObject.name).transform.parent = spParent.transform;*/
-            }
-
         }
         //when a node is selected spawn the specific graph if there is one
         public void selectNode()
@@ -136,6 +133,23 @@ namespace VRige
                             spLocation = g;
                         }
                     }
+                    foreach(Button b in nodeMenu.GetComponentsInChildren<Button>())
+                    {
+                        if(b.name == "PinNode")
+                        {
+                            pinNode = b;
+                        }
+                        if (b.name == "UnPinNode")
+                        {
+                            unPinNode = b;
+                        }
+                    }
+
+                    nodeMenu.spID = spID;
+
+                    /*if (!pinned) pinNode.onClick.AddListener(OnPinClick);
+                    if(pinned) unPinNode.onClick.AddListener(OnPinClick);*/
+
                     spParent = new GameObject(gameObject.name + " sp");
                     spParent.transform.position = spLocation.position;
                     spAxis = ScatterPlotSceneManager.Instance.SpawnGraph(spLocation, spLocation.position, spID, this.name);
@@ -162,13 +176,29 @@ namespace VRige
                         Destroy(axis.gameObject);
                         
                     }
-
+                    Destroy(spParent);
                     nodeMenu.gameObject.SetActive(false);
                 }
             }
         }
 
-
+        /*private void OnPinClick()
+        {
+            if (pinned)
+            {
+                nodeMenu.UnPinNode();
+                unPinNode.onClick.RemoveAllListeners();
+                pinNode.onClick.AddListener(OnPinClick);
+                pinned = false;
+            }
+            else
+            {
+                nodeMenu.pinnedNodeHandler.PinNode(spID);
+                pinNode.onClick.RemoveAllListeners();
+                unPinNode.onClick.AddListener(OnPinClick);
+                pinned = true;
+            }
+        }*/
         // return ID
         public string getID()
         {
