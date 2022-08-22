@@ -49,12 +49,12 @@ public class WandController : MonoBehaviour
     //Debug test
     GameObject brushingPoint;
 
-    Valve.VR.EVRButtonId gripButton = Valve.VR.EVRButtonId.k_EButton_SteamVR_Trigger;
-    Valve.VR.EVRButtonId padButton = Valve.VR.EVRButtonId.k_EButton_SteamVR_Touchpad;
+    //Valve.VR.EVRButtonId gripButton = Valve.VR.EVRButtonId.k_EButton_SteamVR_Trigger;
+    //Valve.VR.EVRButtonId padButton = Valve.VR.EVRButtonId.k_EButton_SteamVR_Touchpad;
 
     bool isTouchDown;
 
-    Valve.VR.SteamVR_TrackedObject trackedObject;
+    //Valve.VR.SteamVR_TrackedObject trackedObject;
     
     Collider intersectingCollider;
     List<Collider> intersectingGrabbables = new List<Collider>();
@@ -96,7 +96,7 @@ public class WandController : MonoBehaviour
     void Awake()
     {
 
-        trackedObject = GetComponent<Valve.VR.SteamVR_TrackedObject>();
+        //trackedObject = GetComponent<Valve.VR.SteamVR_TrackedObject>();
         tracking.AddRange(Enumerable.Repeat<Vector3>(Vector3.zero, 10));
     }
 

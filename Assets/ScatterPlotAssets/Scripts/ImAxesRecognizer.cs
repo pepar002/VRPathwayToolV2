@@ -35,11 +35,30 @@ public class ImAxesRecognizer : MonoBehaviour
     {
         adjacency = new AdjacencyMatrix<Visualization>(ScatterPlotSceneManager.Instance.sceneAxes.Count);
         ScatterPlotSceneManager.Instance.OnAxisAdded.AddListener(OnAxisAdded);
+        ScatterPlotSceneManager.Instance.OnAxisDestroyed.AddListener(OnAxisDestroyed);
     }
 
     void OnAxisAdded(SAxis axis)
     {
         adjacency.Resize(ScatterPlotSceneManager.Instance.sceneAxes.Count);
+    }
+
+    void OnAxisDestroyed(SAxis axis)
+    {
+        foreach(Visualization v in axis.correspondingVisualizations())
+        {
+            SP.Remove(v);
+            Destroy(v.gameObject);
+        }
+        A.Remove(axis);
+        ScatterPlotSceneManager.Instance.sceneAxes.Remove(axis);
+        try
+        {
+            usedAxisIn2DSP.Remove(axis);
+            usedAxisIn3DSP.Remove(axis);
+        }
+        catch { }
+        
     }
 
     //RULES SP =====================

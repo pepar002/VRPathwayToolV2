@@ -60,7 +60,7 @@ public class SAxis : MonoBehaviour, SGrabbable {
 
     //ticker and file path (etc) for logging activity
    
-    Valve.VR.SteamVR_TrackedObject trackedObject;
+    //Valve.VR.SteamVR_TrackedObject trackedObject;
     List<Vector3> tracking = new List<Vector3>();
     
     Vector2 AttributeRange;
@@ -187,6 +187,7 @@ public class SAxis : MonoBehaviour, SGrabbable {
             ghostSourceAxis.OnFiltered.RemoveListener(Ghost_OnFiltered);
             ghostSourceAxis.OnNormalized.RemoveListener(Ghost_OnNormalized);
         }
+        ScatterPlotSceneManager.Instance.RemoveAxis(this);
     }
 
     public void Update()
@@ -209,7 +210,7 @@ public class SAxis : MonoBehaviour, SGrabbable {
                 }
             }
         }
-        
+     
     }
 
     public void LateUpdate()

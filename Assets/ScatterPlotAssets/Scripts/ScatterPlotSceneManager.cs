@@ -14,7 +14,9 @@ public class ScatterPlotSceneManager : MonoBehaviour
     public DataBinding.DataObject dataObject;
 
     public class OnAxisAddedEvent : UnityEvent<SAxis> { }
+    public class OnAxisDestroyedEvent : UnityEvent<SAxis> { }
     public OnAxisAddedEvent OnAxisAdded = new OnAxisAddedEvent();
+    public OnAxisDestroyedEvent OnAxisDestroyed = new OnAxisDestroyedEvent();
 
     public bool generateAll;
 
@@ -99,15 +101,19 @@ public class ScatterPlotSceneManager : MonoBehaviour
 
 
     //generates the 2 axis graph for a specific node
-    public bool SpawnGraph(Transform node, Vector3 location, int spID, string nodeName)
+    public List<SAxis> SpawnGraph(Transform node, Vector3 location, int spID, string nodeName)
     {
-        GenerateAxis(spID, location, Quaternion.Euler(0, 180, 0), nodeName, false); // Vertical axis
-        GenerateAxis(1, location, Quaternion.Euler(0, 0, 90), nodeName, true); // Horizontal axis       
+        SAxis yAxis = GenerateAxis(spID, location, Quaternion.Euler(0, 180, 0), nodeName, false); // Vertical axis
+        SAxis xAxis = GenerateAxis(1, location, Quaternion.Euler(0, 0, 90), nodeName, true); // Horizontal axis       
 
-        return true;
+        List<SAxis> axis = new List<SAxis>();
+        axis.Add(xAxis);
+        axis.Add(yAxis);
+
+        return axis;
     }
 
-   void GenerateAxis(int id, Vector3 location, Quaternion rotation, string nodeName, bool horizontal)
+   SAxis GenerateAxis(int id, Vector3 location, Quaternion rotation, string nodeName, bool horizontal)
     {
         // id 1 is control attribute
 
@@ -127,6 +133,7 @@ public class ScatterPlotSceneManager : MonoBehaviour
         axis.tag = "Axis";
         AddAxis(axis);
         ScaleAxisVisualizations(axis);
+        return axis;
     }
 
     /*
@@ -178,6 +185,10 @@ public class ScatterPlotSceneManager : MonoBehaviour
         //Debug.Log(sceneAxes.Count());
     }
 
+    public void RemoveAxis(SAxis axis)
+    {
+        OnAxisDestroyed.Invoke(axis);
+    }
 
     /*
      * TODO: Does not create SPLOMS, it creates a 3D SP instead!!

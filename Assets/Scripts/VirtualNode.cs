@@ -38,6 +38,8 @@ namespace VRige
         public MeshRenderer outline;
 
         private bool axis = false;
+        private List<SAxis> spAxis;
+
         private List<GameObject> scatterplots;
         public NodeMenu nodeMenu;
         public Transform spLocation;
@@ -115,141 +117,55 @@ namespace VRige
         //when a node is selected spawn the specific graph if there is one
         public void selectNode()
         {
-            if (!activeNode)
+            if (containsData)
             {
-                activeNode = true;
-                if(!axis)
+                if (!activeNode)
                 {
-                    if (containsData)
+                    activeNode = true;
+                
+                    nodeMenu.transform.position = transform.position;
+
+                    Vector3 v = nodeMenu.transform.position - headCamera.transform.position;
+                    Quaternion q = Quaternion.LookRotation(v);
+                    nodeMenu.transform.rotation = q;
+
+                    foreach (Transform g in nodeMenu.GetComponentsInChildren<Transform>())
                     {
-                        nodeMenu.transform.position = transform.position;
-
-                        Vector3 v = nodeMenu.transform.position - headCamera.transform.position;
-                        Quaternion q = Quaternion.LookRotation(v);
-                        nodeMenu.transform.rotation = q;
-
-                        foreach (Transform g in nodeMenu.GetComponentsInChildren<Transform>())
+                        if (g.name == "spLocation")
                         {
-                            if (g.name == "spLocation")
-                            {
-                                spLocation = g;
-                            }
+                            spLocation = g;
                         }
-
-
-                        spParent = new GameObject(gameObject.name + " sp");
-
-                        
-
-                        spParent.transform.position = spLocation.position;
-                        axis = ScatterPlotSceneManager.Instance.SpawnGraph(spLocation, spLocation.position, spID, this.name);
-
-
-                        GameObject.Find("axis " + gameObject.name).transform.parent = spParent.transform;
-                        GameObject.Find("axis CONDITION-" + gameObject.name).transform.parent = spParent.transform;
-
-                        Vector3 spV = spParent.transform.position - headCamera.transform.position;
-                        Quaternion q2 = Quaternion.LookRotation(spV);
-                        spParent.transform.rotation = q2;
-
-                        nodeMenu.gameObject.SetActive(true);
                     }
-                    
-                    //axis.transform.localScale = new Vector3(axis.transform.localScale.x * 2, axis.transform.localScale.y * 2, axis.transform.localScale.z * 2);
-                    //visualizations = new List<GameObject>();
-/*                    foreach (Visualization v in axis.GetComponent<SAxis>().correspondingVisualizations())
+                    spParent = new GameObject(gameObject.name + " sp");
+                    spParent.transform.position = spLocation.position;
+                    spAxis = ScatterPlotSceneManager.Instance.SpawnGraph(spLocation, spLocation.position, spID, this.name);
+
+                    foreach(SAxis axis in spAxis)
                     {
-                        visualizations.Add(v.gameObject);
-                        v.transform.localScale = new Vector3(v.transform.localScale.x * 2, v.transform.localScale.y * 2, v.transform.localScale.z * 2);
-                    }*/
+                        axis.transform.parent = spParent.transform;
+                    }
+
+                    spParent.transform.rotation = nodeMenu.transform.rotation;
+                    spParent.transform.rotation = Quaternion.Euler(nodeMenu.transform.eulerAngles.x, nodeMenu.transform.eulerAngles.y + 180, nodeMenu.transform.eulerAngles.z);
+
+                    nodeMenu.gameObject.SetActive(true);
+
+                    mesh.material.color = Color.green;
                 }
                 else
                 {
-                    if (containsData)
+                    activeNode = false;
+                    mesh.material.color = defaultColor;
+
+                    foreach (SAxis axis in spAxis)
                     {
-                        nodeMenu.transform.position = transform.position;
-                        Vector3 v = nodeMenu.transform.position - headCamera.transform.position;
-                        Quaternion q = Quaternion.LookRotation(v);
-                        nodeMenu.transform.rotation = q;
-
-                        try
-                        {
-                            foreach (GameObject sp in scatterplots)
-                            {
-                                sp.SetActive(true);
-                            }
-                        }
-                        catch
-                        {}
-
-                        nodeMenu.gameObject.SetActive(true);
-                        spParent.SetActive(true);
-                        /*axis.SetActive(true);
-                        foreach (GameObject v in visualizations)
-                        {
-                            v.SetActive(true);
-                        }*/
+                        Destroy(axis.gameObject);
+                        
                     }
+
+                    nodeMenu.gameObject.SetActive(false);
                 }
-                mesh.material.color = Color.green;
             }
-            else
-            {
-/*                foreach (GameObject v in visualizations)
-                {
-                    v.SetActive(false);
-                }*/
-
-                activeNode = false;
-                //axis.SetActive(false);
-                mesh.material.color = defaultColor;
-                /*GameObject.Find("axis " + gameObject.name).transform.parent = spParent.transform;
-                GameObject.Find("axis CONDITION-" + gameObject.name).transform.parent = spParent.transform;*/
-                try
-                {
-                    GameObject.Find("axis " + gameObject.name).transform.position = spLocation.transform.position;
-                    GameObject.Find("axis CONDITION-" + gameObject.name).transform.position = spLocation.transform.position;
-                }
-                catch { }
-                
-
-                try
-                {
-                    scatterplots = new List<GameObject>();
-                    scatterplots.Add(GameObject.Find("axis " + gameObject.name));
-                    scatterplots.Add(GameObject.Find("axis CONDITION-" + gameObject.name));
-                    scatterplots.Add(GameObject.Find("axis " + gameObject.name + " axis CONDITION-" + gameObject.name + " visualisation"));
-                    scatterplots.Add(GameObject.Find("axis CONDITION visualisation"));
-                    scatterplots.Add(GameObject.Find("axis " + gameObject.name + " visualisation"));
-
-                    foreach(GameObject sp in scatterplots)
-                    {
-                        sp.SetActive(false);
-                    }
-
-                   /* GameObject.Find("axis " + gameObject.name).SetActive(false);
-                    GameObject.Find("axis CONDITION visualisation").SetActive(false);
-                    GameObject.Find("axis " + gameObject.name + " visualisation").SetActive(false);
-                    GameObject.Find("axis CONDITION-" + gameObject.name).SetActive(false);
-                    GameObject.Find("axis " + gameObject.name + " axis CONDITION-" + gameObject.name + " visualisation").SetActive(false);*/
-                }
-                catch {
-                }
-                try
-                {
-                    scatterplots.Add(GameObject.Find("axis CONDITION-" + gameObject.name + " visualisation"));
-                    scatterplots.Add(GameObject.Find("axis " + gameObject.name + " visualisation"));
-
-                    foreach (GameObject sp in scatterplots)
-                    {
-                        sp.SetActive(false);
-                    }
-                }
-                catch { }
-                //spParent.SetActive(false);
-                nodeMenu.gameObject.SetActive(false);
-            }
-            
         }
 
 
