@@ -112,14 +112,14 @@ public class PalmUI : MonoBehaviour
                     collided = true;
                     NodeGrabber hand = other.GetComponentInParent<NodeGrabber>();
                     mesh.material.color = Color.blue;
-                    VRigeEventManager.OnPressPalmPyruvate(DataExtrator.Instance.PathwayXmls["ko00620"], Resources.Load<TextAsset>("Datasets/PyruvateKey").text);
+                    VRigeEventManager.OnPressPalmPyruvate(DataExtrator.Instance.PathwayXmls["ko00620"]);
                 }
                 else if (name == "PalmButtonGlycolysis")
                 {
                     collided = true;
                     NodeGrabber hand = other.GetComponentInParent<NodeGrabber>();
                     mesh.material.color = Color.blue;
-                    VRigeEventManager.OnPressPalmGlycolysis(DataExtrator.Instance.PathwayXmls["00010"], Resources.Load<TextAsset>("Datasets/GlycolysisKey").text);
+                    VRigeEventManager.OnPressPalmGlycolysis(DataExtrator.Instance.PathwayXmls["00010"]);
                 }
             }
         }

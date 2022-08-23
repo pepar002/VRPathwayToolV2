@@ -11,12 +11,12 @@ public class DataExtrator : MonoBehaviour
     public static DataExtrator Instance { get; private set; }
     public const string URI = "https://rest.kegg.jp";
 
-    private List<string> pathwayIds; // list of entry ids for the pathways related to pyruvate
+    private List<string> pathwayIds; // list of entry ids for the pathways related to pyruvate (ko00620)
     private Dictionary<string, XmlDocument> pathwayXmls;
-    //private Dictionary<string, string> pathwayKeys;
 
-    private string pathwayKeys;
     public Dictionary<string, XmlDocument> PathwayXmls { get => pathwayXmls; }
+
+    public List<string> RelatedPathwayIds { get => pathwayIds; }
 
     private void Awake()
     {
@@ -58,31 +58,8 @@ public class DataExtrator : MonoBehaviour
         {
             yield return StartCoroutine(SendRequest(String.Format("{0}/get/{1}/kgml", URI, entryId), GetPathwayXml));
         }
-
-        yield return StartCoroutine(WaitUntilPathwaysLoaded()); // TO DO remove; used to fill up the pathway keys
     }
 
-    private IEnumerator ProcessAllPathwayKeys()
-    {
-        foreach (string entryId in pathwayIds)
-        {
-            string[] pathwayContent = GetPathwayContent(pathwayXmls[entryId]).ToArray();
-            string contentURL ="";
-            int size = pathwayContent.Length;
-            int indexStart = 0;
-            while (size > 100) {
-                contentURL = URI + "/list/" + string.Join("+", pathwayContent, 0, 100);
-                yield return StartCoroutine(SendRequest(contentURL, ProcessKeys));
-                indexStart += 100;
-                size -= 100;
-            }
-
-            contentURL = URI + "/list/" + string.Join("+", pathwayContent, indexStart, size);
-
-            yield return StartCoroutine(SendRequest(contentURL, ProcessKeys));
-        }
-
-    }
 
     public IEnumerator SendRequest(string url, UnityAction<string> onSuccess, bool sync = false) {
 
@@ -159,16 +136,6 @@ public class DataExtrator : MonoBehaviour
 
     }
 
-    private IEnumerator WaitUntilPathwaysLoaded()
-    {
-        yield return new WaitUntil(() => pathwayXmls.Count >= 14);
-
-        yield return null;
-
-        Debug.Log(pathwayXmls.Count +" " + pathwayIds.Count);
-
-        yield return StartCoroutine(ProcessAllPathwayKeys());
-    }
 
     // sends a request to get an image from a url
     public IEnumerator SendImageRequest(string url, UnityAction<Texture2D> onSuccess)
@@ -229,46 +196,5 @@ public class DataExtrator : MonoBehaviour
         }
 
 
-    }
-
-    private void ProcessKeys(string response) {
-        // TO DO process the received key text
-/*        string[] lines = response.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.RemoveEmptyEntries);
-        string key = "";
-        Debug.Log(response);
-        foreach (string line in lines) {
-            //Debug.Log("Line: " + line);
-            // if enzyme/ortholog
-            if (line.Substring(0, 2) == "ko")
-            {
-                string[] words = line.Split(':', ' ', ';');
-
-            }
-            // if compound
-            else { 
-
-            }
-        }*/
-
-    }
-
-    // gets all compounds and enzymes entry ids from the pathway kml file
-    // TODO can be done in getpathwayxml function (code reuse)
-    private List<string> GetPathwayContent(XmlDocument doc) {
-        List<string> content = new List<string>();
-
-        if (doc!= null) {
-            XmlNodeList entries = doc.SelectNodes("/pathway/entry");
-
-            foreach (XmlNode entry in entries) {
-                if (entry.Attributes["type"].Value == "ortholog" || entry.Attributes["type"].Value == "compound")
-                {
-                    //Debug.Log(doc.SelectSingleNode("/pathway").Attributes["name"].Value + entry.Attributes["name"].Value);
-                    content.Add(entry.Attributes["name"].Value.Split(':', ' ')[1]);
-                }
-            }
-        }
-
-        return content;
     }
 }

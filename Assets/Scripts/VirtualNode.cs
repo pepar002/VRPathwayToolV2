@@ -259,7 +259,7 @@ namespace VRige
                     foundName = false;
 
                 if (words[0] == "FORMULA" || words[0] == "SYMBOL")
-                    formula = words[1];
+                    formula = words[1].Trim(new[] { ' ', ',', ';', ':'});
 
 
                 if (foundName)
@@ -288,9 +288,9 @@ namespace VRige
 
             if (names.Count > 0)
             {
-                string description = string.Join("\n", names);
+                string description = string.Join("\n\t", names);
 
-                nodeMenu.Description.text += "\n" + description;
+                nodeMenu.Description.text += "\n\t" + description;
             }
         }
 

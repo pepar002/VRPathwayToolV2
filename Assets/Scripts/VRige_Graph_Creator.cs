@@ -58,7 +58,7 @@ namespace VRige
         {
             DataExtrator.Instance.LoadPyruvatePathway();
             //generate the graph from the datasets
-            GenerateGraph(DataExtrator.Instance.PathwayXmls["ko00620"], key.text);
+            GenerateGraph(DataExtrator.Instance.PathwayXmls["ko00620"]);
             //experimental--palm ui events
             VRigeEventManager.PressPalmPyruvate += GenerateGraph;
             VRigeEventManager.PressPalmGlycolysis += GenerateGraph;
@@ -170,13 +170,13 @@ namespace VRige
         }
 
         //main control method that will generate the graph based in the selected xml dataset
-        public void GenerateGraph(XmlDocument xml, string key)
+        public void GenerateGraph(XmlDocument xml)
         {
             t = 1f;
             xmlDataset = xml;
             //this.key = key;
             
-            ExtractDataset(key);
+            ExtractDataset();
             WriteDataset();
             edgeCreator = FindObjectOfType<EdgeCreator>();
             UndirectedGraph();
@@ -248,7 +248,7 @@ namespace VRige
         //this creates data nodes based on the specific xml data inputted.
         //As the xml data created by Kegg is generated in a certain way,
         //this extracts that data into individual node data objects
-        private void ExtractDataset(string key)
+        private void ExtractDataset()
         {
             if (xmlDataset != null)
             {
@@ -273,7 +273,7 @@ namespace VRige
                     }
 
                 }
-                String keyData = key;
+                String keyData = key.text;
                 keyData = keyData.Replace("  	", ";");
                 String[] lines = keyData.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
                 foreach (string s in lines)

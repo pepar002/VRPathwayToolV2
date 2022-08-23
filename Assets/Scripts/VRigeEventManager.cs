@@ -14,14 +14,14 @@ public static class VRigeEventManager{
     public static event UnityAction PressPalmDownButton;
     public static event UnityAction PressPalmScaleUpButton;
     public static event UnityAction PressPalmScaleDownButton;
-    public static event UnityAction<XmlDocument, string> PressPalmPyruvate;
-    public static event UnityAction<XmlDocument, string> PressPalmGlycolysis;
+    public static event UnityAction<XmlDocument> PressPalmPyruvate;
+    public static event UnityAction<XmlDocument> PressPalmGlycolysis;
     public static void OnPressPalmUpButton() => PressPalmUpButton?.Invoke();
     public static void OnPressPalmDownButton() => PressPalmDownButton?.Invoke();
     public static void OnPressPalmScaleUpButton() => PressPalmScaleUpButton?.Invoke();
     public static void OnPressPalmScaleDownButton() => PressPalmScaleDownButton?.Invoke();
-    public static void OnPressPalmPyruvate(XmlDocument xml, string key) => PressPalmPyruvate?.Invoke(xml, key);
-    public static void OnPressPalmGlycolysis(XmlDocument xml, string key) => PressPalmGlycolysis?.Invoke(xml, key);
+    public static void OnPressPalmPyruvate(XmlDocument xml) => PressPalmPyruvate?.Invoke(xml);
+    public static void OnPressPalmGlycolysis(XmlDocument xml) => PressPalmGlycolysis?.Invoke(xml);
 
 
 
