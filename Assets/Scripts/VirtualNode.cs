@@ -237,6 +237,7 @@ namespace VRige
             return circleNode;
         }
 
+        // get information pertaining this node (names and symbol/formula)
         public void GetInfo(string response)
         {
             string[] lines = response.Split(new[] { "\r\n", "\r", "\n" }, System.StringSplitOptions.RemoveEmptyEntries);
@@ -247,7 +248,6 @@ namespace VRige
 
             foreach (string line in lines)
             {
-                //Debug.Log(line);
                 string[] words = line.Trim(new char[] { ' ', ';' }).Split(new char[] { ' ', '\t' }, System.StringSplitOptions.RemoveEmptyEntries);
                 if (words[0] == "NAME")
                 {
@@ -265,7 +265,7 @@ namespace VRige
                 if (foundName)
                     names.Add(line.Trim(new char[] { ' ', ';' }));
             }
-            //Debug.Log(name);
+
             if (name == "Enzyme_N6-(dihydrolipoyl)lysine")
                 Debug.Log(string.Format("Loading information works this node has {0} names and first name is {1}", names.Count, names.ToArray()[0]));
 
@@ -277,12 +277,10 @@ namespace VRige
             }
         }
 
+        // UPDATE node menu with formula and descriptions
         public void UpdateNodeMenu() {
-            // UPDATE node menu with formula and descriptions
             if (formula != null && !string.IsNullOrEmpty(formula))
             {
-                //Debug.Log(formula);
-                //Debug.Log(nodeMenu.Formula);
                 nodeMenu.Formula.text += ": " + formula;
             }
 

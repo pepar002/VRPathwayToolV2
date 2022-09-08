@@ -609,14 +609,15 @@ namespace VRige
             StartCoroutine(StartMultipleRoutines());
            
         }
+
+        // starts multiple coroutines to send different api requests in sequence (sync)
         private IEnumerator StartMultipleRoutines() {
-            //Execute coroutines for getting the node data synchronously with async to the application execution
+            //Execute coroutines for getting the node data synchronously while async to the application execution
             foreach (DataNode n in dataNodes) {
                 // send http request to get data node information
                 VirtualNode vNode = getVirtualNode(n.Id);
                 if (vNode != null) {
-                    //Debug.Log(vNode);
-                    //Debug.Log(nodes.Count);
+
                     string url = DataExtrator.URI + "/get/" + n.Entry;
                     yield return StartCoroutine(DataExtrator.Instance.SendRequest(url, vNode.GetInfo));
 

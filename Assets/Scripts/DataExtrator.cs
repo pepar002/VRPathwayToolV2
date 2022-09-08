@@ -6,6 +6,10 @@ using UnityEngine.Networking;
 using System.Xml;
 using UnityEngine.Events;
 
+/// <summary>
+/// Singleton DataExtractor class
+/// Handles sending API requests and fetching data from KEGG database.
+/// </summary>
 public class DataExtrator : MonoBehaviour
 {
     public static DataExtrator Instance { get; private set; }
@@ -38,8 +42,6 @@ public class DataExtrator : MonoBehaviour
     private void Start()
     {
         Debug.Log("Pyruvate Pathway loaded: " + (pathwayIds.Count==13 && pathwayXmls.Count>=1).ToString());
-        //Debug.Log(String.Format("Pathways size: {0}",pathwayXmls.Count));
-
         StartCoroutine(LoadRelatedPathways());
     }
 
@@ -49,10 +51,11 @@ public class DataExtrator : MonoBehaviour
         while (iterator.MoveNext())
         {
             if (iterator.Current != null)
-                //Debug.Log(iterator.Current);
                 _ = 0; // Do nothing
         }
     }
+
+    // Loads pathways related or connected to pyruvate
     public IEnumerator LoadRelatedPathways() {
         foreach (string entryId in pathwayIds)
         {
@@ -60,16 +63,13 @@ public class DataExtrator : MonoBehaviour
         }
     }
 
-
+    // sends a Web request to the given url
     public IEnumerator SendRequest(string url, UnityAction<string> onSuccess, bool sync = false) {
 
         #region Old http request code
         using UnityWebRequest request = UnityWebRequest.Get(url);
-        //Debug.Log("In coroutine with: " + url);
 
-
-        //request.SendWebRequest();
-
+        // send a synchronous request and wait till response is received
         if (sync == true)
         {
             request.SendWebRequest();
@@ -82,7 +82,6 @@ public class DataExtrator : MonoBehaviour
         }
 
 
-
         switch (request.result)
         {
             case UnityWebRequest.Result.ConnectionError:
@@ -93,47 +92,14 @@ public class DataExtrator : MonoBehaviour
             case UnityWebRequest.Result.ProtocolError:
                 Debug.LogError(": HTTP Error: " + request.error);
                 Debug.Log(url);
-                //yield return SendRequest(url, onSuccess, false);
                 break;
             case UnityWebRequest.Result.Success:
                 string response = request.downloadHandler.text;
                 onSuccess(response);
-                //Debug.Log(":\nReceived: " + response);
                 yield return response;
                 break;
         }
         #endregion
-    }
-
-    // send requests to ket key value pairs for pathway content
-    // only happens when all related pathway xmls are present
-    public IEnumerator SendKeyRequest(string url, string pathId, UnityAction<string, string> onSuccess) {
-
-
-        using UnityWebRequest request = UnityWebRequest.Get(url);
-        //yield return request.SendWebRequest();
-
-        yield return request.SendWebRequest();
-
-        switch (request.result)
-        {
-            case UnityWebRequest.Result.ConnectionError:
-            case UnityWebRequest.Result.DataProcessingError:
-                Debug.LogError(": Error: " + request.error);
-                yield return request.error;
-                break;
-            case UnityWebRequest.Result.ProtocolError:
-                Debug.LogError(": HTTP Error: " + request.error);
-                yield return request.error;
-                break;
-            case UnityWebRequest.Result.Success:
-                string response = request.downloadHandler.text;
-                onSuccess(pathId, response);
-                //Debug.Log(":\nReceived: " + response);
-                yield return response;
-                break;
-        }
-
     }
 
 
@@ -165,6 +131,7 @@ public class DataExtrator : MonoBehaviour
         }
     }
 
+    // processes the response string into an xml file
     public void GetPathwayXml(string xmlString) {
         XmlDocument doc = new XmlDocument();
 
@@ -178,9 +145,9 @@ public class DataExtrator : MonoBehaviour
      
         }
 
+        // if pathway is pyruvate then record ids for all connected pathways
         if (pathway.Attributes["number"].Value == "00620") {
             XmlNodeList entries = doc.SelectNodes("/pathway/entry");
-            //Debug.Log("In Data Extractor: "+entries.Count);
             // record all ids of pathways related to pyruvate metabolism
             foreach (XmlNode entry in entries)
             {
