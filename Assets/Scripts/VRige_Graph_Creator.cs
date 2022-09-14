@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Xml;
 using System.IO;
+using UnityEngine.UI;
 
 // Author: Adam Drogemuller
 namespace VRige
@@ -18,6 +19,7 @@ namespace VRige
         public EdgeCreator edgeCreator;
         public Transform edgeParent;
         public NodeMenu nodeMenu;
+        public Camera hmdCamera;
 
         // 3D coordinates
         public Vector3[,,] gridPositions3D;
@@ -381,7 +383,8 @@ namespace VRige
             foreach(VirtualNode node in nodes)
             {
                 GameObject l = Instantiate(label, node.transform);
-                l.GetComponentInChildren<TextMesh>().text = node.name;
+                l.GetComponentInChildren<TMPro.TMP_Text>().text = node.name;
+                //l.GetComponentInChildren<Canvas>().worldCamera = hmdCamera;
                 NodeMenu menu = Instantiate(nodeMenu);
                 menu.transform.position = node.transform.position;
                 node.nodeMenu = menu;

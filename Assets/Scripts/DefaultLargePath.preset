@@ -1,0 +1,119 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!181963792 &2655988077585873504
+Preset:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: DefaultLargePath
+  m_TargetType:
+    m_NativeTypeID: 114
+    m_ManagedTypePPtr: {fileID: 11500000, guid: e07e675d8ca74fd4da1588617a67970e, type: 3}
+    m_ManagedTypeFallback: 
+  m_Properties:
+  - target: {fileID: 0}
+    propertyPath: m_Enabled
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_EditorHideFlags
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: m_EditorClassIdentifier
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: key
+    value: 
+    objectReference: {fileID: 4900000, guid: dcd37235b9ffa8c4993fd324db2a6918, type: 3}
+  - target: {fileID: 0}
+    propertyPath: edgeCreator
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: edgeParent
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: nodeMenu
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: GraphSize
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: defaultNode
+    value: 
+    objectReference: {fileID: 1751865289714718, guid: d08cc9d1c6abf7d4aa7d500bdadf61b9, type: 3}
+  - target: {fileID: 0}
+    propertyPath: origin
+    value: 
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: label
+    value: 
+    objectReference: {fileID: 3773153034159123954, guid: 17f321c55faee654c9a0a89d0dd22224, type: 3}
+  - target: {fileID: 0}
+    propertyPath: orthologColor.r
+    value: 0.85751003
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: orthologColor.g
+    value: 0.8584906
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: orthologColor.b
+    value: 0.08503916
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: orthologColor.a
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: compoundColor.r
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: compoundColor.g
+    value: 0.3158722
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: compoundColor.b
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: compoundColor.a
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: colorGraph
+    value: 0
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: graphScale
+    value: 1.01
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: scale
+    value: 0.15
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: gridGap
+    value: 0.05
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: area
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: t
+    value: 1
+    objectReference: {fileID: 0}
+  - target: {fileID: 0}
+    propertyPath: smoothTime
+    value: 20
+    objectReference: {fileID: 0}
+  m_ExcludedProperties: []
