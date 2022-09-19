@@ -186,12 +186,13 @@ namespace VRige
             SendNodeApiRequests();
         }
 
-/*        public void GenerateGraph(string pathway)
+        public void GenerateGraph(string pathwayID)
         {
-            TextAsset map = Resources.Load<TextAsset>("Datasets/" + pathway + "Map");
-            TextAsset key = Resources.Load<TextAsset>("Datasets/" + pathway + "Key");
-            GenerateGraph(map, key);
-        }*/
+            // Stop all running co routines in this script before loading another pathway
+            StopAllCoroutines();
+            // Load a pathway according to given id
+            GenerateGraph(DataExtrator.Instance.PathwayXmls[pathwayID]);
+        }
 
 
         //write the file string that generates the correct node generations based on node data
@@ -268,7 +269,14 @@ namespace VRige
                         int id = int.Parse(node.Attributes["id"].Value);
                         string type = node.Attributes["type"].Value;
                         String[] l = node.Attributes["name"].Value.Split(':',' ');
-                        string entryId = l[1];
+                        string entryId = "";
+                        if (l.Length > 1)
+                        {
+                            entryId = l[1]; // TO DO not all attributes have the same name format
+                        }
+                        else {
+                            entryId = l[0]; // Some entry name for some pathways are "undefined"
+                        }
                         DataNode dNode = new DataNode(id, entryId, type);
                         dataNodes.Add(dNode);
 

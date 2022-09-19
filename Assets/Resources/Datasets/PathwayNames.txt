@@ -1,0 +1,14 @@
+ko00620 : Pyruvate metabolism
+ko00760 : Nicotinate and nicotinamide metabolism
+ko00020 : Citrate cycle (TCA cycle)
+ko00260 : Glycine, serine and threonine metabolism
+ko00010 : Glycolysis / Gluconeogenesis
+ko00630 : Glyoxylate and dicarboxylate metabolism
+ko00640 : Propanoate metabolism
+ko00650 : Butanoate metabolism
+ko00290 : Valine, leucine and isoleucine biosynthesis
+ko00300 : Lysine biosynthesis
+ko00061 : Fatty acid biosynthesis
+ko00522 : Biosynthesis of 12-, 14- and 16-membered macrolides
+ko01059 : Biosynthesis of enediyne antibiotics
+ko01056 : Biosynthesis of type II polyketide backbone
