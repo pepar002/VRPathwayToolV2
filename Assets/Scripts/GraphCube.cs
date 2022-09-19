@@ -10,11 +10,17 @@ public class GraphCube : MonoBehaviour
 
     public void DisplayCube()
     {
-        transform.position = palmLocation.position;
-        Vector3 v = transform.position - headCamera.transform.position;
+        cube.transform.position = palmLocation.position;
+        Vector3 v = cube.transform.position - headCamera.transform.position;
         Quaternion q = Quaternion.LookRotation(v);
-        transform.rotation = q;
+        cube.transform.rotation = q;
         cube.SetActive(true);
+        cube.GetComponent<GraphMovement>().Active = true;
+    }
+
+    public void HideCube() {
+        cube.SetActive(false);
+        cube.GetComponent<GraphMovement>().Active = false;
     }
 }
 
