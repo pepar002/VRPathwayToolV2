@@ -35,23 +35,24 @@ namespace VRige
         public bool colorGraph = false;
         [Header("Scale of graph")]
         [Tooltip("Low - nodes are further, High - nodes are closer")]
-        public float graphScale = 1;
+        public float graphScale;
         [Header("Scale of nodes")]
-        public float scale = 1;
-        public float gridGap = 0.1f;
+        public float scale;
+        public float gridGap;
         [Header("Spread of Graph")]
         [Range(0, 50)]
-        public float area = 50f;
-        public float t = 1.0f;
+        public float area;
+        public float t;
         [Range(0, 100)]
-        public float smoothTime = 1f;
+        public float smoothTime;
         private float v2d = 1;
 
-
-        private bool flag = false;
+        private float testTime = 0f;
+        private bool flag = true;
         private List<DataNode> dataNodes;
 
         private bool nodesEnabled = true;
+        private bool isGenerated = false;
 
         public enum PathwayType { PYRUVATE, CITRATE }
 
@@ -60,7 +61,7 @@ namespace VRige
         {
             DataExtrator.Instance.LoadPyruvatePathway();
             //generate the graph from the datasets
-            GenerateGraph(DataExtrator.Instance.PathwayXmls["ko00620"]);
+           // GenerateGraph(DataExtrator.Instance.PathwayXmls["ko00620"]);
             //experimental--palm ui events
             VRigeEventManager.PressPalmPyruvate += GenerateGraph;
             VRigeEventManager.PressPalmGlycolysis += GenerateGraph;
@@ -71,8 +72,9 @@ namespace VRige
         void Update()
         {
             // if t > threshold, apply force-directed layout
-            if (t > 0.95)
+            if (isGenerated && t > 0.95)
             {
+                Debug.Log("Loading... seconds:" + testTime);
                 flag = false;
                 float k = Mathf.Sqrt(area);
                 //Action<float> Fr = (float z) => {
@@ -115,7 +117,7 @@ namespace VRige
                     Vector3 movement = Vector3.Lerp(n.transform.position, n.transform.position + (n.disp.normalized) * Mathf.Min(n.disp.magnitude, t), smoothTime * Time.deltaTime);
                     n.transform.position = new Vector3((movement.x * v2d), movement.y, movement.z);
                 }
-
+                testTime = testTime + Time.deltaTime;
                 t = t * 0.999f;
 
             }
@@ -127,10 +129,22 @@ namespace VRige
                     gameObject.transform.position = origin.transform.position;
                     generateUI();
                     RealignGraph();
+                    Debug.LogAssertion("Loaded Successfully in " + testTime + " seconds");
                     flag = true;
                 }
             }
 
+        }
+
+        private void resetGraph()
+        {
+            flag = true;
+            nodesEnabled = false;
+            isGenerated = false;
+            GraphSize = 0;
+            t = 1f;
+            testTime = 0;
+            Debug.LogError(graphScale + ", " + scale + ", " + gridGap + ", " + area + ", " + t + ", " + smoothTime);
         }
 
         public void hideNodes(bool hide)
@@ -174,7 +188,8 @@ namespace VRige
         //main control method that will generate the graph based in the selected xml dataset
         public void GenerateGraph(XmlDocument xml)
         {
-            t = 1f;
+            resetGraph();
+            Debug.Log("Generating new graph");
             xmlDataset = xml;
             //this.key = key;
             
@@ -184,6 +199,8 @@ namespace VRige
             UndirectedGraph();
             AssignScatterplots();
             SendNodeApiRequests();
+            isGenerated = true;
+            Debug.Log("Generated new graph, now loading graph " + t);
         }
 
         public void GenerateGraph(string pathwayID)
@@ -228,7 +245,8 @@ namespace VRige
             foreach(DataNode node in dataNodes)
             {
                 int spID = ScatterPlotSceneManager.Instance.assignNodeId(node.Entry);
-                if(spID >= 0)
+                Debug.LogError("spID: " + spID);
+                if (getVirtualNode(node.Id) != null)
                 {
                     getVirtualNode(node.Id).spID = spID;
                     getVirtualNode(node.Id).name = node.Entry;
@@ -391,7 +409,7 @@ namespace VRige
             foreach(VirtualNode node in nodes)
             {
                 GameObject l = Instantiate(label, node.transform);
-                l.GetComponentInChildren<TMPro.TMP_Text>().text = node.name;
+                l.GetComponentInChildren<TMPro.TMP_Text>().text = getDataNodeFromID(node.DataID).DisplayName;
                 //l.GetComponentInChildren<Canvas>().worldCamera = hmdCamera;
                 NodeMenu menu = Instantiate(nodeMenu);
                 menu.transform.position = node.transform.position;
@@ -556,6 +574,7 @@ namespace VRige
                             nodes.Add(getNode);
 
                             n.transform.localScale = new Vector3(scale, scale, scale);
+
 
                         }
                         else
