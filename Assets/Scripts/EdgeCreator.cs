@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace VRige
 {
@@ -20,7 +21,24 @@ namespace VRige
         public float yScale;
         private bool edgesEnabled = true;
 
+        private UnityAction<float> nodeMoveListener;
+        private int cooldown = 0;
+
         public ArrayList CylEdges { get => cylEdges; }
+
+        private void Awake()
+        {
+            nodeMoveListener = new UnityAction<float>(UpdateCylEdges);
+        }
+
+        private void OnEnable()
+        {
+            EventManager.StartListening("nodeMove", nodeMoveListener);
+        }
+        private void OnDisable()
+        {
+            EventManager.StopListening("nodeMove", nodeMoveListener);
+        }
 
         //add edges for each node
         public void addEdges(Edge e)
@@ -85,38 +103,44 @@ namespace VRige
 
             }
         }
-        void OnPostRender()
+        public void scaleEdges(float amount)
+        {
+            foreach (GameObject edge in cylEdges)
+            {
+                if((edge.transform.localScale.x + amount) > 0) edge.transform.localScale = new Vector3(edge.transform.localScale.x + amount, 1, edge.transform.localScale.z + amount);
+
+            }
+            edgesEnabled = false;
+        }
+        void Update()
         {
             //DrawConnectingLines();
-            UpdateCylEdges();
+            //UpdateCylEdges(0);
+            cooldown = 0;
         }
 
         //update the edge connections when moved or grabbed
-        void UpdateCylEdges()
+        void UpdateCylEdges(float f)
         {
-            /*foreach(GameObject g in cylEdges)
+            if(cooldown < 1)
             {
-                cylEdges.Remove(g);
-                Destroy(g);
-                
-            }*/
-            for (int i = 0; i < CylEdges.Count; i++)
-            {
-                //Debug.LogError("Aligning edge");
-                GameObject edge = (GameObject) CylEdges[i];
-                Edge e = (Edge) edges[i];
-                Vector3 initialScale = edge.transform.localScale;
+                cooldown++;
+                for (int i = 0; i < CylEdges.Count; i++)
+                {
+                    //Debug.LogError("Aligning edge");
+                    GameObject edge = (GameObject)CylEdges[i];
+                    Edge e = (Edge)edges[i];
+                    Vector3 initialScale = edge.transform.localScale;
 
-                float distance = Vector3.Distance(e.getA(), e.getB());
-                edge.transform.localScale = new Vector3(initialScale.x, distance, initialScale.z);
+                    float distance = Vector3.Distance(e.getA(), e.getB());
+                    edge.transform.localScale = new Vector3(initialScale.x, distance, initialScale.z);
 
-                //Vector3 middle = (e.getA() + e.getB()) / 2f;
-                edge.transform.position = e.getA();
+                    //Vector3 middle = (e.getA() + e.getB()) / 2f;
+                    edge.transform.position = e.getA();
 
-                Vector3 rotation = (e.getB() - e.getA());
-                edge.transform.up = rotation;
-
-                
+                    Vector3 rotation = (e.getB() - e.getA());
+                    edge.transform.up = rotation;
+                }
             }
         }
         //not used - was gl lines as edges

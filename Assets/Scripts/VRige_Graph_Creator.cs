@@ -64,9 +64,6 @@ namespace VRige
             //generate the graph from the datasets
             // GenerateGraph(DataExtrator.Instance.PathwayXmls["ko00620"]);
             GenerateGraph("ko00620");
-            //experimental--palm ui events
-            VRigeEventManager.PressPalmPyruvate += GenerateGraph;
-            VRigeEventManager.PressPalmGlycolysis += GenerateGraph;
 
             VRigeEventManager.SliderMoveX += MoveGraphX;
         }
@@ -146,6 +143,7 @@ namespace VRige
             GraphSize = 0;
             t = 1f;
             testTime = 0;
+            this.transform.localScale = new Vector3(1f, 1f, 1f);
             Debug.LogError(graphScale + ", " + scale + ", " + gridGap + ", " + area + ", " + t + ", " + smoothTime);
         }
 
@@ -254,7 +252,6 @@ namespace VRige
             foreach(DataNode node in dataNodes)
             {
                 int spID = ScatterPlotSceneManager.Instance.assignNodeId(node.Entry);
-                Debug.LogError("spID: " + spID);
                 if (getVirtualNode(node.Id) != null)
                 {
                     getVirtualNode(node.Id).spID = spID;
@@ -409,6 +406,7 @@ namespace VRige
         public void ScaleGraph(float f)
         {
             gameObject.transform.localScale = new Vector3(gameObject.transform.localScale.x + f, gameObject.transform.localScale.y + f, gameObject.transform.localScale.z + f);
+            edgeCreator.scaleEdges(0.05f*f);
             //gameObject.transform.position = origin.transform.position;
         }
 
@@ -423,7 +421,7 @@ namespace VRige
                 NodeMenu menu = Instantiate(nodeMenu);
                 menu.transform.position = node.transform.position;
                 node.nodeMenu = menu;
-                menu.Name.text = node.name;
+                menu.Name.text = getDataNodeFromID(node.DataID).DisplayName;
                 menu.gameObject.SetActive(false);
             }
         }

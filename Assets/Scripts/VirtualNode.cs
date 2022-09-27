@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Oculus.Interaction.Grab;
+using UnityEngine.Events;
 
 namespace VRige
 {
@@ -27,6 +29,7 @@ namespace VRige
         private bool circleNode = false;
         private bool look = false;
         private bool found = false;
+        private Vector3 storedPosition;
 
         public int addDeg = 0;
         private bool grabbed = false;
@@ -49,6 +52,7 @@ namespace VRige
         public GameObject spParent;
         public GameObject headCamera;
 
+
         public bool containsData;
 
         private bool menuUpdated = false;  // TO DO testing
@@ -56,6 +60,8 @@ namespace VRige
         private List<string> names;
         private string formula;  // only for compounds
         private string symbol;  // only for enzymes/ortholog
+
+
 
         public int DataID { get => dataID; set => dataID = value; }
         public Color DefaultColor { get => defaultColor; set => defaultColor = value; }
@@ -70,6 +76,7 @@ namespace VRige
             names = new List<string>();
             mesh = GetComponent<MeshRenderer>();
             spID = -1;
+            storedPosition = transform.localPosition;
 
             GameObject menu = (GameObject)Resources.Load("NodeMenu");
             //nodeMenu = menu.GetComponent<NodeMenu>();
@@ -118,7 +125,11 @@ namespace VRige
                 float randZ = Random.Range(0, 0.1f);
                 transform.position += new Vector3(randX, randY, randZ);
             }
-
+            if(transform.position != storedPosition)
+            {
+                EventManager.TriggerEvent("nodeMove", 0f);
+                storedPosition = transform.position;
+            }
 
         }
         //when a node is selected spawn the specific graph if there is one
