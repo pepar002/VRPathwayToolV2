@@ -19,8 +19,12 @@ public class GraphCube : MonoBehaviour
     }
 
     public void HideCube() {
-        cube.SetActive(false);
-        cube.GetComponent<GraphMovement>().Active = false;
+        if (cube.GetComponent<GraphMovement>().Active)
+        {
+            cube.SetActive(false);
+            cube.GetComponent<GraphMovement>().Active = false;
+        }
+
     }
 }
 

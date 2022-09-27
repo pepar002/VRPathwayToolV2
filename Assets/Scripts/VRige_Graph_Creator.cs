@@ -54,14 +54,16 @@ namespace VRige
         private bool nodesEnabled = true;
         private bool isGenerated = false;
 
+        private string currentPathwayId = "";
+
         public enum PathwayType { PYRUVATE, CITRATE }
 
         // Use this for initialization
         void Start()
         {
-            DataExtrator.Instance.LoadPyruvatePathway();
             //generate the graph from the datasets
-           // GenerateGraph(DataExtrator.Instance.PathwayXmls["ko00620"]);
+            // GenerateGraph(DataExtrator.Instance.PathwayXmls["ko00620"]);
+            GenerateGraph("ko00620");
             //experimental--palm ui events
             VRigeEventManager.PressPalmPyruvate += GenerateGraph;
             VRigeEventManager.PressPalmGlycolysis += GenerateGraph;
@@ -205,8 +207,15 @@ namespace VRige
 
         public void GenerateGraph(string pathwayID)
         {
-            // Stop all running co routines in this script before loading another pathway
-            StopAllCoroutines();
+            // Check if there is any loaded pathway, if not no need to stop coroutines
+            // as active coroutines may be fetching API data
+            if (!String.IsNullOrEmpty(currentPathwayId)) {
+                // Stop all running coroutines in this script before loading another pathway
+                StopAllCoroutines();
+            }
+
+            currentPathwayId = pathwayID;
+
             // Load a pathway according to given id
             GenerateGraph(DataExtrator.Instance.PathwayXmls[pathwayID]);
         }

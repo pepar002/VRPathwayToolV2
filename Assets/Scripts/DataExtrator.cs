@@ -36,7 +36,8 @@ public class DataExtrator : MonoBehaviour
         pathwayIds = new List<string>();
         pathwayXmls = new Dictionary<string, XmlDocument>();
 
-
+        // Calls an API request to get pyrvuate pathway
+        LoadPyruvatePathway();
     }
 
     private void Start()

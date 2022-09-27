@@ -8,6 +8,8 @@ public class GraphMovement : MonoBehaviour
     public GameObject cube;
     private bool rotate = false;
     private bool scale = false;
+    private bool move = true;  // starts with the movement setting ON
+
     private bool active = false;
 
     private Vector3 cubeScale;
@@ -17,6 +19,7 @@ public class GraphMovement : MonoBehaviour
     public bool Active { get => active; set { Debug.Log("Cube is now active"); active = value; GetCurrentCubePosition(); } }
     public bool ChangeGraphScale { get => scale; set { scale = value;  GetCurrentCubeScale(); } }
 
+    public bool Movement { get => move; set => move = value; }
  
     void Update()
     {
@@ -27,12 +30,14 @@ public class GraphMovement : MonoBehaviour
     public void UpdateGraphState() {
         if (active)
         {
-            // rotate the object
+            // rotate the graph
             if (rotate)
             {
                 graph.transform.rotation = cube.transform.rotation;
             }
-            else
+            
+            // move the graph
+            if (move)
             {
                 // get the displacement of the cube
                 var cubeDisplacement = cube.transform.position - beforePos;
@@ -45,8 +50,6 @@ public class GraphMovement : MonoBehaviour
                 graph.GetComponent<VRige.VRige_Graph_Creator>().MoveGraphZ(graph.transform.position.z + cubeDisplacement.z * 10.0f);
 
             }
-
-            // TO DO add movement settings (allowing multiple settings to exists at once
 
             // Scale the graph with respect to the scale change on the cube
             if (scale) {
