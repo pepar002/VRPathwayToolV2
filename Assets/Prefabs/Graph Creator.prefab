@@ -130,6 +130,7 @@ MonoBehaviour:
   edgeCreator: {fileID: 0}
   edgeParent: {fileID: 0}
   nodeMenu: {fileID: 0}
+  hmdCamera: {fileID: 0}
   GraphSize: 0
   defaultNode: {fileID: 1751865289714718, guid: d08cc9d1c6abf7d4aa7d500bdadf61b9, type: 3}
   origin: {fileID: 0}
