@@ -21,7 +21,6 @@ public class DialogUI : MonoBehaviour
     {
         var distance = Vector3.Distance(headcamera.transform.position, transform.position);
 
-        Debug.Log("distance: " + distance);
 
         if (distance > 1.0f)
         {

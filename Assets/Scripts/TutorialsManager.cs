@@ -14,15 +14,11 @@ public class TutorialsManager : MonoBehaviour
 
     private int videoClipIndex;
 
-    private void Awake()
-    {
-        //videoPlayer = GetComponent<VideoPlayer>();
-    }
-
     // Start is called before the first frame update
     // Play first tutorial upon startup
     void Start()
     {
+        videoClipIndex = 0;
         videoPlayer.clip = videoClips[0];
     }
 
@@ -84,7 +80,6 @@ public class TutorialsManager : MonoBehaviour
 
     public void CloseTutorial()
     {
-        videoPlayer.Stop();
         this.gameObject.SetActive(false);
         
     }

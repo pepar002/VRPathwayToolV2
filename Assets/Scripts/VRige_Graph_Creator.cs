@@ -200,6 +200,7 @@ namespace VRige
             AssignScatterplots();
             SendNodeApiRequests();
             isGenerated = true;
+            nodesEnabled = true;
             Debug.Log("Generated new graph, now loading graph " + t);
         }
 
