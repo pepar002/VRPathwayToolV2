@@ -10,6 +10,7 @@ public class TutorialsManager : MonoBehaviour
     public VideoPlayer videoPlayer;
     public GameObject leftHandRayInteractor;
     public GameObject rightHandRayInterator;
+    public GameObject headcamera;
 
     private int videoClipIndex;
 
@@ -28,9 +29,12 @@ public class TutorialsManager : MonoBehaviour
     // hide graph and enable ray hand interactors whenver tutorials are open
     private void OnEnable()
     {
+        this.transform.position = new Vector3(headcamera.transform.position.x + 1.0f, headcamera.transform.position.y, headcamera.transform.position.z);
+
         graph.GetComponent<VRige.VRige_Graph_Creator>().hideNodes(true);
         leftHandRayInteractor.SetActive(true);
         rightHandRayInterator.SetActive(true);
+
     }
 
     private void OnDisable()
@@ -38,6 +42,13 @@ public class TutorialsManager : MonoBehaviour
         graph.GetComponent<VRige.VRige_Graph_Creator>().hideNodes(false);
         leftHandRayInteractor.SetActive(false);
         rightHandRayInterator.SetActive(false);
+    }
+
+    private void Update()
+    {
+        Vector3 v = transform.position - headcamera.transform.position;
+        Quaternion q = Quaternion.LookRotation(v);
+        transform.rotation = q;
     }
 
     // Show tutorial video and info for a given index, graph is disabled.
