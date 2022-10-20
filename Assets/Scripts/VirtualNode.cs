@@ -14,6 +14,7 @@ namespace VRige
         private int dataID = 0;
         public int spID = -1;
         public bool activeNode = false;
+        public string ttest = "-";
 
         public Vector3 disp = Vector3.zero;
         private Rigidbody a;
@@ -82,6 +83,7 @@ namespace VRige
             //nodeMenu = menu.GetComponent<NodeMenu>();
         }
 
+        //make node face user and initalization
         private void Start()
         {
             if (!headCamera)
@@ -132,7 +134,7 @@ namespace VRige
             }
 
         }
-        //when a node is selected spawn the specific graph if there is one
+        //when a node is selected spawn the specific graph if there is one and enable the menu if it has data
         public void selectNode()
         {
             if (containsData)
@@ -301,6 +303,7 @@ namespace VRige
 
                 nodeMenu.Description.text += "\n\t" + description;
             }
+            nodeMenu.Ttest.text += ttest;
         }
 
     }

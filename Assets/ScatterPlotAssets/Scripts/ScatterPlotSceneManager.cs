@@ -99,12 +99,12 @@ public class ScatterPlotSceneManager : MonoBehaviour
         return -1;
     }
 
-    public List<SAxis> SpawnAllGraphs()
+    public List<SAxis> SpawnAllGraphs(float position)
     {
         List<SAxis> allAxis = new List<SAxis>();
         for (int i = 0; i < dataObject.Identifiers.Length; ++i)
         {
-            Vector3 v = new Vector3(30f - (i % 7) * 0.35f, 1.506231f - (i / 7) / 2f, 0f);// -0.4875801f);
+            Vector3 v = new Vector3(30f - (i % 7) * 0.35f, position - (i / 7) / 2f, 0f);// -0.4875801f);
             GameObject obj = (GameObject)Instantiate(axisPrefab);
             obj.transform.position = v;
             SAxis axis = obj.GetComponent<SAxis>();
@@ -118,12 +118,12 @@ public class ScatterPlotSceneManager : MonoBehaviour
         return allAxis;
     }
 
-    public List<SAxis> SpawnPinnedGraphs(List<int> ids)
+    public List<SAxis> SpawnPinnedGraphs(List<int> ids, float position)
     {
         List<SAxis> pinAxis = new List<SAxis>();
         for (int i = 0; i < ids.Count; ++i)
         {
-            Vector3 v = new Vector3(30f - (i % 7) * 0.35f, 1.506231f - (i / 7) / 2f, 0f);// -0.4875801f);
+            Vector3 v = new Vector3(30f - (i % 7) * 0.35f, position - (i / 7) / 2f, 0f);// -0.4875801f);
             GameObject obj = (GameObject)Instantiate(axisPrefab);
             obj.transform.position = v;
             SAxis axis = obj.GetComponent<SAxis>();

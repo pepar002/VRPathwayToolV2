@@ -12,18 +12,17 @@ public class NodeMenu : MonoBehaviour
     public TMPro.TMP_Text Name;
     public TMPro.TMP_Text Description;
     public TMPro.TMP_Text Formula;
+    public TMPro.TMP_Text Ttest;
+    public VRige.VirtualNode targetNode;
     //public Texture2D Image;
     public Image Image;
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
+
+    public void CloseMenu()
     {
-        
+        targetNode.selectNode();
     }
+        
 
     public void PinNode()
     {

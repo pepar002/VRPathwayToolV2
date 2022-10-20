@@ -16,6 +16,7 @@ namespace VRige
         private string graphDataset;
         public XmlDocument xmlDataset;
         public TextAsset key;
+        public TextAsset Ttest;
         public EdgeCreator edgeCreator;
         public Transform edgeParent;
         public NodeMenu nodeMenu;
@@ -420,6 +421,7 @@ namespace VRige
                 l.GetComponentInChildren<TMPro.TMP_Text>().text = getDataNodeFromID(node.DataID).DisplayName;
                 //l.GetComponentInChildren<Canvas>().worldCamera = hmdCamera;
                 NodeMenu menu = Instantiate(nodeMenu);
+                menu.targetNode = node;
                 menu.transform.position = node.transform.position;
                 node.nodeMenu = menu;
                 menu.Name.text = getDataNodeFromID(node.DataID).DisplayName;
@@ -464,6 +466,7 @@ namespace VRige
                 //string allData = File.ReadAllText(Application.dataPath + "/Datasets/" + graphDataset.name + ".txt");
                 //allData.Replace("\r", "\n");
                 String[] lines = graphDataset.Split("\n"[0]);
+                String[] ttest = Ttest.ToString().Split("\n"[0]);
                 populateGridPositions3D(lines.Length * 2);
                 // read through each line
                 foreach (String s in lines)
@@ -502,6 +505,8 @@ namespace VRige
 
                         VirtualNode getNode = n.GetComponent<VirtualNode>();
                         getNode.setID(subLines[0]);
+                       
+
                         foreach (DataNode dNode in dataNodes)
                         {
                             if(getNode.getID() == dNode.DisplayName)
@@ -517,8 +522,17 @@ namespace VRige
                                     n.GetComponent<MeshRenderer>().material.color = compoundColor;
                                     getNode.DefaultColor = compoundColor;
                                 }
+                                foreach (string t in ttest)
+                                {
+                                    if (t.Split(",")[0] == dNode.Entry)
+                                    {
+                                        getNode.ttest = t.Split(",")[1];
+                                    }
+                                }
                             }
                         }
+
+                        
 
                         lineNode = getNode;
                         lineNode.setCircle(true);
@@ -571,6 +585,13 @@ namespace VRige
                                     {
                                         n.GetComponent<MeshRenderer>().material.color = compoundColor;
                                         getNode.DefaultColor = compoundColor;
+                                    }
+                                    foreach (string t in ttest)
+                                    {
+                                        if (t.Split(",")[0] == dNode.Entry)
+                                        {
+                                            getNode.ttest = t.Split(",")[1];
+                                        }
                                     }
                                 }
                             }

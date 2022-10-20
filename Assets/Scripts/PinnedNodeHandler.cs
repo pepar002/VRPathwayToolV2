@@ -12,6 +12,7 @@ public class PinnedNodeHandler : MonoBehaviour
     public List<SAxis> allAxis;
     public List<SAxis> pinnedAxis;
     public List<int> pinnedData;
+    public float currentScroll = 0f;
 
     // Start is called before the first frame update
     void Start()
@@ -34,20 +35,25 @@ public class PinnedNodeHandler : MonoBehaviour
 
     public void DisplayAllNodes()
     {
+        ResetDisplay();
+        ResetScroll();
         displayAll = true;
-        allAxis = ScatterPlotSceneManager.Instance.SpawnAllGraphs();
+        allAxis = ScatterPlotSceneManager.Instance.SpawnAllGraphs(1.5f);
         MovePlayer();
     }
 
     public void DisplayPinnedNodes()
     {
+        ResetDisplay();
+        ResetScroll();
         displayPinned = true;
-        pinnedAxis = ScatterPlotSceneManager.Instance.SpawnPinnedGraphs(pinnedData);
+        pinnedAxis = ScatterPlotSceneManager.Instance.SpawnPinnedGraphs(pinnedData, 1.5f);
         MovePlayer();
     }
     public void ReturnPlayer()
     {
         ResetDisplay();
+        ResetScroll();
         player.position = new Vector3(0, 0, 0);
         player.rotation = Quaternion.Euler(0, 0, 0);
     }
@@ -68,6 +74,29 @@ public class PinnedNodeHandler : MonoBehaviour
         }
         displayAll = false;
         displayPinned = false;
+    }
+
+    public void ResetScroll()
+    {
+        currentScroll = 0f;
+    }
+
+    public void ScrollDisplay(float amount)
+    {
+        if (displayAll)
+        {
+            ResetDisplay();
+            displayAll = true;
+            currentScroll += amount;
+            allAxis = ScatterPlotSceneManager.Instance.SpawnAllGraphs(1.5f + currentScroll);
+        }
+        if (displayPinned)
+        {
+            ResetDisplay();
+            displayPinned = true;
+            currentScroll += amount;
+            pinnedAxis = ScatterPlotSceneManager.Instance.SpawnPinnedGraphs(pinnedData, 1.5f + currentScroll);
+        }
     }
 
     public void PinNode(int id)

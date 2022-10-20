@@ -107,10 +107,8 @@ namespace VRige
         {
             foreach (GameObject edge in cylEdges)
             {
-                if((edge.transform.localScale.x + amount) > 0) edge.transform.localScale = new Vector3(edge.transform.localScale.x + amount, 1, edge.transform.localScale.z + amount);
-
+                if ((edge.transform.localScale.x + amount) > 0) edge.transform.localScale = new Vector3(edge.transform.localScale.x + amount, 1, edge.transform.localScale.z + amount);
             }
-            edgesEnabled = false;
         }
         void Update()
         {
@@ -120,7 +118,7 @@ namespace VRige
         }
 
         //update the edge connections when moved or grabbed
-        void UpdateCylEdges(float f)
+        public void UpdateCylEdges(float f)
         {
             if(cooldown < 1)
             {
