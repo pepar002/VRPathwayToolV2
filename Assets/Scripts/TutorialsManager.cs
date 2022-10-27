@@ -11,15 +11,24 @@ public class TutorialsManager : MonoBehaviour
     public GameObject leftHandRayInteractor;
     public GameObject rightHandRayInterator;
     public GameObject headcamera;
+    public GameObject backButton;
+    public GameObject forwardButton;
+    public TextAsset tutorialsSource;
+    public TMPro.TMP_Text tutorialDescription;
 
     private int videoClipIndex;
+    private string[] tutorials;
 
-    // Start is called before the first frame update
+    private void Awake()
+    {
+        videoClipIndex = 0;
+        tutorials = tutorialsSource.text.Split('\n', System.StringSplitOptions.RemoveEmptyEntries);
+    }
+
     // Play first tutorial upon startup
     void Start()
     {
-        videoClipIndex = 0;
-        videoPlayer.clip = videoClips[0];
+        PlayVideo(0);
     }
 
     // hide graph and enable ray hand interactors whenver tutorials are open
@@ -42,6 +51,23 @@ public class TutorialsManager : MonoBehaviour
 
     private void Update()
     {
+        // Enable/Disble back and forward buttons if at video 1 or last video
+        if (videoClipIndex == 0)
+        {
+            backButton.SetActive(false);
+            forwardButton.SetActive(true);
+        }
+        else if(videoClipIndex == videoClips.Length - 1)
+        {
+            backButton.SetActive(true);
+            forwardButton.SetActive(false);
+        }
+        else
+        {
+            backButton.SetActive(true);
+            forwardButton.SetActive(true);
+        }
+
         Vector3 v = transform.position - headcamera.transform.position;
         Quaternion q = Quaternion.LookRotation(v);
         transform.rotation = q;
@@ -51,30 +77,25 @@ public class TutorialsManager : MonoBehaviour
     public void PlayVideo(int index) {
         this.gameObject.SetActive(true);
         videoClipIndex = index;
+        tutorialDescription.text = tutorials[index];
         videoPlayer.clip = videoClips[videoClipIndex];
     }
 
+    // Plays the next tutorial clip
     public void PlayNext()
     {
         videoClipIndex++;
         if (videoClipIndex >= videoClips.Length)
         {
-            videoClipIndex = videoClipIndex % videoClips.Length;
+            videoClipIndex %= videoClips.Length;
         }
-
-        //videoPlayer.clip = videoClips[videoClipIndex];
         PlayVideo(videoClipIndex);
     }
 
+    // Plays the previous tutorial clip
     public void PlayPrev()
     {
         videoClipIndex--;
-        if (videoClipIndex >= videoClips.Length)
-        {
-            videoClipIndex = videoClipIndex % videoClips.Length;
-        }
-
-        //videoPlayer.clip = videoClips[videoClipIndex];
         PlayVideo(videoClipIndex);
     }
 

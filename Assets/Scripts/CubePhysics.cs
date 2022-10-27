@@ -19,10 +19,11 @@ public class CubePhysics : MonoBehaviour
     private Vector3 prevPos;
     private Quaternion prevRotation;
     private Vector3 prevScale;
-
+    private float minScale = 1.5f;
+    private float maxScale = 6.0f;
 
     // stores origin scale for cube
-    private Vector3 originScale;
+    //private Vector3 originScale = new Vector3(1.5f, 1.5f, 1.5f);
 
     public bool Rotate { get => rotate; set { rotate = value; ResetRotation(); } }
 
@@ -30,12 +31,7 @@ public class CubePhysics : MonoBehaviour
 
     public bool Movement { get => move; set { move = value; ResetPosition(); } }
 
-    private void Start()
-    {
-        // store initial scale
-        originScale = cube.transform.localScale;
-    }
-
+    
     void Update()
     {
         UpdateGraphState();
@@ -50,10 +46,13 @@ public class CubePhysics : MonoBehaviour
         // rotate the graph
         if (rotate)
         {
-            
-            if (prevRotation != cube.transform.rotation)
+            var changeInRotation = new Vector3(cube.transform.eulerAngles.x - prevRotation.eulerAngles.x, cube.transform.eulerAngles.y - prevRotation.eulerAngles.y,
+                cube.transform.eulerAngles.z - prevRotation.eulerAngles.z);
+            if (changeInRotation.magnitude > 0)
             {
-                graph.transform.rotation = cube.transform.rotation;
+                //graph.transform.rotation = cube.transform.rotation;
+                Debug.Log(changeInRotation.ToString());
+                graph.transform.Rotate(changeInRotation, Space.Self);
             }
             prevRotation = cube.transform.rotation;
         }
@@ -75,13 +74,14 @@ public class CubePhysics : MonoBehaviour
 
         // Scale the graph with respect to the scale change on the cube
         if (scale) {
-            // only one dimension is used since the change is the same for all dimensions
+            // only one dimension is used since the change is the same for all dimensions            
             var changeInScale = cube.transform.localScale.x - prevScale.x;
             prevScale = cube.transform.localScale;
             if (changeInScale != 0)
             {
                 graph.GetComponent<VRige.VRige_Graph_Creator>().ScaleGraph(changeInScale);
             }
+            
             
         }
         
@@ -91,9 +91,8 @@ public class CubePhysics : MonoBehaviour
     // reset scale to origin size
     private void ResetScale()
     {
-        Debug.Log("Scale : " + originScale);
-        cube.transform.localScale = originScale;
-        prevScale = originScale;
+        cube.transform.localScale = new Vector3(minScale, minScale, minScale);
+        prevScale = cube.transform.localScale;
     }
 
     private void ResetRotation()

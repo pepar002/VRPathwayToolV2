@@ -1,0 +1,10 @@
+Point your hands to the tutorial pane to project white circles (each for one hand). Perform a pinching gesture to select or click something. Try clicking the right arrow.
+Straighten your left arm forward and have your palm face upwards while straightening your fingers to spawn a cube. Use the cube to move the graph by pinching and dragging the cube towards any direction (Repeat gesture to spawn cube again). Use the peace or scissors sign to hide the cube.
+You can drag a node by performing and holding a pinching gesture while dragging a node.
+You can select a node by poking the node or label with your index finger. Only nodes with the red outline have data in them which will pop up as a menu. You can hide the graph and pin the node for future reference.
+To drag a Scatterplot direct your hand towards the plot are of the scatterplot. If both axes are outlined with green color that means you can drag it. Perform and hold a pinching gesture to drag.
+You can check correlations between different scatterplots and axes by dragging another scatterplot closer to another. You can also detach and attach axes to form a 3D scatterplot. To detach a single axes make sure the green outline is on the axes you wish to detach when dragging.
+To access the palm menu straighten your right arm forward and face your palm upwards with your fingers straightened.
+To access the Graph movement and orientation settings open up the palm menu and select Setting by poking on the button. To scale the graph, activate the Scale radio button and use your two hands to scale the cube by performing and holding a pinchin gesture on both arms, move your hands outwards to scale up and inwards to scale down.
+To view pinned nodes go to the palm menu then select "Collections" by poking the button. Open the palm menu once more, select all graphs to view all the scatterplot axes from the dataset, select pinned graphs to view only the pinned scatterplots.
+To load other pathways Open up the palm menu then go to "Pathways" and poke on the pathway you want to go to next. Use the scrollbar to the right to scroll down and up.
