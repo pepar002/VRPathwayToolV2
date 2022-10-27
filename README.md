@@ -50,7 +50,7 @@ You can build and launch the project onto your Oculus device, just make sure the
 ## VRPathways Features
 The scene is a freeroam environment where you can move around. The scene also allows you to use your hands via handtracking to interact with the pathway while in the scene.
 
-<img src="Media/Images/handtracking.jpg" width="250" height="250"/>
+<img src="Media/Images/handtracking.JPG" width="250" height="250"/>
 
 ### Grabbing and Selecting
 Any grabbable object in the scene can be grabbed using a pinching gesture which involves your index finger and thumb, holding this gesture and moving your hand should allow you to grab objects.
@@ -75,7 +75,7 @@ You can access an interaction menu by straightening your **right** arm foward an
 ### Tutorials
 The tutorials menu can be accessed from the **palm menu** where you can learn about all the features VRPathways tool offers.
 
-<img src="Media/Images/tutorialsMenu.jpg" width="250" height="250"/>
+<img src="Media/Images/tutorialsMenu.JPG" width="250" height="250"/>
 
 ## Developers and Contributors
 This project was developed by:
@@ -87,7 +87,8 @@ Contributors:
 * [Dr. Adam Drogemuller](https://people.unisa.edu.au/Adam.Drogemuller) (University of South Australia)
 
 Clients:
-* Dr. Maxime Francois (CSIRO)
-* Dr. Wayne Leifert (CSIRO)
+* [Dr. Maxime Francois](https://people.csiro.au/f/m/maxime-francois) (CSIRO)
+* [Dr. Wayne Leifert](https://people.csiro.au/l/w/wayne-leifert) (CSIRO)
+* [Dr. Geoff Jarrad](https://www.researchgate.net/profile/Geoff-Jarrad) (CSIRO)
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
