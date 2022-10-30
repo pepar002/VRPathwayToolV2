@@ -27,12 +27,15 @@ public class PinnedNodeHandler : MonoBehaviour
         
     }
 
+    //moves the player to the collection view
     public void MovePlayer()
     {
         player.position = playerLocation.transform.position;
         player.rotation = Quaternion.Euler(player.rotation.x, player.rotation.y + 90, player.rotation.z);
+
     }
 
+    //generates all of the data imported
     public void DisplayAllNodes()
     {
         ResetDisplay();
@@ -42,6 +45,7 @@ public class PinnedNodeHandler : MonoBehaviour
         MovePlayer();
     }
 
+    //generates the pinned data
     public void DisplayPinnedNodes()
     {
         ResetDisplay();
@@ -50,6 +54,7 @@ public class PinnedNodeHandler : MonoBehaviour
         pinnedAxis = ScatterPlotSceneManager.Instance.SpawnPinnedGraphs(pinnedData, 1.5f);
         MovePlayer();
     }
+    //returns the player to the pathway view
     public void ReturnPlayer()
     {
         ResetDisplay();
@@ -57,6 +62,7 @@ public class PinnedNodeHandler : MonoBehaviour
         player.position = new Vector3(0, 0, 0);
         player.rotation = Quaternion.Euler(0, 0, 0);
     }
+    //resets the currently viewed display ready for a new display or to return the player
     public void ResetDisplay()
     {
         if (displayAll)
@@ -75,12 +81,13 @@ public class PinnedNodeHandler : MonoBehaviour
         displayAll = false;
         displayPinned = false;
     }
-
+    //resets the current scroll position of the display
     public void ResetScroll()
     {
         currentScroll = 0f;
     }
 
+    //scrolls the specific display selected up or down to access graphs 
     public void ScrollDisplay(float amount)
     {
         if (displayAll)

@@ -83,6 +83,7 @@ namespace VRige
             edges = new ArrayList();
         }
 
+        //hides the edges in the pathway, mainly used when hiding the whole pathway
         public void hideEdges(bool hide)
         {
             if (hide && edgesEnabled)
@@ -103,6 +104,7 @@ namespace VRige
 
             }
         }
+        //
         public void scaleEdges(float amount)
         {
             foreach (GameObject edge in cylEdges)

@@ -179,7 +179,7 @@ public class SAxis : MonoBehaviour, SGrabbable {
         }       
 
     }
-
+    //removing all references and pointers to axis to allow for complete destroy
     void OnDestroy()
     {
         if (ghostSourceAxis != null)

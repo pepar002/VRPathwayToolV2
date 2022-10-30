@@ -24,7 +24,7 @@ public class DialogUI : MonoBehaviour
 
         if (distance > 1.0f)
         {
-            transform.position = new Vector3(headcamera.transform.position.x + 0.4f, headcamera.transform.position.y, headcamera.transform.position.z);
+            transform.position = new Vector3(headcamera.transform.position.x + 0.5f, headcamera.transform.position.y, headcamera.transform.position.z);
 
             // We used RotateAround to make sure that the dialogue box is directly infront of the player/camera.
             transform.RotateAround(headcamera.transform.position, new Vector3(0, 1, 0), headcamera.transform.rotation.eulerAngles.y - angelOffset.eulerAngles.y);

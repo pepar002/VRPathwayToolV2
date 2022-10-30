@@ -62,8 +62,7 @@ namespace VRige
         // Use this for initialization
         void Start()
         {
-            //generate the graph from the datasets
-            // GenerateGraph(DataExtrator.Instance.PathwayXmls["ko00620"]);
+            //generate the default graph from the datasets
             GenerateGraph("ko00620");
 
             VRigeEventManager.SliderMoveX += MoveGraphX;
@@ -136,6 +135,7 @@ namespace VRige
 
         }
 
+        //resets the settings of the pathway for generating an new pathway
         private void resetGraph()
         {
             flag = true;
@@ -145,9 +145,10 @@ namespace VRige
             t = 1f;
             testTime = 0;
             this.transform.localScale = new Vector3(1f, 1f, 1f);
-            Debug.LogError(graphScale + ", " + scale + ", " + gridGap + ", " + area + ", " + t + ", " + smoothTime);
+            Debug.Log("Pathway loading: " + graphScale + ", " + scale + ", " + gridGap + ", " + area + ", " + t + ", " + smoothTime);
         }
 
+        //hides and unhides the pathway to improve visibility when required
         public void hideNodes(bool hide)
         {
             if (hide && nodesEnabled)
@@ -186,7 +187,9 @@ namespace VRige
             this.transform.localScale = new Vector3(0.4f, 0.4f, 0.4f);
         }
 
-        //main control method that will generate the graph based in the selected xml dataset
+        /*main control function that will generate the graph based on the selected xml dataset
+         * it also runs functions for assigning scatterplots and ui
+         */
         public void GenerateGraph(XmlDocument xml)
         {
             resetGraph();
@@ -220,6 +223,10 @@ namespace VRige
             GenerateGraph(DataExtrator.Instance.PathwayXmls[pathwayID]);
         }
 
+        public void CloseAllNodes()
+        {
+
+        }
 
         //write the file string that generates the correct node generations based on node data
         public void WriteDataset()
@@ -261,22 +268,10 @@ namespace VRige
                 }
             }
         }
-        //get specific node from id
-        public VirtualNode getVirtualNode(int dataNodeid)
-        {
-            foreach (VirtualNode node in nodes)
-            {
-                if(node.DataID == dataNodeid)
-                {
-                    return node;
-                }
-            }
-            return null;
-        }
-
-        //this creates data nodes based on the specific xml data inputted.
-        //As the xml data created by Kegg is generated in a certain way,
-        //this extracts that data into individual node data objects
+        /*this creates data nodes based on the specific xml data inputted.
+        *As the xml data created by Kegg is generated in a certain way,
+        *this extracts that data into individual node data objects
+        */
         private void ExtractDataset()
         {
             if (xmlDataset != null)
@@ -392,7 +387,21 @@ namespace VRige
             }
             return null;
         }
-        // used by ui to scale and translate graph
+
+        //get virtual node from id
+        public VirtualNode getVirtualNode(int dataNodeid)
+        {
+            foreach (VirtualNode node in nodes)
+            {
+                if (node.DataID == dataNodeid)
+                {
+                    return node;
+                }
+            }
+            return null;
+        }
+
+        // used by ui and the manipulation sphere to scale and translate pathway
         public void MoveGraphX(float f)
         {
             gameObject.transform.position = new Vector3(f, gameObject.transform.position.y, gameObject.transform.position.z);
@@ -448,7 +457,14 @@ namespace VRige
             }
         }
 
-        // creates undirected graph
+        /* creates the actual generation of nodes within the pathway
+         * this is done by importing the generated list of connected nodes for the pathway
+         * they are then assigned into a grid where force is applied to spread the nodes
+         * this is slightly spread out within the code making use of update for the physics in
+         * each individual virtual node
+         * some things are also assigned here such as the specific edge objects to the nodes they are connected to
+         * and the type of node category they fall under
+         */
         private void UndirectedGraph()
         {
             if (graphDataset != null)
@@ -457,14 +473,16 @@ namespace VRige
                 {
                     foreach(VirtualNode n in nodes)
                     {
+                        if (n.activeNode)
+                        {
+                            n.deselectNode();
+                        }
+                        
                         Destroy(n.gameObject);
                     }
                     edgeCreator.deleteEdges();
                 }
                 nodes = new ArrayList();
-                //String allData = graphDataset.text;
-                //string allData = File.ReadAllText(Application.dataPath + "/Datasets/" + graphDataset.name + ".txt");
-                //allData.Replace("\r", "\n");
                 String[] lines = graphDataset.Split("\n"[0]);
                 String[] ttest = Ttest.ToString().Split("\n"[0]);
                 populateGridPositions3D(lines.Length * 2);

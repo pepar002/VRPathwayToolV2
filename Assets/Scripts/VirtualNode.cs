@@ -102,7 +102,7 @@ namespace VRige
             }
         }
 
-        // set neighbours
+        // set neighbours for the node for use with edges
         public void setNodes(VirtualNode a, VirtualNode b)
         {
             if (neighbors.Contains(b) == false)
@@ -191,38 +191,25 @@ namespace VRige
                 }
                 else
                 {
-                    activeNode = false;
-                    mesh.material.color = defaultColor;
-
-                    foreach (SAxis axis in spAxis)
-                    {
-                        Destroy(axis.gameObject);
-                        
-                    }
-                    Destroy(spParent);
-                    nodeMenu.gameObject.SetActive(false);
+                    deselectNode();
                 }
             }
         }
-
-        /*private void OnPinClick()
+        //closes the node menu and removes scatterplot instance
+        public void deselectNode()
         {
-            if (pinned)
+            activeNode = false;
+            mesh.material.color = defaultColor;
+
+            foreach (SAxis axis in spAxis)
             {
-                nodeMenu.UnPinNode();
-                unPinNode.onClick.RemoveAllListeners();
-                pinNode.onClick.AddListener(OnPinClick);
-                pinned = false;
+                Destroy(axis.gameObject);
+
             }
-            else
-            {
-                nodeMenu.pinnedNodeHandler.PinNode(spID);
-                pinNode.onClick.RemoveAllListeners();
-                unPinNode.onClick.AddListener(OnPinClick);
-                pinned = true;
-            }
-        }*/
-        // return ID
+            Destroy(spParent);
+            nodeMenu.gameObject.SetActive(false);
+        }
+
         public string getID()
         {
             return ID;

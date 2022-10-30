@@ -89,7 +89,7 @@ public class ScatterPlotSceneManager : MonoBehaviour
 
     }
 
-
+    //assigns the id of the node to the scatterplot
     public int assignNodeId(string name)
     {
         foreach(var item in dataObject.Identifiers.Select((name, index) => (name, index)))
@@ -99,6 +99,7 @@ public class ScatterPlotSceneManager : MonoBehaviour
         return -1;
     }
 
+    //spawns all of the graphs present in the dataset into the scene
     public List<SAxis> SpawnAllGraphs(float position)
     {
         List<SAxis> allAxis = new List<SAxis>();
@@ -118,6 +119,7 @@ public class ScatterPlotSceneManager : MonoBehaviour
         return allAxis;
     }
 
+    //spawns only the graphs in the pinned nodes list in the scene
     public List<SAxis> SpawnPinnedGraphs(List<int> ids, float position)
     {
         List<SAxis> pinAxis = new List<SAxis>();
