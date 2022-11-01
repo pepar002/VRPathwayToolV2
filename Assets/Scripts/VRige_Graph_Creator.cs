@@ -57,6 +57,9 @@ namespace VRige
 
         private string currentPathwayId = "";
 
+        private HashSet<VirtualNode> nodesWithData = new HashSet<VirtualNode>();
+
+
         public enum PathwayType { PYRUVATE, CITRATE }
 
         // Use this for initialization
@@ -205,6 +208,7 @@ namespace VRige
             SendNodeApiRequests();
             isGenerated = true;
             nodesEnabled = true;
+            Debug.Log("Nodes with data = " + nodesWithData.Count);
             Debug.Log("Generated new graph, now loading graph " + t);
         }
 
@@ -261,10 +265,12 @@ namespace VRige
             foreach(DataNode node in dataNodes)
             {
                 int spID = ScatterPlotSceneManager.Instance.assignNodeId(node.Entry);
-                if (getVirtualNode(node.Id) != null)
+                VirtualNode vNode = getVirtualNode(node.Id);
+                if (vNode != null)
                 {
-                    getVirtualNode(node.Id).spID = spID;
-                    getVirtualNode(node.Id).name = node.Entry;
+                    vNode.spID = spID;
+                    vNode.name = node.Entry;
+                    if (spID > 0) nodesWithData.Add(vNode);
                 }
             }
         }
@@ -679,35 +685,37 @@ namespace VRige
         }
 
 
-        // TESTING send api requests to get node information
+        // send api requests to get node information
         // need to send out a few requests at a time (or else forbidden)
         private void SendNodeApiRequests()
         {
-            StartCoroutine(StartMultipleRoutines());
-           
+            // send api requests for nodes with data
+            StartCoroutine(StartMultipleRoutines(nodesWithData));
+            // send api requests for the rest of the nodes
+            StartCoroutine(StartMultipleRoutines(nodes));
+
         }
 
         // starts multiple coroutines to send different api requests in sequence (sync)
-        private IEnumerator StartMultipleRoutines() {
+        private IEnumerator StartMultipleRoutines(IEnumerable nodeCollection) {
             //Execute coroutines for getting the node data synchronously while async to the application execution
-            foreach (DataNode n in dataNodes) {
+
+            // checks if collection is for nodes with data (this was done for sake of optimisation)
+            // NOTE: change this if general nodes list and nodes with data list are the same time
+            bool isListWithData = nodeCollection.GetType() == nodesWithData.GetType();
+
+            foreach (VirtualNode node in nodeCollection) {
                 // send http request to get data node information
-                VirtualNode vNode = getVirtualNode(n.Id);
-                if (vNode != null) {
-
-                    string url = DataExtrator.URI + "/get/" + n.Entry;
-                    yield return StartCoroutine(DataExtrator.Instance.SendRequest(url, vNode.GetInfo));
-
-                    // send http request to get compound image (images from API are in GIF format - not supported by unitywebrequest)
-                    /*                if (n.Type == DataNode.EnumType.COMPOUND)
-                                    {
-                                        string imageUrl = DataExtrator.URI + "/get/" + n.Entry + "/image";
-                                        yield return StartCoroutine(DataExtrator.Instance.SendImageRequest(imageUrl, vNode.GetImage));
-                                    }*/
+                //VirtualNode vNode = getVirtualNode(n.Id);
+                if (node != null) {
+                    // Send request if the passed in collection contains nodes with data
+                    // also send request if passed in collection doe snot contain nodes with data and the node does not have data
+                    if (isListWithData | !nodesWithData.Contains(node)) {
+                        string url = DataExtrator.URI + "/get/" + node.name;
+                        yield return StartCoroutine(DataExtrator.Instance.SendRequest(url, node.GetInfo));
+                    }
                 }
-                vNode = null;
             }
-
         }
 
     }

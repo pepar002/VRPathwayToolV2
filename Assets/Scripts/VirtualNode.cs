@@ -266,8 +266,6 @@ namespace VRige
                     names.Add(line.Trim(new char[] { ' ', ';' }));
             }
 
-            if (name == "Enzyme_N6-(dihydrolipoyl)lysine")
-                Debug.Log(string.Format("Loading information works this node has {0} names and first name is {1}", names.Count, names.ToArray()[0]));
 
             // TO DO testing
             if (!menuUpdated && nodeMenu != null)
