@@ -72,3 +72,9 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 .vsconfig
 ProjectSettings/Packages/com.unity.testtools.codecoverage/Settings.json
+ProjectSettings/Packages/com.unity.testtools.codecoverage/Settings.json
+Assets/SteamVR_Resources/Resources/SteamVR_Settings.asset
+Assets/SteamVR_Resources/Resources/SteamVR_Settings.asset.meta
+Assets/SteamVR_Resources/Resources/SteamVR_Settings.asset
+Assets/SteamVR_Resources/Resources/SteamVR_Settings.asset.meta
+ProjectSettings/Packages/com.unity.testtools.codecoverage/Settings.json
