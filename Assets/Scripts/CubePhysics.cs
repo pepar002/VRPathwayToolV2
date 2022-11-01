@@ -11,8 +11,6 @@ public class CubePhysics : MonoBehaviour
     private bool scale = false;
     private bool move = true;  // starts with the movement setting ON
 
-    //private bool active = false;
-
     private float moveMultiplier = 10.0f;
 
     // stores the transform information before current update frame
@@ -22,38 +20,47 @@ public class CubePhysics : MonoBehaviour
     private float minScale = 1.5f;
     private float maxScale = 6.0f;
 
-    // stores origin scale for cube
-    //private Vector3 originScale = new Vector3(1.5f, 1.5f, 1.5f);
+    public bool Rotate { get => rotate; set { rotate = value; GetPreviousTransform(); } }
 
-    public bool Rotate { get => rotate; set { rotate = value; ResetRotation(); } }
+    public bool ChangeGraphScale { get => scale; set { scale = value; GetPreviousTransform(); } }
 
-    public bool ChangeGraphScale { get => scale; set { scale = value;  ResetScale(); } }
+    public bool Movement { get => move; set { move = value; GetPreviousTransform(); } }
 
-    public bool Movement { get => move; set { move = value; ResetPosition(); } }
+    private void Start()
+    {
+        // store rotation and scale once cube is spawned
+        prevRotation = cube.transform.rotation;
+        prevScale = cube.transform.localScale;
+    }
 
-    
     void Update()
     {
         UpdateGraphState();
     }
     private void OnEnable()
     {
+
         GetPreviousTransform();
     }
+
+
     // Various settings to allow the graph to mimic the cube's movement, rotation and scale
     public void UpdateGraphState() {
 
         // rotate the graph
         if (rotate)
         {
-            var changeInRotation = new Vector3(cube.transform.eulerAngles.x - prevRotation.eulerAngles.x, cube.transform.eulerAngles.y - prevRotation.eulerAngles.y,
-                cube.transform.eulerAngles.z - prevRotation.eulerAngles.z);
-            if (changeInRotation.magnitude > 0)
-            {
-                //graph.transform.rotation = cube.transform.rotation;
-                Debug.Log(changeInRotation.ToString());
-                graph.transform.Rotate(changeInRotation, Space.Self);
+            // get rotation offset between graph and cube
+            if (prevRotation != cube.transform.rotation) {
+                var angelOffset = prevRotation.eulerAngles - graph.transform.eulerAngles;
+
+                // maintain the rotation offset
+                var newRotation = cube.transform.eulerAngles - angelOffset;
+
+                // update graph and previous-cube rotations
+                graph.transform.eulerAngles = newRotation;
             }
+                
             prevRotation = cube.transform.rotation;
         }
             
@@ -82,33 +89,17 @@ public class CubePhysics : MonoBehaviour
                 graph.GetComponent<VRige.VRige_Graph_Creator>().ScaleGraph(changeInScale);
             }
             
-            
         }
         
     }
 
-
-    // reset scale to origin size
-    private void ResetScale()
-    {
-        cube.transform.localScale = new Vector3(minScale, minScale, minScale);
-        prevScale = cube.transform.localScale;
-    }
-
-    private void ResetRotation()
-    {
-        prevRotation = cube.transform.rotation;
-    }
-
-    private void ResetPosition()
-    {
-        prevPos = cube.transform.position;
-    }
-
+    // Updates all the previous variables to hold current cube transform when cube is enabled or buttons are enabled/disabled
     private void GetPreviousTransform()
     {
+
         prevPos = cube.transform.position;
-        prevRotation = cube.transform.rotation;
-        prevScale = cube.transform.localScale;
+        // reset cube to its prev scale and rotation if scale and rotation is enabled
+        if (scale) cube.transform.localScale = prevScale;
+        if (rotate) cube.transform.rotation = prevRotation;
     }
 }

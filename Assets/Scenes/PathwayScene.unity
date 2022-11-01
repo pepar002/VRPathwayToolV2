@@ -29396,13 +29396,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _constraints:
-    ConstraintsAreRelative: 1
+    ConstraintsAreRelative: 0
     MinScale:
-      Constrain: 1
+      Constrain: 0
       Value: 1.5
     MaxScale:
-      Constrain: 1
-      Value: 6
+      Constrain: 0
+      Value: 9
 --- !u!4 &4193259181102350863
 Transform:
   m_ObjectHideFlags: 0
