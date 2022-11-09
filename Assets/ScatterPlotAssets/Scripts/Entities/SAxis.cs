@@ -19,6 +19,10 @@ public class SAxis : MonoBehaviour, SGrabbable {
 
     public bool isPrototype;
 
+    public enum AxisTypes { STANDARD, PROTOTYPE, PIN_PROTOTYPE }
+
+    public AxisTypes type = AxisTypes.STANDARD;
+
     //temporary hack 
 
     Vector3 originPosition;
@@ -201,7 +205,16 @@ public class SAxis : MonoBehaviour, SGrabbable {
                 clone.GetComponent<SAxis>().OnExited.Invoke();
                 clone.GetComponent<SAxis>().ReturnToOrigin();
 
-                ScatterPlotSceneManager.Instance.AddAxis(clone.GetComponent<SAxis>());
+                ScatterPlotSceneManager sm = ScatterPlotSceneManager.Instance;
+                sm.AddAxis(clone.GetComponent<SAxis>());
+                if(type == AxisTypes.PROTOTYPE)
+                {
+                    sm.allAxes.Add(clone.GetComponent<SAxis>());
+                }
+                if (type == AxisTypes.PIN_PROTOTYPE)
+                {
+                    sm.pinAxes.Add(clone.GetComponent<SAxis>());
+                }
                 
                 foreach (var obj in GameObject.FindObjectsOfType<WandController>())
                 {

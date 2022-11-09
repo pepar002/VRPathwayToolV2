@@ -8,7 +8,8 @@ public class ScatterPlotSceneManager : MonoBehaviour
 {
 
     public List<SAxis> sceneAxes { get; internal set; }
-
+    public List<SAxis> pinAxes { get; set; }
+    public List<SAxis> allAxes { get; set; }
     public HashSet<int> axisIds { get; set; }
 
     public DataBinding.DataObject dataObject;
@@ -102,7 +103,7 @@ public class ScatterPlotSceneManager : MonoBehaviour
     //spawns all of the graphs present in the dataset into the scene
     public List<SAxis> SpawnAllGraphs(float position)
     {
-        List<SAxis> allAxis = new List<SAxis>();
+        allAxes = new List<SAxis>();
         for (int i = 0; i < dataObject.Identifiers.Length; ++i)
         {
             Vector3 v = new Vector3(30f - (i % 7) * 0.35f, position - (i / 7) / 2f, 0f);// -0.4875801f);
@@ -112,17 +113,18 @@ public class ScatterPlotSceneManager : MonoBehaviour
             axis.Init(dataObject, i, true);
             axis.InitOrigin(v, obj.transform.rotation);
             axis.tag = "Axis";
+            axis.type = SAxis.AxisTypes.PROTOTYPE;
 
             AddAxis(axis);
-            allAxis.Add(axis);
+            allAxes.Add(axis);
         }
-        return allAxis;
+        return allAxes;
     }
 
     //spawns only the graphs in the pinned nodes list in the scene
     public List<SAxis> SpawnPinnedGraphs(List<int> ids, float position)
     {
-        List<SAxis> pinAxis = new List<SAxis>();
+        pinAxes = new List<SAxis>();
         for (int i = 0; i < ids.Count; ++i)
         {
             Vector3 v = new Vector3(30f - (i % 7) * 0.35f, position - (i / 7) / 2f, 0f);// -0.4875801f);
@@ -132,11 +134,12 @@ public class ScatterPlotSceneManager : MonoBehaviour
             axis.Init(dataObject,ids[i], true);
             axis.InitOrigin(v, obj.transform.rotation);
             axis.tag = "Axis";
+            axis.type = SAxis.AxisTypes.PIN_PROTOTYPE;
 
             AddAxis(axis);
-            pinAxis.Add(axis);
+            pinAxes.Add(axis);
         }
-        return pinAxis;
+        return pinAxes;
     }
 
     //generates the 2 axis graph for a specific node
